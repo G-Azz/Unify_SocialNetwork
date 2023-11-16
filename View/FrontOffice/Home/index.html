@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +11,7 @@
   <title>Twitter Clone - Final</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="brand.css" />
+  <link rel="stylesheet" href="post.css"/>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -113,27 +117,25 @@
     </div>
 
     <!-- tweetbox starts -->
-    <div class="tweetBox">
-      <form>
-        <div class="tweetbox__input">
-          <div clas="tweetbox_input_header">
-            <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
-            <label for="chat-channel">Select Chat Channels:</label>
-            <select id="chat-channel" name="chat-channel" multiple>
-              <option value="All_Channels">All Channels</option>
-              <option value="General_Chat">General Chat</option>
-              <option value="Area_Chat">Area Chat</option>
-              <option value="University_Chat">University Chat</option>
-              <option value="Class_Chat">Class Chat</option>
-              <option value="Private_Chat">Private Chat</option>
-            </select>
-            <div id="selected-channels"></div>
-          </div>
-          <input type="text" placeholder="What's happening?" />
+    <form action="postD.php" method="post">
+      <div class="post-box">
+        <div class="post-header">
+          <img src="path-to-your-profile-icon.png" alt="Profile Icon" width="32" height="32">
+          <textarea name="postContent" rows="2" placeholder="What is happening?!" oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
         </div>
-        <button class="tweetBox__tweetButton">Post</button>
-      </form>
-    </div>
+       
+        <div class="post-footer">
+          <div class="options">
+            <!-- Options here can be inputs as well, depending on what they do -->
+            <span class="option">GIF</span>
+            <span class="option">📷</span>
+            <span class="option">📍</span>
+            <span class="option">🔒</span>
+          </div>
+          <button type="submit" id="postButton" style="opacity: 0.5;" disabled>Post</button>
+        </div>
+      </div>
+    </form>
     <!-- tweetbox ends -->
 
     <!-- post starts -->
@@ -205,6 +207,49 @@
 
   <!-- widgets ends -->
   <script src="./js/home.js"></script>
+  <script>
+    function autoResizeTextarea(textarea) {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+function toggleButtonOpacity(textarea) {
+  const button = document.getElementById('postButton');
+  if (textarea.value.trim().length > 0) {
+    button.style.opacity = 1;
+    button.disabled = false;
+  } else {
+    button.style.opacity = 0.5;
+    button.disabled = true;
+  }
+}
+/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
+function toggleDropdown() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+// Function to select or deselect all checkboxes
+function selectAll(source) {
+  checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
+  for(var i = 0, n = checkboxes.length; i < n; i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+  </script>
 </body>
 
 </html>
