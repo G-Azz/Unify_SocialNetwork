@@ -381,14 +381,14 @@ body {
 }
 .channel-tag {
   display: inline-block;
-  margin: 5px;
-  padding: 2px 6px; /* Smaller padding */
+  margin: 3px;
   background-color: transparent;
   text-align: center;
   white-space: nowrap;
   position: relative;
-  border: 2px solid transparent;
-  font-size: 14px; /* Smaller font size */
+  border: 1px solid transparent;
+  font-size: 12px; /* Smaller font size */
+  border-radius: 25%;
 }
 
 .channel-tag .flex-container {
@@ -412,5 +412,4 @@ body {
 }
 .all-channels #selected-channels {
   display: flex;
-
 }

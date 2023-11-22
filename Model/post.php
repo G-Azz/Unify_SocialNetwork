@@ -43,7 +43,7 @@ class Post {
         return $this->media;
     }
 
-    public function getPostId(): int {
+    public function getPostId(): ?int { // Nullable return type
         return $this->post_id;
     }
 

@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +8,7 @@
   <title>Twitter Clone - Final</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="brand.css" />
-  <link rel="stylesheet" href="post.css"/>
+  <link rel="stylesheet" href="post.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -106,7 +103,7 @@
   <div class="feed">
     <div class="feed__header">
       <h1>Home</h1>
-      <form action="post" class="search_bar">
+      <form action="postD.php" class="search_bar">
 
         <input type="text" placeholder="Search In Unify " name="q">
         <button type="submit" class="search_btn">
@@ -117,18 +114,81 @@
     </div>
 
     <!-- tweetbox starts -->
-    <form action="postD.php" method="post">
+    <form id="FormControl" action="postD.php" method="post" enctype="multipart/form-data">
       <div class="post-box">
         <div class="post-header">
-          <img src="path-to-your-profile-icon.png" alt="Profile Icon" width="32" height="32">
-          <textarea name="postContent" rows="2" placeholder="What is happening?!" oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
+
+          <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="Profile Icon"
+            width="32" height="32">
+          <div class="dropdown-container">
+            <div>
+              <p>Chat Channels :</p>
+              <div class="dropdown">
+                <div class="dropbtn" id="dropbtn">
+                  <span class="plus-sign"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                      <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+                <div class="dropdown-content" id="dropdown-content">
+                  <a href="#" data-value="All_Channels">All Channels</a>
+                  <a href="#" data-value="General_Chat">General Chat</a>
+                  <a href="#" data-value="Area_Chat">Area Chat</a>
+                  <a href="#" data-value="University_Chat">University Chat</a>
+                  <a href="#" data-value="Class_Chat">Class Chat</a>
+                  <a href="#" data-value="Private_Chat">Private Chat</a>
+                </div>
+              </div>
+              <div id="selected-options" class="selected-options"></div>
+              <!-- Container for displaying selected options -->
+            </div>
+            <div>
+              <div class="dropdown">
+                <div class="dropbtn" id="dropbtn2">
+                  <span class="hashtag-sign" id="hashtag-sign">#topic</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-content2">
+                  <a href="#" data-value="#General_Discussion">#General Discussion</a>
+                  <a href="#" data-value="#Missing_items">#Missing Items</a>
+                  <a href="#" data-value="#Advertising">#Advertising</a>
+                  <a href="#" data-value="#Other">#Other</a>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
         </div>
-       
+        <input type="hidden" name="selectedChannel" id="selectedChannel" value="">
+        <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
+
+        <textarea name="postContent" rows="2" placeholder="What is happening?!" 
+          oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
+
+          <div id="image-preview-container" style="display: none;">
+            <div id="progress-container" style="display: none; position: relative;">
+                <img id="image-preview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
+                <svg id="svg-progress-bar" width="75" height="75" viewbox="0 0 100 100" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    <circle cx="50" cy="50" r="45" stroke="#eca9ae" stroke-width="5" fill="none" />
+                    <circle id="progress-bar" cx="50" cy="50" r="45" stroke="#c41318" stroke-width="5" stroke-dasharray="282.74" stroke-dashoffset="282.74" fill="none"/>
+                </svg>
+            </div>
+        </div>
         <div class="post-footer">
           <div class="options">
             <!-- Options here can be inputs as well, depending on what they do -->
             <span class="option">GIF</span>
-            <span class="option">📷</span>
+            <label for="file-upload" class="option">
+              📷
+          </label>
+          <input id="file-upload" name="file-upload" type="file" style="display:none;" onchange="toggleUploadButton(this)"/>
+          
+          
+
             <span class="option">📍</span>
             <span class="option">🔒</span>
           </div>
@@ -137,7 +197,6 @@
       </div>
     </form>
     <!-- tweetbox ends -->
-
     <!-- post starts -->
     <div class="post">
       <div class="post__avatar">
@@ -207,49 +266,7 @@
 
   <!-- widgets ends -->
   <script src="./js/home.js"></script>
-  <script>
-    function autoResizeTextarea(textarea) {
-  textarea.style.height = 'auto';
-  textarea.style.height = textarea.scrollHeight + 'px';
-}
-function toggleButtonOpacity(textarea) {
-  const button = document.getElementById('postButton');
-  if (textarea.value.trim().length > 0) {
-    button.style.opacity = 1;
-    button.disabled = false;
-  } else {
-    button.style.opacity = 0.5;
-    button.disabled = true;
-  }
-}
-/* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-function toggleDropdown() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-// Function to select or deselect all checkboxes
-function selectAll(source) {
-  checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
-  for(var i = 0, n = checkboxes.length; i < n; i++) {
-    checkboxes[i].checked = source.checked;
-  }
-}
-
-  </script>
 </body>
 
 </html>

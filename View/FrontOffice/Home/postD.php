@@ -1,29 +1,52 @@
 <?php
 include '../../../Controller/postED.php';
 include '../../../Model/post.php';
-
 $error = "";
+$media = ""; // Initialize $media variable
+
+// Handle File Upload
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_FILES['file-upload']) && $_FILES['file-upload']['error'] == 0) {
+        $file = $_FILES['file-upload'];
+        $targetDirectory = "uploads/";
+        $targetFile = $targetDirectory . basename($file['name']);
+
+        // Security: Check if the file type is allowed
+        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']; // Add or remove file types as needed
+        if (!in_array($file['type'], $allowedTypes)) {
+            echo "Error: Unsupported file type.";
+            exit;
+        }
+
+        // Security: Prevent overwriting existing files
+        if (file_exists($targetFile)) {
+            echo "Error: File already exists.";
+            exit;
+        }
+
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            echo "The file " . htmlspecialchars(basename($file['name'])) . " has been uploaded.";
+            $media = $targetFile; // Assign the target file path to $media
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+            exit; // Stop script execution if upload fails
+        }
+    }
+}
+
+// Handle Post Creation
 $postedit = new PostED();
-
 if (isset($_POST["postContent"])) {
-    // Retrieve user ID from session or other source
-
-    $user_id = 1; // This is an example. Replace with actual user ID.
-    $createtime = date('Y-m-d H:i:s'); // Current datetime
-
-    // Assuming you have form inputs for channel_id, posttype, content, and media
-    // If not, replace these with appropriate default values or other logic
-    $channel_id = 1;
-    $posttype = 1;
+    $user_id = 1; // Replace with actual user ID (e.g., from session)
+    $createtime = date('Y-m-d H:i:s');
+    $channel_id = $_POST['selectedChannel'] ?? 'default_channel'; // Provide a default value if not set
+    $posttype = $_POST['selectedTopic'] ?? 'default_type'; // Provide a default value if not set
     $content = $_POST['postContent'];
-    $media = "empty"; // Handle file upload separately if needed
 
     $post = new Post($user_id, $createtime, $channel_id, $posttype, $content, $media);
-
-
     try {
-        $postedit->addPost($post);
-        // Redirect or perform other success actions
+        $lastInsertId = $postedit->addPost($post);
+        // Redirect or other success actions
     } catch (Exception $e) {
         $error = $e->getMessage();
     }
@@ -31,6 +54,7 @@ if (isset($_POST["postContent"])) {
 
 // Additional logic or HTML here
 ?>
+
 
 
 
@@ -153,14 +177,62 @@ if (isset($_POST["postContent"])) {
         <form action="postD.php" method="post">
             <div class="post-box">
                 <div class="post-header">
-                    <img src="path-to-your-profile-icon.png" alt="Profile Icon" width="32" height="32">
-                    <textarea name="postContent" rows="2" placeholder="What is happening?!"
-                        oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
+
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
+                        alt="Profile Icon" width="32" height="32">
+                    <div class="dropdown-container">
+                        <div>
+                            <p>Chat Channels :</p>
+                            <div class="dropdown">
+                                <div class="dropbtn" id="dropbtn">
+                                    <span class="plus-sign"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 5V19" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M5 12H19" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="dropdown-content" id="dropdown-content">
+                                    <a href="#" data-value="All_Channels">All Channels</a>
+                                    <a href="#" data-value="General_Chat">General Chat</a>
+                                    <a href="#" data-value="Area_Chat">Area Chat</a>
+                                    <a href="#" data-value="University_Chat">University Chat</a>
+                                    <a href="#" data-value="Class_Chat">Class Chat</a>
+                                    <a href="#" data-value="Private_Chat">Private Chat</a>
+                                </div>
+                            </div>
+                            <div id="selected-options" class="selected-options"></div>
+                            <!-- Container for displaying selected options -->
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <div class="dropbtn" id="dropbtn2">
+                                    <span class="hashtag-sign" id="hashtag-sign">#topic</span>
+                                </div>
+                                <div class="dropdown-content" id="dropdown-content2">
+                                    <a href="#" data-value="#General_Discussion">#General Discussion</a>
+                                    <a href="#" data-value="#Missing_items">#Missing Items</a>
+                                    <a href="#" data-value="#Advertising">#Advertising</a>
+                                    <a href="#" data-value="#Other">#Other</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
+                <input type="hidden" name="selectedChannel" id="selectedChannel" value="">
+                <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
+
+                <textarea name="postContent" rows="2" placeholder="What is happening?!"
+                    oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
+
 
                 <div class="post-footer">
                     <div class="options">
-                        
+                        <!-- Options here can be inputs as well, depending on what they do -->
                         <span class="option">GIF</span>
                         <span class="option">📷</span>
                         <span class="option">📍</span>
@@ -182,10 +254,10 @@ if (isset($_POST["postContent"])) {
                 <div class="post__header">
                     <div class="post__headerText">
                         <h3>
-                            User Name 
+                            User Name
                             <span class="post__headerSpecial">
                                 <span class="material-icons post__badge"> verified </span>
-                                @username 
+                                @username
                             </span>
                         </h3>
                     </div>
@@ -193,142 +265,173 @@ if (isset($_POST["postContent"])) {
                         <p>
                             <?php echo htmlspecialchars($post->getContent()); ?>
                         </p>
+
+                    </div>
+                    <?php if ($post->getMedia() !== ""): ?>
+                        <img src="<?php echo htmlspecialchars($post->getMedia()); ?>" alt="Post Media" />
+                    <?php endif; ?>
+                    <div class="post__footer">
+                        <span class="material-icons"> repeat </span>
+                        <span class="material-icons"> favorite_border </span>
+                        <span class="material-icons"> publish </span>
+                        <span class="material-icons" style="position: flex;">
+
+                            <span class="material-icons"> edit </span>
+                            <form method="post" action="postDD.php"
+                                onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                <input type="hidden" name="postId" value="<?php echo $lastInsertId; ?>">
+                                <button type="submit" class="delete-button" style="background: none; border: none;">
+                                    <span class="material-icons">close</span>
+                                </button>
+                            </form>
+
+
+                        </span>
                     </div>
                 </div>
-                <?php if ($post->getMedia() !== "empty"): ?>
-                    <img src="<?php echo htmlspecialchars($post->getMedia()); ?>" alt="Post Media" />
-                <?php endif; ?>
-                <div class="post__footer">
-                    <span class="material-icons"> repeat </span>
-                    <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
-                    <span class="material-icons" style="position: flex;">
-                        
-                            <span class="material-icons"> edit </span> 
-                        <form method="post" action="postDD.php"
-                            onsubmit="return confirm('Are you sure you want to delete this post?');">
-                            <button type="submit" class="delete-button" style="background: none; border: none;">
-                                <span class="material-icons">close</span>
-                            </button>
-                        </form>
-                    </span>
+            </div>
+                    </div>
+                    <form action="postD.php" method="post">
+            <div class="post-box">
+                <div class="post-header">
+
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
+                        alt="Profile Icon" width="32" height="32">
+                    <div class="dropdown-container">
+                        <div>
+                            <p>Chat Channels :</p>
+                            <div class="dropdown">
+                                <div class="dropbtn" id="dropbtn">
+                                    <span class="plus-sign"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 5V19" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M5 12H19" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="dropdown-content" id="dropdown-content">
+                                    <a href="#" data-value="All_Channels">All Channels</a>
+                                    <a href="#" data-value="General_Chat">General Chat</a>
+                                    <a href="#" data-value="Area_Chat">Area Chat</a>
+                                    <a href="#" data-value="University_Chat">University Chat</a>
+                                    <a href="#" data-value="Class_Chat">Class Chat</a>
+                                    <a href="#" data-value="Private_Chat">Private Chat</a>
+                                </div>
+                            </div>
+                            <div id="selected-options" class="selected-options"></div>
+                            <!-- Container for displaying selected options -->
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <div class="dropbtn" id="dropbtn2">
+                                    <span class="hashtag-sign" id="hashtag-sign">#topic</span>
+                                </div>
+                                <div class="dropdown-content" id="dropdown-content2">
+                                    <a href="#" data-value="#General_Discussion">#General Discussion</a>
+                                    <a href="#" data-value="#Missing_items">#Missing Items</a>
+                                    <a href="#" data-value="#Advertising">#Advertising</a>
+                                    <a href="#" data-value="#Other">#Other</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <input type="hidden" name="selectedChannel" id="selectedChannel" value="">
+                <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
+
+                <textarea name="postContent" rows="2" placeholder="What is happening?!"
+                    oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
+
+
+                <div class="post-footer">
+                    <div class="options">
+                        <!-- Options here can be inputs as well, depending on what they do -->
+                        <span class="option">GIF</span>
+                        <span class="option">📷</span>
+                        <span class="option">📍</span>
+                        <span class="option">🔒</span>
+                    </div>
+                    <button type="submit" id="postButton" style="opacity: 0.5;" disabled>Post</button>
                 </div>
             </div>
+        </form>
+                    
+
+            <div class="post">
+                <div class="post__avatar">
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                </div>
+
+                <div class="post__body">
+                    <div class="post__header">
+                        <div class="post__headerText">
+                            <h3>
+                                Somanath Goudar
+                                <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
+                                    </span>@somanathg</span>
+                            </h3>
+                        </div>
+                        <div class="post__headerDescription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        </div>
+                    </div>
+                    <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
+                        alt="" />
+                    <div class="post__footer">
+                        <span class="material-icons"> repeat </span>
+                        <span class="material-icons"> favorite_border </span>
+                        <span class="material-icons"> publish </span>
+                    </div>
+                </div>
+            </div>
+            <!-- post ends -->
+
+            <!-- post starts -->
+            <div class="post">
+                <div class="post__avatar">
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                </div>
+
+                <div class="post__body">
+                    <div class="post__header">
+                        <div class="post__headerText">
+                            <h3>
+                                Somanath Goudar
+                                <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
+                                    </span>@somanathg</span>
+                            </h3>
+                        </div>
+                        <div class="post__headerDescription">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+                        </div>
+                    </div>
+                    <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
+                        alt="" />
+                    <div class="post__footer">
+                        <span class="material-icons"> repeat </span>
+                        <span class="material-icons"> favorite_border </span>
+                        <span class="material-icons"> publish </span>
+                    </div>
+                </div>
+            </div>
+            <!-- post ends -->
         </div>
+        <!-- feed ends -->
 
-        <div class="post">
-            <div class="post__avatar">
-                <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
-            </div>
-
-            <div class="post__body">
-                <div class="post__header">
-                    <div class="post__headerText">
-                        <h3>
-                            Somanath Goudar
-                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                </span>@somanathg</span>
-                        </h3>
-                    </div>
-                    <div class="post__headerDescription">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                    alt="" />
-                <div class="post__footer">
-                    <span class="material-icons"> repeat </span>
-                    <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
-                </div>
-            </div>
-        </div>
-        <!-- post ends -->
-
-        <!-- post starts -->
-        <div class="post">
-            <div class="post__avatar">
-                <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
-            </div>
-
-            <div class="post__body">
-                <div class="post__header">
-                    <div class="post__headerText">
-                        <h3>
-                            Somanath Goudar
-                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                </span>@somanathg</span>
-                        </h3>
-                    </div>
-                    <div class="post__headerDescription">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                    alt="" />
-                <div class="post__footer">
-                    <span class="material-icons"> repeat </span>
-                    <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
-                </div>
-            </div>
-        </div>
-        <!-- post ends -->
-    </div>
-    <!-- feed ends -->
-
-    <!-- widgets starts -->
+        <!-- widgets starts -->
 
 
 
 
 
 
-    <!-- widgets ends -->
-    <script src="./js/home.js"></script>
-    <script>
-        function autoResizeTextarea(textarea) {
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
-        }
-        function toggleButtonOpacity(textarea) {
-            const button = document.getElementById('postButton');
-            if (textarea.value.trim().length > 0) {
-                button.style.opacity = 1;
-                button.disabled = false;
-            } else {
-                button.style.opacity = 0.5;
-                button.disabled = true;
-            }
-        }
-        /* When the user clicks on the button, toggle between hiding and showing the dropdown content */
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
+        <!-- widgets ends -->
+        <script src="./js/home.js"></script>
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-
-        // Function to select or deselect all checkboxes
-        function selectAll(source) {
-            checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = source.checked;
-            }
-        }
-
-    </script>
 </body>
 
 </html>

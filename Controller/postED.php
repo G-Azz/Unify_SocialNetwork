@@ -18,6 +18,9 @@ class PostED {
                 'content' => $post->getContent(),
                 'media' => $post->getMedia()
             ]);
+            // Get the last inserted ID
+        $lastInsertId = $db->lastInsertId();
+        return $lastInsertId;
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
