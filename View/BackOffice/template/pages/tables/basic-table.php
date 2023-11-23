@@ -401,13 +401,13 @@ $list = $UserC->listUser();
               </ul>
             </div>
           </li>
-          
 
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a></li>
-              </ul>
-            </div>
+
+          <div class="collapse" id="form-elements">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a></li>
+            </ul>
+          </div>
           </li>
 
           <li class="nav-item">
@@ -423,6 +423,19 @@ $list = $UserC->listUser();
             </div>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Help</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/ss/View/BackOffice/template/pages/Help/Help.php">Tickets Management</a></li>
+              </ul>
+            </div>
+          </li>
+
 
         </ul>
       </nav>
@@ -434,7 +447,7 @@ $list = $UserC->listUser();
 
               <div class="card-body">
                 <h4 class="card-title">Users</h4>
-                
+
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -464,12 +477,13 @@ $list = $UserC->listUser();
                           <td><?php echo $j['University'] ?></td>
 
                           <td>
-
+                            <a href="/ss/View/updateUser.php?id=<?php echo $j['Id_User']; ?>">Update</a>
                           </td>
                           <td>
-                          <a href="/ss/View/deleteUser.php?id=<?php echo $j['Id_User']; ?>">delete</a>
+                            <a href="/ss/View/deleteUser.php?id=<?php echo $j['Id_User']; ?>">delete</a>
 
                           </td>
+
                         </tr>
                       <?php
                       }

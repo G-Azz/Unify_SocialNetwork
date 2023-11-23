@@ -394,6 +394,20 @@
               </ul>
             </div>
           </li>
+
+
+          <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Help</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/Help/Help.php">Tickets Management</a></li>
+              </ul>
+            </div>
+          </li>
           
           
           

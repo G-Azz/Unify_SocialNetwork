@@ -2,6 +2,8 @@
 include("../Controller/UserC.php");
 include("../Model/User.php");
 
+
+
 $UserC = new UserC();
 $User = NULL;
 
@@ -19,6 +21,9 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
             // Form is valid, proceed with sign-up
             $User = new User(NULL, $_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], $_POST['Password'], $_POST['Adress'], $_POST['University']);
             $UserC->addUser($User);
+
+            
+            
         } else {
             // Display error messages
             echo '<script>alert("Fix the errors in the form");</script>';
@@ -137,19 +142,28 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
 
                 <div class="input-field">
                     <i class="fa-solid fa-flag"></i>
-                    <select id="country" class="input-field-select" name="Adress">
-                        <option value="Tunis">Tunis</option>
-                        <option value="Jandouba">Jandouba</option>
-                        <option value="Touzeur">Touzeur</option>
+                    <select id="country" class="input-field-select" name="Adress" >
+                        <option >Ariana</option>
+                        <option >Béja</option>
+                        <option >Ben Arous</option>
+                        <option >Bizerte</option>
+                        <option >Gabès</option>
+                        <option >Gafsa</option>
+                        <option >Jendouba</option>
+                        <option >Kairouan</option>
+                        <option >Kasserine</option>
+                        <option >Kébili</option>
                     </select>
                 </div>
 
                 <div class="input-field">
                     <i class="fa-solid fa-university"></i>
                     <select id="university" class="input-field-select" name="University">
-                        <option value="Esprit">Esprit</option>
-                        <option value="Beauart">Beauart</option>
-                        <option value="ISIE Jandouba">ISIE Jandouba</option>
+                        <option >Esprit</option>
+                        <option >Isie</option>
+                        <option >Insat</option>
+                        <option >Medteck</option>
+                        <option >Enit</option>
                     </select>
                 </div>
 
@@ -225,6 +239,8 @@ function validateForm() {
 </script>
     </div>
     </div>
+
+    <form action="../Controller/checkSi.php" method="POST">
     <div class="modal" id="signinModal">
         <div class="modal-content">
             <span class="close" id="closeSigninModal">&times;</span>
@@ -232,18 +248,21 @@ function validateForm() {
             <form>
                 <div class="input-field">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="Username">
+                    <input type="text" placeholder="Username" name="Username">
                 </div>
                 <div class="input-field">
                     <i class="fa-solid fa-key"></i>
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="Password">
                 </div>
                 <div class="btn-field">
-                    <button type="submit">Sign in</button>
+                    <button type="submit" name="signinBtn">Sign in</button>
                 </div>
             </form>
         </div>
     </div>
+    </form>
+
+    
 </body>
 
 </html>
