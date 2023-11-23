@@ -4,18 +4,16 @@ faqs.forEach((faq) => {
         faq.classList.toggle("active");
     });
 });
+function validateDescription(event) {
+    const description = document.getElementById('descriptions').value;
+    const maxLength = 100;
 
-const reclamationButton = document.getElementById('reclamationButton');
-const reclamationContent = document.getElementById('reclamationContent');
-const reclamationForm = document.getElementById('reclamationForm');
-const page1 = document.querySelector('.page1');
-
-reclamationButton.addEventListener('click', function() {
-    if (reclamationContent.style.display === 'block') {
-        reclamationContent.style.display = 'none';
-        page1.classList.remove('blurred');
-    } else {
-        reclamationContent.style.display = 'block';
-        page1.classList.add('blurred');
+    if (description.length > maxLength) {
+        document.getElementById('charCount').innerText = 'Ticket description should not exceed 100 characters.';
+        event.preventDefault(); // Prevent form submission
+        return false;
     }
-});
+
+    return true; // Allow form submission
+};
+
