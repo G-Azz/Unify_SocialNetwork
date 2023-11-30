@@ -1,0 +1,40 @@
+/* Style for the table */
+.title-list-tickets{
+color: #9b1c31;
+
+}
+.ticket-table {
+    border-collapse: collapse;
+    width: 90%;
+    margin: 20px auto;
+    font-size: 16px;
+  }
+  
+  /* Style for table headers */
+  .ticket-table th {
+    background-color: #9b1c31;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd; /* Add border for headers */
+  }
+  
+  /* Style for table cells */
+  .ticket-table td {
+    border: 1px solid #ddd; /* Add border for cells */
+    padding: 8px;
+  }
+  
+  /* Style for alternate rows */
+  .ticket-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Style for links */
+  .ticket-table a {
+    text-decoration: none;
+    color: #9b1c31; /* Change color as needed */
+  }
+  
+  .ticket-table a:hover {
+    text-decoration: underline;
+  }

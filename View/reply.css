@@ -1,0 +1,86 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Styling for the ticket details section */
+.ticket-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc; /* Adjust border size here */
+}
+
+.ticket-details h2 {
+    color: #a03737;
+    margin-bottom: 15px;
+}
+
+.ticket-details p {
+    margin: 5px 0;
+}
+
+.ticket-details strong {
+    font-weight: bold;
+}
+.ticketd{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.sghar{
+    display:flex;
+    flex-direction: column;
+}
+
+/* Styling for the reply box section */
+.reply-box {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    width: 700px;
+    align-items:center /* Adjust border size here */
+}
+.khalil{
+    display:flex;
+    flex-direction: column;
+    
+
+}
+.reply-box h2 {
+    color:#a03737;
+    margin-bottom: 15px;
+    
+}
+
+.reply-box textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}
+
+.reply-box input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #2cad7c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reply-box input[type="submit"]:hover {
+    background-color: #0056b3;
+}

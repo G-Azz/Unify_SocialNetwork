@@ -2,6 +2,7 @@
 <?php
 
 require "../config.php";
+
 class TicketReplyED {
 
 public function addTicketReply($ticketReply) {
@@ -54,34 +55,34 @@ public function listTicketReplies($ticketId) {
         die('Error: ' . $e->getMessage());
     }
 }
-public function listTickets()
-    {
-        $sql = "SELECT * FROM tickets"; 
-        $db = config::getConnexion(); 
-       
-        try {
-            $list = $db->query($sql);  
-            return $list;
-        } catch (Exception $e) 
-         {
-            die('Error:' . $e->getMessage());
-        }
-    }
 
-    public function showTicket($id) {
-        $sql = "SELECT * FROM tickets WHERE ticket_id = :ticket_id";
-        $db = config::getConnexion();
-        try {
-            $query = $db->prepare($sql);
-            $query->bindParam(':ticket_id', $id); // Bind the ticket_id parameter
-            $query->execute();
-            $ticket = $query->fetch();
-            return $ticket;
-        } catch (PDOException $e) {
-            throw new Exception('Error: ' . $e->getMessage());
-        }
-    }
+public function getRepliesForTicket($ticket_id) {
+    $db = config::getConnexion(); // Obtain your database connection
 
-// Add more methods as needed, like updateTicketReply, showTicketReply, etc.
+    // Fetch responses for the given ticket_id from ticket_reply table
+    $sql = "SELECT * FROM ticket_reply WHERE ticket_id = :ticket_id";
+    $query = $db->prepare($sql);
+    $query->bindParam(':ticket_id', $ticket_id);
+    $query->execute();
+
+    $responses = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $responses;
+}
+public function updateTicketReply($description_reply, $ticket_reply_id) {
+    $sql = "UPDATE ticket_reply SET description_reply = :description_reply WHERE ticket_reply_id = :ticket_reply_id";
+    $db = config::getConnexion();
+
+    try {
+        $query = $db->prepare($sql);
+        $query->execute([
+            'description_reply' => $description_reply,
+            'ticket_reply_id' => $ticket_reply_id,
+        ]);
+        echo $query->rowCount() . " records UPDATED successfully <br>";
+    } catch (PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
 };
 ?>

@@ -11,6 +11,14 @@ body {
     font-family: Arial, sans-serif;
     
 }
+.solved {
+    color: green;
+}
+
+.not-solved {
+    color: red;
+}
+
 
 h1 {
     margin-bottom: 10px;
@@ -41,16 +49,16 @@ h1 {
 }
 
 .ticket-table input[type="submit"] {
-    padding: 5px 10px;
+    padding: 8px 10px;
     border: none;
     border-radius: 3px;
-    background-color: #9b1c31;
-    color: white;
+    background-color: #1c9b4d;
+    color: rgb(255, 255, 255);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .ticket-table input[type="submit"]:hover {
-    background-color: #008006;
+    background-color: #093109;
 }
 

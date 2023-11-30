@@ -8,15 +8,15 @@ class TicketReply
     private DateTime $created_datetime;
 
     private string $description_reply;
-    public function __construct( int $ticket_reply_id, int $ticket_id,
-     int $user_sender_id, string $media, DateTime $created_datetime, string $description_reply)
+    public function __construct( int $ticket_id,
+     int $user_sender_id, string $media, string $created_datetime, string $description_reply)
      {
          
-            $this->ticket_reply_id = $ticket_reply_id;
+            
             $this->ticket_id = $ticket_id;
             $this->user_sender_id = $user_sender_id;
             $this->media = $media;
-            $this->created_datetime = $created_datetime;
+            $this->created_datetime =new DateTime ($created_datetime);
             $this->description_reply = $description_reply;
      }
      

@@ -152,18 +152,44 @@ svg {
   .label-reclamation {
     font-weight: bold;
     color: #9b1c31;
-    font-size: 2em;
-    /* Add other styles as needed */
+    font-size: 1.5em; /* Adjust as needed */
+  }
+  .input-wrapper,
+.tickettype-wrapper,
+.buttons-wrapper {
+  margin-bottom: 15px;
+}
+form {
+  width: 60%; /* Adjust form width */
+  padding: 20px;
+
+  border-radius: 8px;
+
+}
+
+.form-wrapper{
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+
+}
+
+
+
+#ticketType {
+  font-size: 16px; /* Set the font size as needed */
+  padding: 10px; /* Increase padding for better visibility */
+  width: 200px; /* Adjust the width as needed */
+  /* Other styles */
 }
 
 /* Style for the input field */
-input[type="text"] {
+#descriptions {
   border: 3px solid rgb(131, 118, 118);
-  
   outline: none;
   font-size: 16px;
-  width: 30%;
-  height: 10%;
+  width: 80%;
+  height: 120px;
   resize: none; /* Prevent resizing of textarea /
   min-height: 50px; / Minimum height */
   vertical-align: top;
@@ -172,12 +198,6 @@ input[type="text"] {
     /* You can add more styles as per your preference */
 }
 
-/* Style for the buttons */
-.buttons-wrapper {
-     /* Center align the buttons */
-    margin-top: 10px; /* Adjust spacing between input and buttons */
-    margin-left:2px;
-}
 
 input[type="submit"],
 input[type="reset"] {
@@ -193,7 +213,7 @@ input[type="reset"] {
 
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-    background-color: #0056b3;
+    background-color: #697786;
 }
 .back-to-list {
   text-decoration: none;

@@ -15,7 +15,6 @@ if (isset($_POST["descriptions"])) {
     $user_sender_id = 3; // This is an example. Replace with actual user ID.
     $created_datetime = date('Y-m-d H:i:s'); // Current datetime
     $ticketType = $_POST['ticketType'];
-    // Assuming you have a default ticket type ID
     $descriptions = $_POST['descriptions'];
     $media = "empty"; // Handle file upload separately if needed
 
@@ -36,23 +35,123 @@ if (isset($_POST["descriptions"])) {
 
 
 
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-<link rel="stylesheet" href="faqstyle.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twitter Clone - Final</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="brand.css" />
+  <link rel="stylesheet" href="post.css"/>
+  <link rel="stylesheet" href="faqstyle.css">
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" />
 
-
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="app.js"></script>
-
-    <title>Reclamation </title>
 </head>
 
 <body>
+
+  <!-- sidebar starts -->
+  <div class="sidebar">
+    <img src="./SVG/unifylogo.svg" class="logo" />
+    <div class="sidebarOption ">
+      <img class=" menu__items__icons " src="./SVG/home.svg" />
+      <h2>Home</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/discussions.svg" />
+      <h2>Discussions</h2>
+    </div>
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/notification.svg" />
+        <h2>Notifications</h2>
+      </div> -->
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/schedule.svg" />
+        <h2>Schedule</h2>
+      </div> -->
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/profile.svg" />
+      <h2>Profile</h2>
+    </div>
+    <div class="sidebarOption">
+      <img class=" menu__items__icons " src="./SVG/clubs.svg" />
+      <h2>Find clubs</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/carpooling.svg" />
+      <h2>Carpooling</h2>
+    </div>
+    <ul class="tree">
+      <li>
+        <details>
+          <summary>
+            <div class="sidebarOption" id="study" tabindex="0" name="study">
+              <img class="menu__items__icons  " src="./SVG/study.svg" />
+              <h2>Study with</h2>
+            </div>
+          </summary>
+          <ul>
+            <div class="lefty">
+              <li>
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/tutor.svg" />
+                  <h4>Tutor</h4>
+                </div>
+              </li>
+              <li>
+
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/group.svg" />
+                  <h4>Group</h4>
+                </div>
+              </li>
+            </div>
+
+
+        </details>
+      </li>
+    </ul>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/courses.svg" />
+      <h2>Courses</h2>
+    </div>
+
+    <div class="sidebarOption active">
+      <img class="menu__items__icons  " src="./SVG/help.svg" />
+      <h2>Help Center</h2>
+    </div>
+
+    <button class="sidebar__tweet">Discuss</button>
+  </div>
+  
+  <div class="feed">
+    <div class="feed__header">
+      <h1>Help</h1>
+      <form action="post" class="search_bar">
+
+        <input type="text" placeholder="Search In Unify " name="q">
+        <button type="submit" class="search_btn">
+          <img src="./SVG/search.svg" alt="Search">
+        </button>
+
+      </form>
+      
+    </div>
     
     <a class="back-to-list" href="listtickets.php">Back To List </a>
     <a class="back-to-help" href="index.html">Back To Help Center </a>
@@ -61,6 +160,8 @@ if (isset($_POST["descriptions"])) {
     <div id="error">
         <?php echo $error; ?>
     </div>
+    
+    <div class="form-wrapper">
     <form action="" method="POST" onsubmit="return validateDescription(event)">
     <div class="input-wrapper">
         <label for="descriptions" class="label-reclamation">Reclamation:</label>
@@ -70,7 +171,7 @@ if (isset($_POST["descriptions"])) {
 
     <div class="tickettype-wrapper">
         <label for="ticketType" class="label-tickettype">  Ticket Type:  </label>
-        <select id="ticketType" name="ticketType">
+        <select class="tickettype" id="ticketType" name="ticketType">
             <option value="feedback">Feedback</option>
             <option value="report">Report</option>
         </select>
@@ -81,21 +182,30 @@ if (isset($_POST["descriptions"])) {
         <input type="reset" value="Reset">
     </div>
 </form>
+</div>
+
+</div>
 
 <script>
     function validateDescription(event) {
-        const description = document.getElementById('descriptions').value;
-        const maxLength = 100;
-        const charCount = document.getElementById('charCount');
+    const description = document.getElementById('descriptions').value.trim(); // Trim whitespace
+    const maxLength = 100;
+    const charCount = document.getElementById('charCount');
 
-        if (description.length > maxLength) {
-            charCount.innerText = 'Ticket description should not exceed 100 characters.';
-            event.preventDefault(); // Prevent form submission
-            return false;
-        }
-
-        return true; // Allow form submission
+    if (description === '') {
+        charCount.innerText = 'Please provide a description.';
+        event.preventDefault(); // Prevent form submission
+        return false;
     }
+
+    if (description.length > maxLength) {
+        charCount.innerText = 'Ticket description should not exceed 100 characters.';
+        event.preventDefault(); // Prevent form submission
+        return false;
+    }
+
+    return true; // Allow form submission
+}
 </script>
 
     

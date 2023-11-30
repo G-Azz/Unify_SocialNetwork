@@ -1,9 +1,8 @@
 <?php
-include "../controller/ticketreplyC.php"; 
+include "../controller/ticketC.php"; 
 $user_sender_id=3;
-$ticketId = 1;
-$ticketreplyedit = new TicketReplyED();
-$tab = $ticketreplyedit->listTicketReplies($ticketId); 
+$ticketedit = new TicketED();
+$tab = $ticketedit->listTickets(); 
 
 ?>
 <head>
@@ -12,7 +11,7 @@ $tab = $ticketreplyedit->listTicketReplies($ticketId);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>List of ALL THE Tickets</title>
+    <title>List of Tickets</title>
     
 </head>
 <body>
@@ -31,27 +30,26 @@ $tab = $ticketreplyedit->listTicketReplies($ticketId);
         <th>Reply</th>
     </tr>
 
-    <?php foreach ($tab as $ticket_reply) { ?>
+    <?php foreach ($tab as $tickets) { ?>
         <tr>
-            <td><?= $ticket_reply['ticket_id']; ?></td>
-            <td><?= $ticket_reply['user_sender_id']; ?></td>
-            <td><?= $ticket_reply['description_reply']; ?></td>
-            <td><?= $ticket_reply['created_datetime']; ?></td>
-            <td><?= $ticket_reply['ticket_reply_id']; ?></td>
+            <td><?= $tickets['ticket_id']; ?></td>
+            <td><?= $tickets['user_sender_id']; ?></td>
+            <td><?= $tickets['descriptions']; ?></td>
+            <td><?= $tickets['created_datetime']; ?></td>
+            <td><?= $tickets['ticket_typeid']; ?></td>
             <td>
-            <a href="reply.php?id=<?= $ticket_reply['description_reply']; ?>">Reply</a> 
+            <a href="deleteticket.php?id=<?= $tickets['ticket_id']; ?>">Delete</a> 
             </td>
             <td>
-            <a href="deleteticket.php?id=<?= $ticket_reply['ticket_id']; ?>">Delete</a> 
-            </td>
-            <td>
-            <form method="POST" action="updateticket.php">
-                    <input type="submit" name="update" value="Update">
-                    <input type="hidden" value=<?PHP echo $ticket_reply['ticket_id']; ?> name="ticket_id">
+            <form method="POST" action="reply.php">
+                    
+                    <a type="submit" href="reply.php?id=<?php echo($tickets['ticket_id']) ; ?>">Reply </a>
                 </form>
             
             </td>
-            
+            <td>
+                <?= $tickets_reply['ticket_typeid']; ?>
+            </td>
         </tr>
     <?php } ?>
 </table>
