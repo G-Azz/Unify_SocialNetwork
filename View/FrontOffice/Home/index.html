@@ -101,7 +101,7 @@
 
   <!-- feed starts -->
   <div class="feed">
-    <div class="feed__header">
+    <div class="feed__header" id="head">
       <h1>Home</h1>
       <form action="postD.php" class="search_bar">
 
@@ -114,7 +114,8 @@
     </div>
 
     <!-- tweetbox starts -->
-    <form id="FormControl" action="postD.php" method="post" enctype="multipart/form-data">
+    <form id="FormControl" action="postD.php" method="post" enctype="multipart/form-data"
+      onsubmit="return validateForm();">
       <div class="post-box">
         <div class="post-header">
 
@@ -166,28 +167,34 @@
         <input type="hidden" name="selectedChannel" id="selectedChannel" value="">
         <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
 
-        <textarea name="postContent" rows="2" placeholder="What is happening?!" 
+        <textarea id="postContent" name="postContent" rows="2" placeholder="What is happening?!"
           oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
 
-          <div id="image-preview-container" style="display: none;">
+          <div id="image-preview-container" style="position: relative; display: none;">
+            <span id="remove-image-btn" >&times;</span>
             <div id="progress-container" style="display: none; position: relative;">
-                <img id="image-preview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
-                <svg id="svg-progress-bar" width="75" height="75" viewbox="0 0 100 100" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                    <circle cx="50" cy="50" r="45" stroke="#eca9ae" stroke-width="5" fill="none" />
-                    <circle id="progress-bar" cx="50" cy="50" r="45" stroke="#c41318" stroke-width="5" stroke-dasharray="282.74" stroke-dashoffset="282.74" fill="none"/>
-                </svg>
+              <img id="image-preview"
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
+              <svg id="svg-progress-bar" width="75" height="75" viewbox="0 0 100 100"
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <circle cx="50" cy="50" r="45" stroke="#eca9ae" stroke-width="5" fill="none" />
+                <circle id="progress-bar" cx="50" cy="50" r="45" stroke="#c41318" stroke-width="5"
+                  stroke-dasharray="282.74" stroke-dashoffset="282.74" fill="none" />
+              </svg>
             </div>
-        </div>
+          </div>
+          
         <div class="post-footer">
           <div class="options">
             <!-- Options here can be inputs as well, depending on what they do -->
             <span class="option">GIF</span>
             <label for="file-upload" class="option">
               📷
-          </label>
-          <input id="file-upload" name="file-upload" type="file" style="display:none;" onchange="toggleUploadButton(this)"/>
-          
-          
+            </label>
+            <input id="file-upload" name="file-upload" type="file" style="display:none;"
+              onchange="toggleUploadButton(this)" />
+
+
 
             <span class="option">📍</span>
             <span class="option">🔒</span>
@@ -209,12 +216,31 @@
             <h3>
               Somanath Goudar
               <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                </span>@somanathg</span>
+                </span>@somanathg<span class="post__date">Nov 26, 2023</span></span>
+                <span class="dropdown-menu-post">
+                  <svg class="dropdown-menu-post__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="4" cy="12" r="2" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="2" fill="currentColor"/>
+                    <circle cx="20" cy="12" r="2" fill="currentColor"/>
+                  </svg>
+                  <ul class="dropdown-menu-post__content">
+                    <li>Not interested in this post</li>
+                    <li>Unfollow @Warcraft</li>
+                    <li>Add/remove @Warcraft from Lists</li>
+                    <li>Mute @Warcraft</li>
+                    <li>Block @Warcraft</li>
+                    <li>View post engagements</li>
+                    <li>Embed post</li>
+                    <li>Report post</li>
+                  </ul>
+                </span>
+                
             </h3>
+            
           </div>
-          <div class="post__headerDescription">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-          </div>
+        </div>
+        <div class="post__headerDescription">
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
         </div>
         <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg" alt="" />
         <div class="post__footer">
@@ -236,10 +262,11 @@
         <div class="post__header">
           <div class="post__headerText">
             <h3>
-              Somanath Goudar
+              SAGAGA
               <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                </span>@somanathg</span>
+                </span>@somanathg </span>
             </h3>
+
           </div>
           <div class="post__headerDescription">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
@@ -266,6 +293,7 @@
 
   <!-- widgets ends -->
   <script src="./js/home.js"></script>
+  <script src="./js/postedit.js"></script>
 
 </body>
 

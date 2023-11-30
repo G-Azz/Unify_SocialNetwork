@@ -4,6 +4,19 @@ require_once 'C:\xampp\htdocs\Unify_SocialNetwork\Config.php';
 
 class PostED {
     // Method to add a post
+    function showPost($postId)
+    {
+        $sql = "SELECT * from post where post_id = $postId";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->execute();
+            $rec = $query->fetch();
+            return $rec;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
     public function addPost($post) {
         $sql = $sql = "INSERT INTO post (id_user, created_datetime, channel_id, posttype_id, content, media) VALUES (:user, :created_datetime, :channel_id, :posttype, :content, :media)";
         ;
@@ -39,7 +52,48 @@ class PostED {
             echo 'Error: ' . $e->getMessage();
         }
     }
+
+ function updatePost($post)
+{   
+    try {
+        $db = config::getConnexion();
+        $query = $db->prepare(
+            'UPDATE post SET
+                created_datetime= :created_datetime,
+                channel_id= :channel_id,
+                posttype_id= :posttype,
+                content = :content
+            WHERE post_id = :postId'
+        );
+        
+        $query->execute([
+                'created_datetime' => $post->getCreateTime()->format('Y-m-d H:i:s'),
+                'channel_id' => $post->getChannelId(),
+                'posttype' => $post->getPostType(),
+                'content' => $post->getContent(),
+                'postId' =>$post->getPostId()
+        ]);
+        
+        echo $query->rowCount() . " records UPDATED successfully <br>";
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 }
+public function listPosts()
+{
+    $sql = "SELECT * FROM post";
+    $db = config::getConnexion();
+    try {
+        $liste = $db->query($sql);
+        return $liste;
+    } catch (Exception $e) {
+        die('Error:' . $e->getMessage());
+    }
+}
+}
+
+
+
 
 // Usage
 // $postED = new PostED();

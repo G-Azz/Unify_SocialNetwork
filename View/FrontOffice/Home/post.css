@@ -92,7 +92,7 @@
 }
 /* Dropdown Button */
 /* Base styling for the dropdown */
-#dropbtn {
+#dropbtn,#dropbtn-edit {
   margin-left: 5px;
   width: 50px;
   height: 25px;
@@ -108,7 +108,7 @@
   color: white; /* White text for contrast */
   transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
-#dropbtn2 {
+#dropbtn2,#dropbtn2-edit {
   margin-left: 17px;
   width: 140px;
   height: 25px;
@@ -127,12 +127,14 @@
 
 /* Styling for the dropdown when active/hover */
 #dropbtn:hover,
-#dropbtn:focus {
+#dropbtn:focus,#dropbtn-edit:hover,
+#dropbtn-edit:focus {
   background: linear-gradient(to bottom right, #f53d4a, #c41318);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
 #dropbtn2:hover,
-#dropbtn2:focus {
+#dropbtn2:focus,#dropbtn2-edit:hover,
+#dropbtn2-edit:focus {
   background:  #d38a8c;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
 }
@@ -267,5 +269,50 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#remove-image-btn{
+  position: absolute;
+  top: 8px; /* Adjust as needed */
+  right: 8px; /* Adjust as needed */
+  z-index: 10;
+  cursor: pointer;
+  background-color: #9b1c31;
+  color: #fff;/* White text color */
+  padding: 4px 8px;
+  border-radius: 50%; /* Circle shape */
+  font-size: 16px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; /* Fixed width */
+  height: 24px; /* Fixed height */
+  line-height: 1; /* Adjust line height to ensure the × is centered */
+}
+#remove-image-btn-edit {
+  position: absolute;
+  top: 8px; /* Adjust as needed */
+  right: 8px; /* Adjust as needed */
+  z-index: 10;
+  cursor: pointer;
+  background-color: #9b1c31;
+  color: #fff;/* White text color */
+  padding: 4px 8px;
+  border-radius: 50%; /* Circle shape */
+  font-size: 16px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; /* Fixed width */
+  height: 24px; /* Fixed height */
+  line-height: 1; /* Adjust line height to ensure the × is centered */
+}
+
+#remove-image-btn:hover{
+  background-color: #f53d4a; /* Slightly darker red on hover */
+}
+#remove-image-btn-edit:hover {
+  background-color: #f53d4a; /* Slightly darker red on hover */
+}
+
+
 
 
