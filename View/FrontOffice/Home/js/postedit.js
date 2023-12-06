@@ -7,9 +7,33 @@ function closeEditModal() {
   element.style.background = 'white';
   element.style.color = '#9b1c31';
 }
-function showEditModal() {
+function MediaClick(imageUrl) {
+    if (imageUrl) {
+
+    imageUrl = decodeURIComponent(imageUrl.replace(/\+/g, ' ')).replace(/&#(\d+);/g, function (match, dec) {
+        return String.fromCharCode(dec);})
+        document.getElementById('image-preview-container-edit').style.display = 'block';
+        document.getElementById('progress-container-edit').style.display = 'block';
+        document.getElementById('svg-progress-bar-edit').style.display = 'none';
+        
+        // Only set the src if it hasn't been set yet
+        var imagePreview = document.getElementById('image-preview-edit');
+        
+            imagePreview.src = imageUrl;
+        
+    }
+
+}
+function showEditModal(postId,Schannel,Stopic,content) {
     document.getElementById('editPostModal').style.display = 'block';
     var element = document.getElementById("head");
+    document.getElementById('postId_edit').value = postId;
+    document.getElementById('selectedChannel-edit').value = Schannel;
+    document.getElementById('selectedTopic-edit').value = Stopic;
+    document.getElementById('content-edit').value=content;
+    document.querySelector('#hashtag-sign-edit').textContent =Stopic;
+
+
     element.style.borderColor = '#8A8E90';
     element.style.background = 'rgba(153,153,153,1)';
     element.style.color = '#5B111D';
@@ -32,11 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
     var dropdownContent2 = document.getElementById('dropdown-content2-edit');
     var hashtagSign = document.getElementById('hashtag-sign-edit');
     var selectedChannels = [];
-    var initialTopicValue = document.querySelector('#selectedTopic-edit').value;
-    if (initialTopicValue) {
-        document.querySelector('#hashtag-sign-edit').textContent = initialTopicValue;
-    }
-    var initialTopicValue = document.querySelector('#selectedTopic-edit').value;
+  
+   
 
     removeImageButton.addEventListener('click', function () {
         // Hide the image preview container
@@ -419,3 +440,17 @@ function initializeEditModal(initialSelectedChannels) {
 }
 
 
+function handleClickModalEdit(element) {
+    var postId = element.getAttribute('data-post-id');
+    var channelId = element.getAttribute('data-channel-id');
+    var posttypeId = element.getAttribute('data-posttype-id');
+    var content = element.getAttribute('data-content');
+    var media = element.getAttribute('data-media');
+    var initialSelectedChannels = channelId.split(',');
+
+    showEditModal(postId, channelId, posttypeId, content);
+    if (media) {
+        MediaClick(media);
+    }
+    initializeEditModal(initialSelectedChannels);
+}

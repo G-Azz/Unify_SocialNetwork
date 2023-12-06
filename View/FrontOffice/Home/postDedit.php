@@ -1,9 +1,34 @@
 <?php
 include '../../../Controller/postED.php';
 include '../../../Model/post.php';
-
 $error = "";
 $media = ""; // Initialize $media variable
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_FILES['file-upload-edit']) && $_FILES['file-upload-edit']['error'] == 0) {
+        $file = $_FILES['file-upload-edit'];
+        $targetDirectory = "uploads/";
+        $targetFile = $targetDirectory . basename($file['name']);
+
+        // Security: Check if the file type is allowed
+        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']; // Add or remove file types as needed
+        if (!in_array($file['type'], $allowedTypes)) {
+            echo "Error: Unsupported file type.";
+            exit;
+        }
+
+        // Security: Prevent overwriting existing files
+     
+
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            echo "The file " . htmlspecialchars(basename($file['name'])) . " has been uploaded.";
+            $media = $targetFile; // Assign the target file path to $media
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+            exit; // Stop script execution if upload fails
+        }
+    }
+}
 
 $user_id = 1; // Replace with actual user ID (e.g., from session)
 $createtime = date('Y-m-d H:i:s');

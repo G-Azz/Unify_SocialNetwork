@@ -62,7 +62,8 @@ class PostED {
                 created_datetime= :created_datetime,
                 channel_id= :channel_id,
                 posttype_id= :posttype,
-                content = :content
+                content = :content,
+                media= :media
             WHERE post_id = :postId'
         );
         
@@ -71,7 +72,8 @@ class PostED {
                 'channel_id' => $post->getChannelId(),
                 'posttype' => $post->getPostType(),
                 'content' => $post->getContent(),
-                'postId' =>$post->getPostId()
+                'postId' =>$post->getPostId(),
+                'media' =>$post->getMedia()
         ]);
         
         echo $query->rowCount() . " records UPDATED successfully <br>";

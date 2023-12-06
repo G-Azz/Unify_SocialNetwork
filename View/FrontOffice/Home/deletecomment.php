@@ -6,7 +6,7 @@ include "../../../Model/comment.php"; include "../../../Controller/commentED.php
     $postedit->deleteComment($postId);
 
     
-    header('Location: ./index.html');
+    header('Location: ./index.html  ');
     exit;
 
 ?>

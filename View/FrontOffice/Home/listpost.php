@@ -1,63 +1,10 @@
 <?php
-include '../../../Controller/postED.php';
-include '../../../Model/post.php';
-include '../../../Controller/functions.php';
-$error = "";
-$media = ""; // Initialize $media variable
-
-// Handle File Upload
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_FILES['file-upload']) && $_FILES['file-upload']['error'] == 0) {
-        $file = $_FILES['file-upload'];
-        $targetDirectory = "uploads/";
-        $targetFile = $targetDirectory . basename($file['name']);
-
-        // Security: Check if the file type is allowed
-        $allowedTypes = ['image/jpeg', 'image/png', 'application/pdf']; // Add or remove file types as needed
-        if (!in_array($file['type'], $allowedTypes)) {
-            echo "Error: Unsupported file type.";
-            exit;
-        }
-
-        // Security: Prevent overwriting existing files
-        if (file_exists($targetFile)) {
-            echo "Error: File already exists.";
-            exit;
-        }
-
-        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-            echo "The file " . htmlspecialchars(basename($file['name'])) . " has been uploaded.";
-            $media = $targetFile; // Assign the target file path to $media
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-            exit; // Stop script execution if upload fails
-        }
-    }
-}
-
-// Handle Post Creation
-$postedit = new PostED();
-if (isset($_POST["postContent"])) {
-    $user_id = 1; // Replace with actual user ID (e.g., from session)
-    $createtime = date('Y-m-d H:i:s');
-    $channel_id = $_POST['selectedChannel'] ?? 'default_channel'; // Provide a default value if not set
-    $posttype = $_POST['selectedTopic'] ?? 'default_type'; // Provide a default value if not set
-    $content = $_POST['postContent'];
-
-    $post = new Post($user_id, $createtime, $channel_id, $posttype, $content, $media);
-    try {
-        $lastInsertId = $postedit->addPost($post);
-        // Redirect or other success actions
-    } catch (Exception $e) {
-        $error = $e->getMessage();
-    }
-}
-
-// Additional logic or HTML here
+// Assuming you have a Controller class that can fetch posts
+require_once '../../../Controller/postED.php';
+require_once '../../../Controller/functions.php';
+$postController = new PostED(); // Replace with your actual controller class
+$posts = $postController->listPosts(); // Replace with the actual method to fetch posts
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,45 +17,28 @@ if (isset($_POST["postContent"])) {
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="brand.css" />
     <link rel="stylesheet" href="post.css" />
+    <link rel="stylesheet" href="comment.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" />
 
-        <script>
-             <?php if ($post->getMedia()): ?>
-    var hasMedia = true;
-    var imageUrl = "<?php echo htmlspecialchars($post->getMedia()); ?>";
-    imageUrl = decodeURIComponent(imageUrl.replace(/\+/g, ' ')).replace(/&#(\d+);/g, function (match, dec) {
-        return String.fromCharCode(dec);
-    });
-    <?php else: ?>
-    var hasMedia = false;
-    <?php endif; ?>
-
-
-    function MediaClick() {
-    if (hasMedia) {
-        document.getElementById('image-preview-container-edit').style.display = 'block';
-        document.getElementById('progress-container-edit').style.display = 'block';
-        document.getElementById('svg-progress-bar-edit').style.display = 'none';
-        
-        // Only set the src if it hasn't been set yet
-        var imagePreview = document.getElementById('image-preview-edit');
-        
-            imagePreview.src = imageUrl;
-        
-    }
-
-}
-var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialchars($post->getChannelId()))); ?>;
-</script>
-<script src="./js/postedit.js"></script>
-
 </head>
 
 <body>
     <!--Modal Delete -->
+    <div id="deleteConfirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Delete post?</h2>
+            <p>This can’t be undone and it will be removed from your profile, the timeline of any accounts that follow
+                you, and from search results.</p>
+            <form id="deleteForm" method="post" action="postDD.php" onsubmit="return true">
+                <input type="hidden" name="postId" id="postId_delete">
+                <button type="submit" class="delete-btn">Delete</button>
+                <button type="button" onclick="closeModal()" class="cancel-btn">Cancel</button>
+            </form>
+        </div>
+    </div>
     <div id="deleteConfirmationModal" class="modal">
         <div class="modal-content">
             <h2>Delete post?</h2>
@@ -126,7 +56,7 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
         <div class="modal-content-edit">
             <h2>Edit post</h2>
             <form id="EditFormControl" action="PostDedit.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="postd" value="<?php echo $lastInsertId; ?>">
+                <input type="hidden" name="postd" id="postId_edit">
                 <div class="post-box">
                     <div class="post-header">
                         <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
@@ -177,21 +107,19 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
 
 
                     <!-- Hidden Inputs for Selected Channel and Topic -->
-                    <input type="hidden" name="selectedChannel" id="selectedChannel-edit"
-                        value="<?php echo htmlspecialchars($post->getChannelId()) ?>">
-                    <input type="hidden" name="selectedTopic" id="selectedTopic-edit"
-                        value="<?php echo htmlspecialchars($post->getPostType()); ?>">
+                    <input type="hidden" name="selectedChannel" id="selectedChannel-edit">
+                    <input type="hidden" name="selectedTopic" id="selectedTopic-edit">
 
                     <!-- Textarea for Post Content -->
-                    <textarea name="editPostContent" rows="2" placeholder="Edit your post..."
-                        oninput="autoResizeTextarea(this); "><?php echo htmlspecialchars($post->getContent()); ?></textarea>
+                    <textarea name="editPostContent" rows="2" placeholder="Edit your post..." id="content-edit"
+                        oninput="autoResizeTextarea(this); "></textarea>
 
                     <!-- Image Preview Container-->
 
                     <div id="image-preview-container-edit" style="position: relative;display:none;">
                         <span id="remove-image-btn-edit">&times;</span>
                         <div id="progress-container-edit" style="position: relative;display:none;">
-                      
+
                             <img id="image-preview-edit"
                                 style="position: relative; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;" />
                             <svg id="svg-progress-bar-edit" width="75" height="75" viewbox="0 0 100 100"
@@ -219,7 +147,7 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
                         <button type="button" onclick="closeEditModal()" class="cancel-btn">Cancel</button>
                         <button type="submit" id="postContent-edit" style="opacity: 1;">Confirme</button>
                     </div>
-                    
+
                 </div>
         </div>
         </form>
@@ -310,7 +238,7 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
     <div class="feed">
         <div class="feed__header" id="head">
             <h1>Home</h1>
-            <form action="post" class="search_bar">
+            <form action="postD.php" class="search_bar">
 
                 <input type="text" placeholder="Search In Unify " name="q">
                 <button type="submit" class="search_btn">
@@ -372,7 +300,7 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
                     </div>
                 </div>
                 <input type="hidden" name="selectedChannel" id="selectedChannel" value="">
-        <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
+                <input type="hidden" name="selectedTopic" id="selectedTopic" value="">
 
                 <textarea id="postContent" name="postContent" rows="2" placeholder="What is happening?!"
                     oninput="autoResizeTextarea(this); toggleButtonOpacity(this);"></textarea>
@@ -411,236 +339,174 @@ var initialSelectedChannels = <?php echo json_encode(explode(',', htmlspecialcha
             </div>
         </form>
         <!-- tweetbox ends -->
-
         <!-- post starts -->
-        <div class="post">
-            <div class="post__avatar">
-                <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
-                    alt="Profile Icon" width="32" height="32">
-            </div>
+        <?php foreach ($posts as $post) { ?>
+            <div class="post">
+                <div class="post__avatar">
+                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                </div>
 
-            <div class="post__body">
-                <div class="post__header">
-                    <div class="post__headerText">
-                        <h3>
-                            Somanath Goudar
-                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                </span>@somanathg<span class="post__date"
-                                    data-creation-time="<?php echo $post->getCreateTime()->format('c'); ?>">
-                                    <?php echo htmlspecialchars(timeElapsedString($post->getCreateTime())); ?>
+                <div class="post__body">
+                    <div class="post__header">
+                        <div class="post__headerText">
+                            <h3>
+                                Somanath Goudar
+                                <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
+                                    </span>@somanathg
+                                    <span class="post__date"
+                                        data-creation-time="<?php echo (new DateTime($post['Created_DateTime']))->format('c'); ?>">
+                                        <?php echo htmlspecialchars(timeElapsedString(new DateTime($post['Created_DateTime']))); ?>
+                                    </span>
                                 </span>
-                            </span>
-                            <span class="dropdown-menu-post">
-                                <svg class="dropdown-menu-post__icon" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="4" cy="12" r="2" fill="currentColor" />
-                                    <circle cx="12" cy="12" r="2" fill="currentColor" />
-                                    <circle cx="20" cy="12" r="2" fill="currentColor" />
-                                </svg>
-                                <ul class="dropdown-menu-post__content">
+                                <span class="dropdown-menu-post">
+                                    <svg class="dropdown-menu-post__icon" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <circle cx="4" cy="12" r="2" fill="currentColor" />
+                                        <circle cx="12" cy="12" r="2" fill="currentColor" />
+                                        <circle cx="20" cy="12" r="2" fill="currentColor" />
+                                    </svg>
+                                    <ul class="dropdown-menu-post__content">
+                                        <?php echo $post['post_id']; ?>
+                                        <li class="delete-option" onclick="confirmDelete(<?php echo $post['post_id']; ?>);">
 
-                                    <li class="delete-option" onclick="confirmDelete();">
+                                            <svg class="icon delete-icon" xmlns="http://www.w3.org/2000/svg" width="24"
+                                                height="24" fill="rgba(244,33,46,5)" class="bi bi-trash"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z" />
+                                            </svg>
+                                            Delete
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon"
+                                                fill="black" class="bi bi-pin" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M4.146 4.146a.5.5 0 0 1 .708 0L8 7.293l3.146-3.147a.5.5 0 0 1 .708.708L8.707 8l3.147 3.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0L8 9.707l-3.146 3.147a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 0-.708L7.293 8 4.146 4.854a.5.5 0 0 1 0-.708z" />
+                                                <path
+                                                    d="M5.5 5.5a.5.5 0 0 1 .5.5v.634l.549-.317 2-1.155V3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1.634l2 1.155.549.317V6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H10v.293l.854.853-.708.708-2-2-.708-.708-.708.708-2 2-.708-.708L6 8.293V8H1.5A.5.5 0 0 1 1 7.5v-1a.5.5 0 0 1 .5-.5h4V6a.5.5 0 0 1 .5-.5z" />
+                                            </svg>
 
-                                        <svg class="icon delete-icon" xmlns="http://www.w3.org/2000/svg" width="24"
-                                            height="24" fill="rgba(244,33,46,5)" class="bi bi-trash"
-                                            viewBox="0 0 24 24">
-                                            <path
-                                                d="M7 21q-.825 0-1.412-.587Q5 19.825 5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413Q17.825 21 17 21ZM17 6H7v13h10ZM9 17h2V8H9Zm4 0h2V8h-2ZM7 6v13Z" />
-                                        </svg>
-                                        Delete
+                                            Pin to your profile
+                                        </li>
+                                        <script>
+                                            var cnt = <?php echo json_encode($post['content']); ?>;
+                                            var Medi = <?php echo json_encode($post['media']); ?>;
+                                            var chaid = <?php echo json_encode(explode(',', htmlspecialchars($post['channel_id']))); ?>;
+                                        </script>
 
-                                    </li>
+                                        <li data-post-id="<?php echo $post['post_id']; ?>"
+                                            data-channel-id="<?php echo htmlspecialchars($post['channel_id'], ENT_QUOTES); ?>"
+                                            data-posttype-id="<?php echo htmlspecialchars($post['posttype_id'], ENT_QUOTES); ?>"
+                                            data-content="<?php echo htmlspecialchars($post['content'], ENT_QUOTES); ?>"
+                                            data-media="<?php echo $post['media'] ? htmlspecialchars($post['media'], ENT_QUOTES) : ''; ?>"
+                                            onclick="handleClickModalEdit(this)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" height="24" width="24"
+                                                fill="black">
+                                                <path
+                                                    d="M20.125 15 18 12.875l.725-.725q.275-.275.7-.275.425 0 .7.275l.725.725q.275.275.275.7 0 .425-.275.7ZM12 21v-2.125l5.3-5.3 2.125 2.125-5.3 5.3Zm-9-5v-2h7v2Zm0-4v-2h11v2Zm0-4V6h11v2Z" />
+                                            </svg>
+                                            Edit Post
+                                        </li>
 
 
 
-                                    <li>
 
 
+                                    </ul>
+                                </span>
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon"
-                                            fill="black" class="bi bi-pin" viewBox="0 0 16 16">
-                                            <path
-                                                d="M4.146 4.146a.5.5 0 0 1 .708 0L8 7.293l3.146-3.147a.5.5 0 0 1 .708.708L8.707 8l3.147 3.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0L8 9.707l-3.146 3.147a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 0-.708L7.293 8 4.146 4.854a.5.5 0 0 1 0-.708z" />
-                                            <path
-                                                d="M5.5 5.5a.5.5 0 0 1 .5.5v.634l.549-.317 2-1.155V3.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1.634l2 1.155.549.317V6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H10v.293l.854.853-.708.708-2-2-.708-.708-.708.708-2 2-.708-.708L6 8.293V8H1.5A.5.5 0 0 1 1 7.5v-1a.5.5 0 0 1 .5-.5h4V6a.5.5 0 0 1 .5-.5z" />
-                                        </svg>
+                            </h3>
 
-                                        Pin to your profile
-                                    </li>
-                                    <li onclick="showEditModal();MediaClick();initializeEditModal(initialSelectedChannels);">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" height="24" width="24"
-                                            fill="black">
-                                            <path
-                                                d="M20.125 15 18 12.875l.725-.725q.275-.275.7-.275.425 0 .7.275l.725.725q.275.275.275.7 0 .425-.275.7ZM12 21v-2.125l5.3-5.3 2.125 2.125-5.3 5.3Zm-9-5v-2h7v2Zm0-4v-2h11v2Zm0-4V6h11v2Z" />
-                                        </svg>
-                                        Edit Post
-                                    </li>
-                                </ul>
-                            </span>
-
-                        </h3>
+                        </div>
                     </div>
                     <div class="post__content">
                         <p class="post__headerchannels">Channels :
-                            <?php echo htmlspecialchars($post->getChannelId()); ?>
+                            <?php echo htmlspecialchars($post['channel_id']); ?>
                         </p>
                         <p class="post__headertopic">
-                            <?php echo htmlspecialchars($post->getPostType()) ?>
+                            <?php echo htmlspecialchars($post['posttype_id']) ?>
                         </p>
                         <p class="post__headerDescription">
-                            <?php echo htmlspecialchars($post->getContent()); ?>
+                            <?php echo htmlspecialchars($post['content']); ?>
                         </p>
 
                     </div>
-                    <?php if ($post->getMedia() !== ""): ?>
-                        <img src="<?php echo htmlspecialchars($post->getMedia()); ?>" alt="Post Media" />
+                    <?php if ($post['media'] !== ""): ?>
+                        <img src="<?php echo htmlspecialchars($post['media']); ?>" alt="Post Media" />
                     <?php endif; ?>
                     <div class="post__footer">
                         <span class="material-icons"> repeat </span>
                         <span class="material-icons"> favorite_border </span>
                         <span class="material-icons"> publish </span>
-                        <span class="material-icons" style="position: flex;">
-
-                            
-
-
-
-                        </span>
                     </div>
                 </div>
             </div>
-        </div>
-        <form action="commentD.php" method="POST">
-        <textarea placeholder="Comment here" name="commentContent"></textarea>
-        <input type="hidden" name="postId" value="<?php echo $lastInsertId; ?>">
-        <button type="submit">Submit</button>
-                    </form>
+            <div class="comment-section">
+    <!-- Comment input area -->
+    <div class="reply-input container">
+      <img src="images/avatars/image-juliusomo.webp" alt="" class="usr-img">
+      <textarea class="cmnt-input" placeholder="Add a comment..."></textarea>
+      <button class="bu-primary">SEND</button>
+    </div> <!--reply input-->
+  </div> <!--comment sectio-->
+  
 
-
-
-        <div class="post">
-            <div class="post__avatar">
-                <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
-            </div>
-
-            <div class="post__body">
-                <div class="post__header">
-                    <div class="post__headerText">
-                        <h3>
-                            Somanath Goudar
-                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                </span>@somanathg</span>
-                        </h3>
-                    </div>
-                    <div class="post__headerDescription">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                    alt="" />
-                <div class="post__footer">
-                    <span class="material-icons"> repeat </span>
-                    <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
-                </div>
-            </div>
-        </div>
-        <!-- post ends -->
-
-        <!-- post starts -->
-        <div class="post">
-            <div class="post__avatar">
-                <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
-            </div>
-
-            <div class="post__body">
-                <div class="post__header">
-                    <div class="post__headerText">
-                        <h3>
-                            Somanath Goudar
-                            <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                </span>@somanathg</span>
-                        </h3>
-                    </div>
-                    <div class="post__headerDescription">
-                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <img src="https://www.focus2move.com/wp-content/uploads/2020/01/Tesla-Roadster-2020-1024-03.jpg"
-                    alt="" />
-                <div class="post__footer">
-                    <span class="material-icons"> repeat </span>
-                    <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
-                </div>
-            </div>
-        </div>
-        <!-- post ends -->
-    </div>
-    <!-- feed ends -->
-
-    <!-- widgets starts -->
-
-
-
-
-
-
-    <!-- widgets ends -->
-    <!-- Confirmation Modal -->
-
-
-    <script src="./js/home.js"></script>
-    <script>
-        const orderedOptions = ['General_Chat', 'Area_Chat', 'University_Chat', 'Class_Chat', 'Private_Chat'];
-        function updatePostTimes() {
-            var posts = document.querySelectorAll('.post__date');
-            posts.forEach(function (post) {
-                var creationTime = new Date(post.getAttribute('data-creation-time'));
-                post.textContent = timeSince(creationTime);
-            });
-        }
-
-        function timeSince(date) {
-            var seconds = Math.floor((new Date() - date) / 1000);
-            console.log(date);
-            var interval = seconds / 31536000;
-
-            if (interval > 1) {
-                return Math.floor(interval) + "Y";
-            }
-            interval = seconds / 2592000;
-            if (interval > 1) {
-                return Math.floor(interval) + "Mon";
-            }
-            interval = seconds / 86400;
-            if (interval > 1) {
-                return Math.floor(interval) + "Days";
-            }
-            interval = seconds / 3600;
-            if (interval > 1) {
-                return Math.floor(interval) + "H";
-            }
-            interval = seconds / 60;
-            if (interval > 1) {
-                return Math.floor(interval) + "Min";
-            }
-            return Math.floor(seconds) + " Sec";
-        }
-
-        setInterval(updatePostTimes, 60000); // Update every second
-        
-        
-     
-   
-        // Iterate over initial selected channels
-        
- 
+    <!-- Example Comment -->
    
 
-    </script>
-    
+        <?php } ?>
+      
 
+        <!-- widgets starts -->
+
+
+
+
+
+
+        <!-- widgets ends -->
+        <script src="./js/home.js"></script>
+        <script src="./js/postedit.js"></script>
+
+        <script>
+            const orderedOptions = ['General_Chat', 'Area_Chat', 'University_Chat', 'Class_Chat', 'Private_Chat'];
+            function updatePostTimes() {
+                var posts = document.querySelectorAll('.post__date');
+                posts.forEach(function (post) {
+                    var creationTime = new Date(post.getAttribute('data-creation-time'));
+                    post.textContent = timeSince(creationTime);
+                });
+            }
+
+            function timeSince(date) {
+                var seconds = Math.floor((new Date() - date) / 1000);
+
+                var interval = seconds / 31536000;
+
+                if (interval > 1) {
+                    return Math.floor(interval) + "Y";
+                }
+                interval = seconds / 2592000;
+                if (interval > 1) {
+                    return Math.floor(interval) + "Mon";
+                }
+                interval = seconds / 86400;
+                if (interval > 1) {
+                    return Math.floor(interval) + "Days";
+                }
+                interval = seconds / 3600;
+                if (interval > 1) {
+                    return Math.floor(interval) + "H";
+                }
+                interval = seconds / 60;
+                if (interval > 1) {
+                    return Math.floor(interval) + "Min";
+                }
+                return Math.floor(seconds) + " Sec";
+            }
+
+            setInterval(updatePostTimes, 60000); // Update every second
+        </script>
 
 </body>
 

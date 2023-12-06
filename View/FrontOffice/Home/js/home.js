@@ -14,8 +14,10 @@ function toggleButtonOpacity(textarea) {
   }
 }
 // Function to show the modal
-function confirmDelete() {
+function confirmDelete(postId) {
   document.getElementById('deleteConfirmationModal').style.display = 'block';
+  document.getElementById('postId_delete').value = postId;
+  console.log(document.getElementById('postId_delete').value);
   var element = document.getElementById("head");
   element.style.borderColor = '#8A8E90';
   element.style.background = 'rgba(153,153,153,1)';
@@ -85,8 +87,9 @@ function toggleUploadButton(fileInput) {
 
 document.addEventListener("DOMContentLoaded", function () {
   var studyContainer = document.getElementById("study");
-  const dropdownIcons = document.querySelector('.dropdown-menu-post__icon');
-  const dropdownContents = document.querySelector('.dropdown-menu-post__content');
+  const dropdownIcons = document.querySelectorAll('.dropdown-menu-post__icon');
+  const dropdownContents = document.querySelectorAll('.dropdown-menu-post__content');
+  console.log(dropdownIcons);
 
 
   const removeImageButton = document.getElementById('remove-image-btn');
@@ -110,22 +113,31 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
-
+  function toggleDropdown(dropdownContent, icon) {
+    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    icon.classList.toggle('active');
+}
 
   // Toggle the display of the dropdown content on click
-  dropdownIcons.addEventListener('click', function () {
-    dropdownContents.style.display = dropdownContents.style.display === 'block' ? 'none' : 'block';
-    this.classList.toggle('active');
-  });
+  dropdownIcons.forEach((icon, index) => {
+    icon.addEventListener('click', function (e) {
+        // Prevent the click from propagating to the window
+        e.stopPropagation();
 
-  // Close the dropdown if clicked outside of it
-  window.addEventListener('click', function (e) {
-    if (!dropdownIcons.contains(e.target) && !dropdownContents.contains(e.target) && dropdownContents.style.display == 'block') {
-      dropdownContents.style.display = 'none';
+        // Toggle the corresponding dropdown content
+        toggleDropdown(dropdownContents[index], this);
+    });
+});
 
-      dropdownIcons.classList.toggle('active');
-    }
-  });
+// Close all dropdowns if clicked outside of them
+window.addEventListener('click', function () {
+    dropdownContents.forEach((content, index) => {
+        if (content.style.display === 'block') {
+            content.style.display = 'none';
+            dropdownIcons[index].classList.remove('active');
+        }
+    });
+});   
 
 
   function toggleActiveClass() {
