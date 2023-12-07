@@ -2,7 +2,7 @@
 include "../controller/ticketC.php"; 
 $user_sender_id=3;
 $ticketedit = new TicketED();
-$tab = $ticketedit->listTickets(); 
+$tab = $ticketedit->listTickets($start, $perPage); 
 
 ?>
 <head>

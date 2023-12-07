@@ -19,6 +19,18 @@ body {
     color: red;
 }
 
+.ticket-description {
+    color: red;
+    
+}
+
+.title-style {
+
+    font-size: 24px; 
+    font-weight: bold;
+    
+}
+
 
 h1 {
     margin-bottom: 10px;

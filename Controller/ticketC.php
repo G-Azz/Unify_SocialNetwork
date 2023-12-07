@@ -5,6 +5,8 @@ require __DIR__ . "/../config.php";
 
 class TicketED {
 
+    
+
     public function addTicket($ticket) {
         $sql = $sql = "INSERT INTO tickets ( user_sender_id, admin_id, descriptions, media,created_datetime,ticket_typeid,opened) 
         VALUES ( :user_senderid, :admin_id, :descriptions, :media, :created_datetime, :ticket_typeid, :opened)";
@@ -62,19 +64,22 @@ class TicketED {
             die('Error: ' . $e->getMessage());
         }
     }
-    public function listTickets()
-    {
-        $sql = "SELECT * FROM tickets"; 
-        $db = config::getConnexion(); 
-       
-        try {
-            $list = $db->query($sql);  
-            return $list;
-        } catch (Exception $e) 
-         {
-            die('Error:' . $e->getMessage());
-        }
+    public function listTickets($start, $perPage)
+{
+    $sql = "SELECT * FROM tickets LIMIT :start, :perPage";
+    $db = config::getConnexion();
+
+    try {
+        $query = $db->prepare($sql);
+        $query->bindParam(':start', $start, PDO::PARAM_INT);
+        $query->bindParam(':perPage', $perPage, PDO::PARAM_INT);
+        $query->execute();
+        $tickets = $query->fetchAll();
+        return $tickets;
+    } catch (Exception $e) {
+        die('Error: ' . $e->getMessage());
     }
+}
 
     public function showTicket($id) {
         $sql = "SELECT * FROM tickets WHERE ticket_id = :ticket_id";

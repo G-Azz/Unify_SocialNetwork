@@ -19,10 +19,13 @@ public function addTicketReply($ticketReply) {
             'created_datetime' => $ticketReply->getCreatedDatetime()->format('Y-m-d H:i:s'),
             'description_reply' => $ticketReply->getDescriptionReply(),
         ]);
+
+      
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
 }
+
 
 public function deleteTicketReply($id) {
     $sql = "DELETE FROM ticket_reply WHERE ticket_reply_id = :ticket_reply_id";
@@ -83,6 +86,42 @@ public function updateTicketReply($description_reply, $ticket_reply_id) {
         echo 'Error: ' . $e->getMessage();
     }
 }
+
+public function showTicketReply($ticket_reply_id) {
+    $db = config::getConnexion(); // Assuming this method gets the database connection
+
+    try {
+        // Prepare SQL query to fetch ticket reply details based on the provided ID
+        $query = $db->prepare("SELECT * FROM ticket_reply WHERE ticket_reply_id = :ticket_reply_id");
+        $query->bindParam(':ticket_reply_id', $ticket_reply_id);
+        $query->execute();
+        
+        // Fetch the ticket reply details
+        $ticketReplyDetails = $query->fetch(PDO::FETCH_ASSOC);
+
+        return $ticketReplyDetails; // Return the ticket reply details
+    } catch (PDOException $e) {
+        throw new Exception('Error: ' . $e->getMessage());
+    }
+}
+public function getTicketDetails($ticket_id) {
+    $db = config::getConnexion(); // Obtain your database connection
+
+    try {
+        // Prepare SQL query to fetch ticket details based on the provided ticket ID
+        $query = $db->prepare("SELECT * FROM tickets WHERE ticket_id = :ticket_id");
+        $query->bindParam(':ticket_id', $ticket_id);
+        $query->execute();
+        
+        // Fetch the ticket details
+        $ticketDetails = $query->fetch(PDO::FETCH_ASSOC);
+
+        return $ticketDetails; // Return the ticket details
+    } catch (PDOException $e) {
+        throw new Exception('Error: ' . $e->getMessage());
+    }
+}
+
 
 };
 ?>

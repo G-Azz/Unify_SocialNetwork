@@ -442,10 +442,32 @@
                 
               <?php
 include "../../../Controller/ticketC.php"; 
-$user_sender_id=3;
-$ticketedit = new TicketED();
-$tab = $ticketedit->listTickets(); 
 
+
+// Initialize the database connection
+$db = config::getConnexion();
+$user_sender_id = 3;
+$ticketedit = new TicketED();
+
+$perPage = 10; // Number of tickets per page
+$current = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
+$start = ($current - 1) * $perPage;
+
+// Fetch tickets for the current page
+$tab = $ticketedit->listTickets($start, $perPage);
+$tab = is_array($tab) ? $tab : [];
+$totalTickets = count($tab); // Total number of tickets
+
+// Calculate total pages based on total tickets and perPage
+$totalPages = ceil($totalTickets / $perPage);
+
+// Fetch total count of tickets separately
+$sql = "SELECT COUNT(*) as count FROM tickets";
+$query = $db->query($sql);
+$totalTickets = $query->fetch(PDO::FETCH_ASSOC)['count'];
+
+// Recalculate total pages based on the fetched total tickets count
+$totalPages = ceil($totalTickets / $perPage);
 ?>
 <head>
     <link rel="stylesheet" href="listoftickets.css">
@@ -471,27 +493,56 @@ $tab = $ticketedit->listTickets();
         <th>Reply</th>
     </tr>
 
-    <?php foreach ($tab as $tickets) { ?>
+    <?php foreach ($tab as $ticket) { ?>
         <tr>
-            <td><?= $tickets['ticket_id']; ?></td>
-            <td><?= $tickets['user_sender_id']; ?></td>
-            <td><?= $tickets['descriptions']; ?></td>
-            <td><?= $tickets['created_datetime']; ?></td>
-            <td><?= $tickets['ticket_typeid']; ?></td>
+            <td><?= $ticket['ticket_id']; ?></td>
+            <td><?= $ticket['user_sender_id']; ?></td>
+            <td><?= $ticket['descriptions']; ?></td>
+            <td><?= $ticket['created_datetime']; ?></td>
+            <td><?= $ticket['ticket_typeid']; ?></td>
             <td>
-            <a href="../../../View/deleteticket.php?id=<?= $tickets['ticket_id']; ?>">Delete</a> 
+                <a href="../../../View/deleteticket.php?id=<?= $ticket['ticket_id']; ?>">Delete</a> 
             </td>
             <td>
-            <form method="POST" action="reply.php">
-                    
-                    <a type="submit" href="../../../View/reply.php?id=<?php echo($tickets['ticket_id']) ; ?>">Reply </a>
+                <form method="POST" action="reply.php">
+                    <a href="../../../View/reply.php?id=<?= $ticket['ticket_id']; ?>">Reply </a>
                 </form>
-            
             </td>
+
         </tr>
+
     <?php } ?>
 </table>
 
+<div class="pagination">
+    <?php if ($current > 1) { ?>
+        <a href="?page=<?= $current - 1; ?>">Previous </a>
+    <?php } ?>
+
+    <?php if ($totalPages > 0) { ?>
+        <a href="?page=1" <?= $current === 1 ? 'class="active"' : ''; ?>>1</a>
+    <?php } ?>
+
+    &nbsp; <!-- Add a space or use any other separator -->
+
+    <?php if ($totalPages > 1) { ?>
+        <a href="?page=2" <?= $current === 2 ? 'class="active"' : ''; ?>>2</a>
+    <?php } ?>
+
+    &nbsp; <!-- Add a space or use any other separator -->
+
+    <?php for ($i = 3; $i <= $totalPages; $i++) { ?>
+        <a href="?page=<?= $i; ?>" <?= $i === $current ? 'class="active"' : ''; ?>>
+            <?= $i; ?>
+        </a>
+        
+        &nbsp; <!-- Add a space or use any other separator -->
+    <?php } ?>
+
+    <?php if ($current < $totalPages) { ?>
+        <a href="?page=<?= $current + 1; ?>">Next</a>
+    <?php } ?>
+</div>
       
               </div>
 
