@@ -4,6 +4,8 @@ session_start();
 
 $Username = $_POST['Username'];
 $Password = $_POST['Password'];
+$Password =md5($Password);
+
 
 $con = config::getConnexion();
 $requete = "SELECT Id_User FROM user WHERE Username = :Username AND Pwd = :Pwd";
@@ -22,10 +24,19 @@ $row = $stmt->fetchAll();
 if (!empty($row)) {
     $_SESSION['valide'] = true;
     $_SESSION['Username'] = $Username;
-    if ($Username == "admin" && $Password == "admin") {
+    
+    
+
+    if ($Username == "admin" && $Password == "21232f297a57a5a743894a0e4a801fc3") {
         header('Location: /ss/View/BackOffice/template/index.php');
     } else {
-        header('Location: /Unify_SocialNetwork-aziz/View/FrontOffice/Home/postDD.php');
+        $userId = $row[0]['Id_User'];
+        session_start();
+        $_SESSION['user_data'] = $row[0];
+        $_SESSION['id'] = $userId;
+        header('Location: /ss/View/FrontOfiice/View/Home/postDD.php');
+        
+        
     }
     exit(); // Ensure that no further code is executed after the redirect
 } else {
@@ -33,4 +44,3 @@ if (!empty($row)) {
     echo '<script>window.location.href="/ss/View/index.php";</script>';
     exit(); // Ensure that no further code is executed after the redirect
 }
-?>

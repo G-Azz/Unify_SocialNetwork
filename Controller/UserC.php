@@ -16,12 +16,16 @@ class UserC
 
 
     function addUser($User)
-    {
-        $sql = "INSERT INTO user
-VALUES (NULL, :Nme,:Lname, :Email,:Username,:Pwd,:Adress,:University)";
-        $db = config::getConnexion();
-        try {
-            $query = $db->prepare($sql);
+{
+    $sql = "INSERT INTO user (Nme, Lname, Email, Username, Pwd, Adress, University) 
+            VALUES (:Nme, :Lname, :Email, :Username, :Pwd, :Adress, :University)";
+    $db = config::getConnexion();
+    
+    try {
+        $query = $db->prepare($sql);
+
+        // Check if $User is an instance of the User class
+        if ($User instanceof User) {
             $query->execute([
                 'Nme' => $User->getName(),
                 'Lname' => $User->getLname(),
@@ -31,10 +35,13 @@ VALUES (NULL, :Nme,:Lname, :Email,:Username,:Pwd,:Adress,:University)";
                 'Adress' => $User->getAdress(),
                 'University' => $User->getUniversity(),
             ]);
-        } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+        } else {
+            echo 'Error: User must be an instance of User class!';
         }
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
     }
+}
 
     function deleteUser($ide)
     {
@@ -89,6 +96,22 @@ VALUES (NULL, :Nme,:Lname, :Email,:Username,:Pwd,:Adress,:University)";
             return $user;
         } catch (Exception $e) {
             die('Error: ' . $e->getMessage());
+        }
+    }
+
+    public function listuserbyusername($userid)
+    {
+        $sql = "SELECT * FROM user WHERE Username = :userid";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindParam(':userid', $userid, PDO::PARAM_STR);
+            $query->execute();
+
+            $liste = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $liste;
+        } catch (Exception $e) {
+            die('Error:' . $e->getMessage());
         }
     }
 }

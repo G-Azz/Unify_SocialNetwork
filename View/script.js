@@ -63,6 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.style.overflow = 'auto';
     });
 
+    signupBtnFinal.addEventListener('click', function () {
+        step2Modal.style.display = 'none'; // Hide step2Modal if it's open
+        step3Modal.style.display = 'block'; // Display step3Modal
+    });
+
+
 });
 
 

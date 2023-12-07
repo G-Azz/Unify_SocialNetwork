@@ -1,46 +1,37 @@
 <?php
+session_start();
+
 include("../Controller/UserC.php");
 include("../Model/User.php");
-
-
 
 $UserC = new UserC();
 $User = NULL;
 
-if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) && isset($_POST['Username']) && isset($_POST['Password']) && isset($_POST['Adress']) && isset($_POST['University'])) {
-    if (!empty($_POST['Name']) && !empty($_POST['Lname']) && !empty($_POST['Email']) && !empty($_POST['Username']) && !empty($_POST['Password']) && !empty($_POST['Adress']) && !empty($_POST['University'])) {
-        // Validate form fields
-        if (
-            preg_match("/^[a-zA-Z ]*$/", $_POST['Name']) &&
-            preg_match("/^[a-zA-Z ]*$/", $_POST['Lname']) &&
-            filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL) &&
-            preg_match("/^[a-zA-Z]*$/", $_POST['Username']) &&
-            strlen($_POST['Password']) >= 8 
-            // Add other validations for Adress and University if needed
-        ) {
-            // Form is valid, proceed with sign-up
-            $User = new User(NULL, $_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], $_POST['Password'], $_POST['Adress'], $_POST['University']);
-            $UserC->addUser($User);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], $_POST['Password'], $_POST['Adress'], $_POST['University']) &&
+        !empty($_POST['Name']) && !empty($_POST['Lname']) && !empty($_POST['Email']) &&
+        !empty($_POST['Username']) && !empty($_POST['Password']) && !empty($_POST['Adress']) && !empty($_POST['University']) &&
+        preg_match("/^[a-zA-Z ]*$/", $_POST['Name']) &&
+        preg_match("/^[a-zA-Z ]*$/", $_POST['Lname']) &&
+        filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL) &&
+        preg_match("/^[a-zA-Z]*$/", $_POST['Username']) &&
+        strlen($_POST['Password']) >= 8) {
 
-            
-            
-        } else {
-            // Display error messages
-            echo '<script>alert("Fix the errors in the form");</script>';
-        }
+        // Form is valid, proceed with sign-up
+        $User = new User(NULL, $_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], md5($_POST['Password']), $_POST['Adress'], $_POST['University']);
+        
+        // Store the user data in the session
+        // After creating the $User object
+        $_SESSION['user_data'] = $User;
+
+        header("Location: confirmation.php");        // Redirect to the verification page
+        exit();
+    } else {
+        // Display error messages
+        echo '<script>alert("Fix the errors in the form");</script>';
     }
 }
-
-
-
-
-
 ?>
-
-
-
-
-
 
 
 
@@ -57,6 +48,7 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>UNIFY</title>
 </head>
 
@@ -72,7 +64,8 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
             <button id="signinBtn" class="button">Sign in</button>
         </div>
     </div>
-    <form action="" method="POST" onsubmit="return validateForm()">
+    <form action="mail.php" method="POST" onsubmit="return validateForm()">
+
         <div class="modal" id="signupModal">
             <div class="modal-content">
                 <span class="close" id="closeModal">&times;</span>
@@ -80,7 +73,7 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
 
                 <div class="input-field">
                     <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="First Name" id="Name" name="Name">
+                    <input type="text" placeholder="First Name" id="Name" name="Name" >
                     <?php
                     if (isset($_POST['Name']) && !preg_match("/^[a-zA-Z ]*$/", $_POST['Name'])) {
                         echo 'fix name';
@@ -179,7 +172,7 @@ if (isset($_POST['Name']) && isset($_POST['Lname']) && isset($_POST['Email']) &&
 
                 <div class="btn-field">
                     <button type="button" id="prevStep">Previous</button>
-                    <input type="submit" id="signupBtnFinal" value="Sign up">
+                    <input type="submit" id="signupBtnFinal" value="Sign up" name="signup">
                 </div>
 
             </div>
@@ -240,27 +233,42 @@ function validateForm() {
     </div>
     </div>
 
-    <form action="../Controller/checkSi.php" method="POST">
+    <form action="../Controller/checkSi.php" method="POST" onsubmit="return validateForm1()">
     <div class="modal" id="signinModal">
         <div class="modal-content">
             <span class="close" id="closeSigninModal">&times;</span>
             <h1>Sign In</h1>
-            <form>
-                <div class="input-field">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="text" placeholder="Username" name="Username">
-                </div>
-                <div class="input-field">
-                    <i class="fa-solid fa-key"></i>
-                    <input type="password" placeholder="Password" name="Password">
-                </div>
-                <div class="btn-field">
-                    <button type="submit" name="signinBtn">Sign in</button>
-                </div>
-            </form>
+            <div class="input-field">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="Username" name="Username">
+            </div>
+            <div class="input-field">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" placeholder="Password" name="Password">
+            </div>
+            <div class="g-recaptcha" data-sitekey="6Ldv7yMpAAAAAAFNT0JBMZBbEfim6erUhW_-UC2I"></div>
+            <div class="btn-field">
+                <button type="submit" name="signinBtn">Sign in</button>
+            </div>
         </div>
     </div>
-    </form>
+</form>
+
+<script>
+function validateForm1() {
+    // Check if the captcha is completed
+    var response = grecaptcha.getResponse();
+    if (response.length === 0) {
+        alert("Please complete the captcha.");
+        return false; // Prevent form submission
+    }
+
+    // Optionally, you can add additional validation logic here
+
+    return true; // Allow form submission
+}
+</script>
+
 
     
 </body>

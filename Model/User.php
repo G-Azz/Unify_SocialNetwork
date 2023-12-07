@@ -14,6 +14,7 @@ class User
     private ?string $Adress = null;
 
     private ?string $University = null;
+    
 
     public function __construct($Id_User, $Nme, $Lname, $Email, $Username, $Pwd, $Adress, $University)
     {
@@ -25,6 +26,7 @@ class User
         $this->Pwd = $Pwd;
         $this->Adress = $Adress;
         $this->University = $University;
+        
 
    
     }
@@ -120,6 +122,6 @@ class User
         return $this;
     }
     
-
+    
     
 }

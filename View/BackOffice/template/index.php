@@ -46,7 +46,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">Admin</span></h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -185,11 +185,22 @@
                 <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
                 <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
               </div>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile <span class="badge badge-pill badge-danger">1</span></a>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-message-text-outline text-primary me-2"></i> Messages</a>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-calendar-check-outline text-primary me-2"></i> Activity</a>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-help-circle-outline text-primary me-2"></i> FAQ</a>
-              <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+              
+              <div id="logoutOption1">
+                <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2" ></i>Sign Out</a>
+              </div>
+
+              <script>
+                // Get the logout element by its ID
+                var logoutOption1 = document.getElementById('logoutOption1');
+
+                // Add a click event listener to the logout element
+                logoutOption1.addEventListener('click', function() {
+                  // Redirect to index.php when the logout element is clicked
+                  window.location.href = '../../../View/index.php';
+                });
+              </script>
+              
             </div>
           </li>
         </ul>
