@@ -23,6 +23,6 @@
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string) . 'Ago' : 'Now';
+    return $string ? implode(', ', $string)  : 'Now';
 }
 ?>

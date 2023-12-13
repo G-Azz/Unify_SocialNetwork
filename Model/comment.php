@@ -17,6 +17,7 @@ class Comment {
         $this->dateTime_Creation = new DateTime($createtime);
         $this->media = $media;
     }
+    
 
     // Getters
     public function getCommentId(): int {

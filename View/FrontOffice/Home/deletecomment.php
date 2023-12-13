@@ -2,11 +2,12 @@
 include "../../../Model/comment.php"; include "../../../Controller/commentED.php"; 
     $postedit = new CommentED();
  
-    $postId=$_GET['id'];
+    $postId=$_POST['commentId'];
     $postedit->deleteComment($postId);
-
-    
-    header('Location: ./index.html  ');
+    header('Location: ./listpost.php');
     exit;
+    
+  
+    
 
 ?>

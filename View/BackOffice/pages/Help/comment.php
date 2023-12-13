@@ -21,6 +21,92 @@
   <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            position: relative;
+            background-color: #f8f8f8;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+        h1 {
+            text-align: center;
+            color: #9b1c31;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-transform: uppercase;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: all 0.3s ease;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e9e9e9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            text-decoration: none;
+            color: #9b1c31;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #b63443;
+        }
+        .status {
+            font-weight: bold;
+        }
+        .solved {
+            color: #27ae60;
+        }
+        .not-solved {
+            color: #c0392b;
+        }
+        .update {
+            padding: 8px 16px;
+            background-color: #9b1c31;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .update:hover {
+            background-color: #b63443;
+            transform: translateY(-2px);
+        }
+        .back-to-help {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #9b1c31;
+            transition: color 0.3s ease;
+        }
+        .back-to-help:hover {
+            color: #b63443;
+        }
+    </style>
 </head>
 
 <body>
@@ -443,7 +529,7 @@
               <?php
 include "../../../../Model/comment.php"; include "../../../../Controller/commentED.php"; 
 if (isset($_GET['id'])) {
-    echo "Post ID: " . $_GET['id'] . "<br>";
+
 
     $commentedit = new CommentED();
     $tab = $commentedit->listCommentsById($_GET['id']);
@@ -452,10 +538,9 @@ if (isset($_GET['id'])) {
         echo "Error in query execution or database connection.<br>";
     } elseif (empty($tab)) {
         echo "No comments found for post ID: " . $_GET['id'] . "<br>";
-    } else {
-        echo "Comments: <br>";
-        print_r($tab);
-    }
+    } 
+      
+    
 } else {
     echo "Post ID not provided.<br>";
 }
@@ -470,7 +555,7 @@ if (isset($_GET['id'])) {
     
 </head>
 
-<a class="back-to-help" href="index.html">Back To Help Center </a>
+<a class="back-to-help" href="post.php">Back To Posts </a>
 
 <h1 class="title-list-tickets" > List of tickets</h1>   
 
@@ -487,14 +572,14 @@ if (isset($_GET['id'])) {
 
     <?php foreach ($tab as $comments) { ?>
         <tr>
-             <td><?= $comments['comment_id']; ?></td>
-            <td><?= $comments['post_id']; ?></td>
-            <td><?= $comments['created_by_user_id']; ?></td>
-            <td><?= $comments['comment_content']; ?></td>
-            <td><?= $comments['replied_to_comment_id']; ?></td>
-            <td><?= $comments['datetime_creation']; ?></td>
-            <td>
-            <a href="./deletecomment.php?id=<?= $comments['comment_id']; ?>">Delete</a> 
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['comment_id']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['post_id']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['created_by_user_id']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['comment_content']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['replied_to_comment_id']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $comments['datetime_creation']; ?></td>
+        <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
+        <a style="text-decoration: none; color: #9b1c31; transition: color 0.3s ease;"href="./deletecomment.php?id=<?= $comments['comment_id']; ?>">Delete</a> 
     </td>
         </tr>
     <?php } ?>
@@ -538,6 +623,32 @@ if (isset($_GET['id'])) {
   <script src="../../js/template.js"></script>
   <script src="../../js/settings.js"></script>
   <script src="../../js/todolist.js"></script>
+  <script>
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Your existing particle animation JavaScript code here
+
+        const tableRows = document.querySelectorAll('.ticket-table tr');
+
+        tableRows.forEach(row => {
+            row.addEventListener('mouseover', () => {
+                row.style.backgroundColor = '#e9e9e9'; // Change background color on hover
+                row.style.transform = 'scale(1.02)'; // Zoom effect
+                row.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.2)'; // Add a shadow
+            });
+
+            row.addEventListener('mouseout', () => {
+                row.style.backgroundColor = ''; // Revert back to default background color
+                row.style.transform = ''; // Remove transform
+                row.style.boxShadow = ''; // Remove shadow
+            });
+        });
+    </script>
+
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->

@@ -83,7 +83,7 @@ class PostED {
 }
 public function listPosts()
 {
-    $sql = "SELECT * FROM post";
+    $sql = "SELECT * FROM `post` ORDER BY `post`.`Created_DateTime` DESC";
     $db = config::getConnexion();
     try {
         $liste = $db->query($sql);

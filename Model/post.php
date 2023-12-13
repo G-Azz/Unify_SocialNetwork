@@ -16,6 +16,7 @@ class Post {
         $this->posttype = $posttype;
         $this->content = $content;
         $this->media = $media;
+        $this->likes=0;
     }
 
     // Getters
@@ -46,6 +47,7 @@ class Post {
     public function getPostId(): ?int { // Nullable return type
         return $this->post_id;
     }
+   
 
     // Setters
     public function setUserId(int $user_id): void {
@@ -75,6 +77,7 @@ class Post {
     public function setPostId(int $post_id): void {
         $this->post_id = $post_id;
     }
+   
 }
 
 ?>

@@ -5,17 +5,19 @@ require_once 'C:\xampp\htdocs\Unify_SocialNetwork\Config.php';
 class CommentED {
     // Method to add a comment
     public function addComment($comment) {
-        $sql = "INSERT INTO comments (post_id, created_by_user_id, comment_content, replied_to_comment_id, datetime_creation) VALUES (:post_id, :created_by_user_id, :comment_content, :replied_to_comment_id, :dateTime_Creation)";
+        // Updated SQL query to include the media field
+        $sql = "INSERT INTO comments (post_id, created_by_user_id, comment_content, datetime_creation, media) VALUES (:post_id, :created_by_user_id, :comment_content, :dateTime_Creation, :media)";
         
         $db = Config::getConnexion();
         try {
             $query = $db->prepare($sql);
+            // Execute the query with the media parameter
             $query->execute([
                 'post_id' => $comment->getPostId(),
                 'created_by_user_id' => $comment->getCreatedByUserId(),
                 'comment_content' => $comment->getCommentContent(),
-                'replied_to_comment_id' => $comment->getRepliedToCommentId(),
-                'dateTime_Creation' => $comment->getDateTimeCreation()->format('Y-m-d H:i:s')
+                'dateTime_Creation' => $comment->getDateTimeCreation()->format('Y-m-d H:i:s'),
+                'media' => $comment->getMedia()
             ]);
             $lastInsertId = $db->lastInsertId();
             return $lastInsertId;
@@ -23,6 +25,7 @@ class CommentED {
             echo 'Error: ' . $e->getMessage();
         }
     }
+    
 
     // Method to delete a comment
     public function deleteComment($commentId) {
@@ -39,36 +42,34 @@ class CommentED {
     }
 
     // Method to update a comment
-    public function updateComment($comment) {
+    public function updateComment($comment_id, $comment_content, $dateTime_Creation) {
         try {
             $db = Config::getConnexion();
+    
+            // Check if $dateTime_Creation is a DateTime object, if not convert it
+            if (!$dateTime_Creation instanceof DateTime) {
+                $dateTime_Creation = new DateTime($dateTime_Creation);
+            }
+    
             $query = $db->prepare(
-                'UPDATE comments SET
-                    post_id = :post_id,
-                    created_by_user_id = :created_by_user_id,   
+                'UPDATE comments SET 
                     comment_content = :comment_content,
-                    replied_to_comment_id = :replied_to_comment_id,
-                    datetime_creation = :dateTime_Creation,
-                    media = :media
-                   
+                    datetime_creation = :dateTime_Creation
                 WHERE comment_id = :comment_id'
             );
-
+    
             $query->execute([
-                'post_id' => $comment->getPostId(),
-                'created_by_user_id' => $comment->getCreatedByUserId(),
-                'comment_content' => $comment->getCommentContent(),
-                'replied_to_comment_id' => $comment->getRepliedToCommentId(),
-                'dateTime_Creation' => $comment->getDateTimeCreation()->format('Y-m-d H:i:s'),
-                'media' => $comment->getMedia(),
-                'comment_id' => $comment->getCommentId()
+                'comment_content' => $comment_content,
+                'dateTime_Creation' => $dateTime_Creation->format('Y-m-d H:i:s'),
+                'comment_id' => $comment_id
             ]);
-
+    
             echo $query->rowCount() . " records UPDATED successfully <br>";
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
+    
 
     // Method to list all comments
     public function listComments() {
@@ -82,7 +83,7 @@ class CommentED {
         }
     }
     public function listCommentsById($post_id) {
-        $sql = "SELECT * FROM comments WHERE post_id = :post_id";
+        $sql = "SELECT * FROM comments WHERE post_id = :post_id ORDER BY `datetime_creation` DESC";
         $db = Config::getConnexion();
     
         try {
@@ -95,6 +96,7 @@ class CommentED {
             return false; // Or handle the error as appropriate
         }
     }
+
 }
 
 

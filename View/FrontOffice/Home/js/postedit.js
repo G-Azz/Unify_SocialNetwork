@@ -7,6 +7,15 @@ function closeEditModal() {
   element.style.background = 'white';
   element.style.color = '#9b1c31';
 }
+function closeEditModalcomment() {
+    // Assuming you have a modal with an ID 'editModal'
+    document.getElementById('editPostModalcomment').style.display = 'none';
+    var element = document.getElementById("head");
+  element.style.borderColor = '#e6ecf0';
+  element.style.background = 'white';
+  element.style.color = '#9b1c31';
+}
+
 function MediaClick(imageUrl) {
     if (imageUrl) {
 
@@ -34,6 +43,18 @@ function showEditModal(postId,Schannel,Stopic,content) {
     document.querySelector('#hashtag-sign-edit').textContent =Stopic;
 
 
+    element.style.borderColor = '#8A8E90';
+    element.style.background = 'rgba(153,153,153,1)';
+    element.style.color = '#5B111D';
+    document.querySelector('.dropdown-menu-post__content').style.display = 'none';
+    document.querySelector('.dropdown-menu-post__icon').classList.toggle('active');
+    
+  }
+  function showEditModalcomment(commentId,content) {
+    document.getElementById('editPostModalcomment').style.display = 'block';
+    var element = document.getElementById("head");
+    document.getElementById('commentId_edit').value = commentId;
+    document.getElementById('content-editcomment').value=content;
     element.style.borderColor = '#8A8E90';
     element.style.background = 'rgba(153,153,153,1)';
     element.style.color = '#5B111D';
@@ -454,3 +475,11 @@ function handleClickModalEdit(element) {
     }
     initializeEditModal(initialSelectedChannels);
 }
+function handleClickModalEditcomment(element) {
+    var commentId = element.getAttribute('data-comment-id');
+    var content = element.getAttribute('data-content-comment');
+
+    showEditModalcomment(commentId,content);
+
+}
+

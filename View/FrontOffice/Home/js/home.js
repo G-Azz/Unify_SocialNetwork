@@ -1,4 +1,109 @@
+function toggleGiphyMenu(icon,type) {
+  var menu = icon.parentNode.querySelector('.giphy-menu');
+  if (menu.style.display === 'none') {
+    menu.style.display = 'block';
+    searchGiphy(menu,type); // Call this function to populate the menu with GIFs
+  } 
 
+ 
+ 
+} 
+function toggleEmoteMenu(icon,type) {
+  var menu = icon.parentNode.querySelector('.emote-container');
+  console.log(icon.parentNode.querySelector('.emote-container')); // Find the .emote-container element next to the clicked icon
+  if (menu.style.display === 'none' || menu.style.display === '') {
+    menu.style.display = 'block';
+    fetchAndDisplayEmotes(menu,type); // Call this function to populate the menu with GIFs
+  } else {
+    menu.style.display = 'none';
+  }
+}
+
+
+
+function searchGiphy(menu, type) {
+  var apiKey = 'QZeoMHsSrsf05dWvkJJAaEp8ch5HvaYy'; // Your Giphy API key
+
+  // Assuming you have an input element with class "giphy-search" in your HTML
+  var inputElement = menu.querySelector('.giphy-search');
+
+  // Add an event listener for the "input" event on the input field
+  inputElement.addEventListener('keydown', function(event) {
+    if (event.keyCode === 13) { // Check if Enter key was pressed (key code 13)
+      // Trigger the search when Enter key is pressed
+      var query = inputElement.value;
+      var url = 'https://api.giphy.com/v1/gifs/search?api_key=' + apiKey + '&q=' + encodeURIComponent(query);
+
+      fetch(url)
+        .then(response => response.json())
+        .then(content => {
+          // Clear previous results while preserving the input element
+          menu.innerHTML = '';
+          menu.appendChild(inputElement);
+
+          content.data.forEach(gif => {
+            var img = document.createElement('img');
+            img.src = gif.images.fixed_height.url;
+            img.alt = gif.title;
+            img.className = 'giphy-img'; // Add a class for styling if necessary
+            img.onclick = function() {
+              selectGif(img);
+            };
+            menu.appendChild(img);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching from Giphy API:', error);
+        });
+    }
+  });
+}
+
+
+
+function selectGif(selectedGifUrl) {
+  console.log('Selected GIF URL:', selectedGifUrl.src);
+
+  // Assuming 'selectedGifUrl' is an element, find the closest form
+  const form = selectedGifUrl.closest('form');
+  
+  // Display the image preview container
+  const imagePreviewContainer = form.querySelector('.image-preview-container');
+  if (imagePreviewContainer) {
+      imagePreviewContainer.style.display = 'block';
+  }
+
+  // Set the source of the image preview to the selected GIF URL
+  const imagePreview = form.querySelector('.image-preview');
+  if (imagePreview) {
+      imagePreview.src = selectedGifUrl.src;
+  }
+
+  // Display the progress container
+  const progressContainer = form.querySelector('.progress-container');
+  if (progressContainer) {
+      progressContainer.style.display = 'block';
+  }
+
+  // Hide the SVG progress bar
+  const svgProgressBar = form.querySelector('.svg-progress-bar');
+  if (svgProgressBar) {
+      svgProgressBar.style.display = 'none';
+  }
+
+  // Update the GIF URL input field and disable the file upload
+  const gifUrlInput = form.querySelector('.gif-url');
+  if (gifUrlInput) {
+      gifUrlInput.value = selectedGifUrl.src;
+      gifUrlInput.disabled = false;
+  }
+  console.log(gifUrlInput.value);
+
+  const fileUploadInput = form.querySelector('.file-upload');
+  if (fileUploadInput) {
+      fileUploadInput.disabled = true;
+  }
+}
 function autoResizeTextarea(textarea) {
   textarea.style.height = 'auto';
   textarea.style.height = textarea.scrollHeight + 'px';
@@ -13,6 +118,17 @@ function toggleButtonOpacity(textarea) {
     button.disabled = true;
   }
 }
+function confirmDeleteComment(postId) {
+  document.getElementById('deleteConfirmationModalComment').style.display = 'block';
+  document.getElementById('commentId_delete').value = postId;
+  var element = document.getElementById("head");
+  element.style.borderColor = '#8A8E90';
+  element.style.background = 'rgba(153,153,153,1)';
+  element.style.color = '#5B111D';
+  document.querySelector('.dropdown-menu-post__content').style.display = 'none';
+  document.querySelector('.dropdown-menu-post__icon').classList.toggle('active');
+
+}
 // Function to show the modal
 function confirmDelete(postId) {
   document.getElementById('deleteConfirmationModal').style.display = 'block';
@@ -26,13 +142,19 @@ function confirmDelete(postId) {
   document.querySelector('.dropdown-menu-post__icon').classList.toggle('active');
 
 }
-// Function to show the edit modal
-
-
-// Function to close the edit modal
 
 
 
+function closeModalcomment() {
+  document.getElementById('deleteConfirmationModalComment').style.display = 'none';
+  var element = document.getElementById("head");
+  element.style.borderColor = '#e6ecf0';
+  element.style.background = 'white';
+  element.style.color = '#9b1c31';
+  
+
+
+}
 // Function to close the modal
 function closeModal() {
   document.getElementById('deleteConfirmationModal').style.display = 'none';
@@ -41,6 +163,16 @@ function closeModal() {
   element.style.background = 'white';
   element.style.color = '#9b1c31';
   
+
+
+}
+function submitDeleteFormcomment() {
+  // You might want to add additional logic here
+  document.getElementById('deleteFormcomment').submit();
+  var element = document.getElementById("head");
+  element.style.borderColor = '#e6ecf0';
+  element.style.background = 'white';
+  element.style.color = '#9b1c31';
 
 
 }
@@ -80,12 +212,175 @@ function toggleUploadButton(fileInput) {
   }
 }
 
+function fetchAndDisplayEmotes(menu,type) {
+  const emoteAPIUrl = 'https://emoji-api.com/emojis?access_key=2b0abf9d1f16445afa81cf44e4496c7e69061278';
+  const container = menu;
 
+  // Show the container
+  container.style.display = 'block';
 
+  // Fetch emotes from the API
+  fetch(emoteAPIUrl)
+      .then(response => response.json())
+      .then(data => {
+          data.forEach(emoji => {
+              const span = document.createElement('span');
+              span.className = 'emote';
+              span.textContent = emoji.character; // Displaying the emoji character
+              span.onclick = () => insertEmoji(emoji.character, span,type) // Add click event
+              container.appendChild(span);
+          });
+      })
+      .catch(error => console.error('Error:', error));
+}
 
+// function insertEmoji(character) {
+//   const textarea = document.getElementById('postContent');
+//   textarea.value += character; // Append the emoji character to the textarea
+// }
+function insertEmoji(character, emojiElement,type) {
+  if(type==1){
+  const inputField = emojiElement.closest('.comment-wrapper').querySelector('.input-comment');
+  if (inputField) {
+    const currentValue = inputField.value;
+    const newValue = currentValue + character;
+    inputField.value = newValue;
+  }
+}
+else if(type==0)
+{
+  
+  const textarea = emojiElement.closest('form').querySelector('textarea');
+textarea.value += character; // Append the emoji character to the textarea
+}
+}
+
+//*** */
+  function fetchLikeCount(postId,type) {
+    var xhr = new XMLHttpRequest();
+    console.log(type);
+    xhr.open("GET", "likeNumbers.php?postId=" + postId +"&likedType=" + type, true);
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        // Update the like count display
+        var likeCountDisplay = document.querySelector('.likeButton[data-post-id="' + postId + '"] .likeCount');
+        console.log(this.responseText);
+        if (likeCountDisplay !== null) {
+          likeCountDisplay.textContent = this.responseText;
+        }
+      }
+    };
+    xhr.send();
+  }
+function addLike( likedId,type, button) {
+  var xhr = new XMLHttpRequest();
+  var likedType = type; // Assuming this is for liking posts
+  xhr.open("POST", "addlike.php", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          button.classList.add('liked');
+          console.log(this.responseText);
+      }
+  }
+  xhr.send("likedId=" + likedId + "&likedType=" + likedType);
+
+}
+
+function deleteLike(likedId,type, button) {
+  var xhr = new XMLHttpRequest();
+  var likedType = type; // Assuming this is for liking posts
+  xhr.open("POST", "deletelike.php", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          button.classList.remove('liked');
+          console.log(this.responseText);
+      }
+  }
+  xhr.send("likedId=" + likedId + "&likedType=" + likedType);
+}
+function checkIfLiked(likedId,type, button) {
+  var xhr = new XMLHttpRequest();
+  var likedType = type; 
+  xhr.open("POST", "checkliked.php", true);
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          if (this.responseText === "true") {
+            console.log("hello");
+              button.classList.add('liked');
+          }
+      }
+  }
+  xhr.send("likedId=" + likedId + "&likedType=" + likedType); // Assuming 'post' as the liked type
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('.likeButton').forEach(post => {
+    var postId = post.getAttribute('data-post-id');
+    var type=post.getAttribute('data-post-type');
+    fetchLikeCount(postId,type);
+}); 
+document.querySelectorAll('.likeButton').forEach(button => {
+  var likedId = button.getAttribute('data-post-id');
+  var type=button.getAttribute('data-post-type');
+  checkIfLiked(likedId,type, button);
+  // Check if the post is already liked by this user
+  
+
+  button.addEventListener('click', function() {
+      console.log(button);
+      
+      if (this.classList.contains('liked')) {
+          // If the post is already liked, delete the like
+          var postId = button.getAttribute('data-post-id');
+          var type=button.getAttribute('data-post-type');
+          deleteLike(likedId,type,this);
+          fetchLikeCount(postId,type);
+      } else {
+          // If the post is not liked, add the like
+          var postId = button.getAttribute('data-post-id');
+          var type=button.getAttribute('data-post-type');
+          addLike(likedId,type,this);
+          fetchLikeCount(postId,type);
+      }
+      checkIfLiked(likedId, button);
+  }); 
+});
+
+
+ 
+
+
+
+  //µµµµµµµµµµµµµµµ
+
+  document.querySelector('.emote-container').addEventListener('click', function(event) {
+    event.stopPropagation(); // This prevents the document click listener from hiding the menu when a GIF is clicked
+  });
+  document.querySelectorAll('.option').forEach(function(option) {
+    option.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+});
+
+// Event listener for document to hide the menu when clicking outside
+document.addEventListener('click', function() {
+    document.querySelectorAll('.giphy-menu').forEach(function(menu) {
+        if (menu.style.display === 'block') {
+            menu.style.display = 'none';
+        }
+    });
+})
+
+
+ 
+ 
+
+      
+  //***************************** */
   var studyContainer = document.getElementById("study");
   const dropdownIcons = document.querySelectorAll('.dropdown-menu-post__icon');
   const dropdownContents = document.querySelectorAll('.dropdown-menu-post__content');
@@ -95,12 +390,47 @@ document.addEventListener("DOMContentLoaded", function () {
   const removeImageButton = document.getElementById('remove-image-btn');
   const imagePreviewContainer = document.getElementById('image-preview-container');
   const fileUploadInput = document.getElementById('file-upload');
+// Select all remove image buttons
+const removeImageButtonsCmnt = document.querySelectorAll('.remove-image-btn-cmnt');
+
+// Loop through all buttons and add an event listener to each
+removeImageButtonsCmnt.forEach(function(removeImageButtoncmnt) {
+    removeImageButtoncmnt.addEventListener('click', function () {
+        // Find the closest image preview container relative to the clicked button
+        const imagePreviewContainercmnt = removeImageButtoncmnt.closest('.comment-wrapper').querySelector('.image-preview-container');
+        
+        if (imagePreviewContainercmnt) {
+            // Hide the image preview container
+            imagePreviewContainercmnt.style.display = 'none';
+
+            // Remove the src from the image to release the object URL if it was used
+            const imagePreview = imagePreviewContainercmnt.querySelector('.image-preview-cmnt');
+            if (imagePreview && imagePreview.src) {
+                URL.revokeObjectURL(imagePreview.src);
+                imagePreview.src = '';
+            }
+
+            // Find the file upload input related to this comment
+            const fileUploadInput = removeImageButtoncmnt.closest('.comment-section').querySelector('.file-upload-input-cmnt');
+            if (fileUploadInput) {
+                // Clear the value of the file input
+                fileUploadInput.value = '';
+
+                // Update the button state if needed
+                const postContentInput = document.getElementById("postContent");
+                if (postContentInput && postContentInput.value == "") {
+                    toggleUploadButton(fileUploadInput); // Modify this function according to your needs
+                }
+            }
+        }
+    });
+})
 
   removeImageButton.addEventListener('click', function () {
     // Hide the image preview container
     imagePreviewContainer.style.display = 'none';
     // Remove the src from the image to release the object URL if it was used
-    const imagePreview = document.getElementById('image-preview');
+    const imagePreview =  imagePreviewContainer.closest('.image-preview');
     if (imagePreview.src) {
       URL.revokeObjectURL(imagePreview.src);
       imagePreview.src = '';
@@ -113,6 +443,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 
+
   function toggleDropdown(dropdownContent, icon) {
     dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
     icon.classList.toggle('active');
@@ -123,6 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
     icon.addEventListener('click', function (e) {
         // Prevent the click from propagating to the window
         e.stopPropagation();
+        console.log(dropdownContents[index]);
 
         // Toggle the corresponding dropdown content
         toggleDropdown(dropdownContents[index], this);
@@ -372,6 +704,8 @@ window.addEventListener('click', function () {
       document.getElementById('image-preview-container').style.display = 'block';
       document.getElementById('progress-container').style.display = 'block';
       uploadFile(file); // Call function to handle the file upload
+      document.getElementById('gif-url').disabled = true;
+      document.getElementById('file-upload').disabled = false;
     };
 
     reader.readAsDataURL(file);
