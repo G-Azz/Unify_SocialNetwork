@@ -23,7 +23,7 @@ if (
         $Club = new Club(
             $_POST['name'],
             $_POST['type'],
-            $_POST['description']
+            $_POST['description'],
             $_FILES['image']['name']
         );
        
@@ -564,7 +564,7 @@ if (
         $Club = $ClubC->showClub($_GET['idClub']);
         
     ?>
-                <form id="Add_Form"  method="POST">
+                <form id="Add_Form" action=""  method="POST" enctype="multipart/form-data">
             <label for="Nom">Nom</label>
               <input type="text" class="form-control" name="name" id="name" value="<?php echo $Club['name'] ?>">
               <span id="erreurName" style="color:red"></span>

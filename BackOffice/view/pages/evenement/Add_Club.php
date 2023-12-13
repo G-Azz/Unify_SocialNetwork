@@ -528,7 +528,7 @@ if(isset($_GET["idClub"])){
               <div class="card-body">
                 <h4 class="card-title">Add Club</h4>
                 
-                <form id="Add_Form" action="../../../Back/Controller/addClub.php" method="POST">
+                <form id="Add_Form" action="../../../Back/Controller/addClub.php" method="POST" enctype="multipart/form-data">
             <label for="Nom">Nom</label>
               <input type="text" class="form-control" name="name" id="name" >
               <span id="erreurName" style="color:red"></span>

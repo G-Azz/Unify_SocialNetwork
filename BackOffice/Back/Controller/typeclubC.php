@@ -71,6 +71,19 @@ class typeclubC
             die('Error: ' . $e->getMessage());
         }
     }
+    function SearchtypeClub($querySearch)
+    {
+        $sql = "SELECT * FROM typeclub WHERE ('type' LIKE '%".$querySearch."%') OR (`description` LIKE '%".$querySearch."%')";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->execute();
+            $typeclub = $query->fetch();
+            return $typeclub;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
 
     function Recherchetypeclub($id)
     {

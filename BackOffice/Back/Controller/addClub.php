@@ -16,12 +16,14 @@ $Club = null;
 // create an instance of the controller
 $ClubC = new ClubC();
 if (
+    isset($_FILES['image']['name']) &&
     isset($_POST["name"]) &&    
     isset($_POST["type"]) &&
     isset($_POST["description"])
     
 ) {
     if (
+        !empty($_FILES['image']['name']) &&
         !empty($_POST["name"]) &&
         !empty($_POST["type"]) &&
         !empty($_POST["description"])
@@ -31,12 +33,12 @@ if (
             $_POST['name'],
             $_POST['type'],
             $_POST['description'],
+            $_FILES['image']['name']
 
         );
         $ClubC->addClub($Club);
         
-    } else
-    $error = "Missing information";
+    
         if($ClubC) {
             try {
                 $name = $_POST['name'];
@@ -61,7 +63,8 @@ if (
             }
          
         }
-
+    } else
+    $error = "Missing information";
       // 
 
 }

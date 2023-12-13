@@ -33,29 +33,25 @@ class ClubC
     function addClub($club)
     {
         $currentDirectory = getcwd();
-        $uploadDirectory = "/uploads/";
+        $uploadDirectory = "../../../view/pages/evenement/uploads/";
         $fileName = $_FILES['image']['name'];
         $fileTmpName  = $_FILES['image']['tmp_name'];
         $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName);
-            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+        $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
         $sql = "INSERT INTO club(name, type, description,image) VALUES (:name,:type,:description,:image)";
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
             $query->execute([
-                'image' => $club->getImage(),
                 'name' => $club->getName(),
                 'type' => $club->getType(),
-                'description' => $club->getDescription(),   
+                'description' => $club->getDescription(),
+                'image' => $club->getImage() 
             ]);
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
-        if ($didUpload) {
-            echo "The file " . basename($fileName) . " has been uploaded";
-          } else {
-            echo $errors;
-          }
+       
     }
 
 
@@ -77,7 +73,7 @@ class ClubC
     {   
         try {
             $currentDirectory = getcwd();
-            $uploadDirectory = "/uploads/";
+            $uploadDirectory = "../../../view/pages/evenement/uploads/";
             $fileName = $_FILES['image']['name'];
             $fileTmpName  = $_FILES['image']['tmp_name'];
             $uploadPath = $currentDirectory . $uploadDirectory . basename($fileName);

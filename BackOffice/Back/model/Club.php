@@ -8,17 +8,29 @@ class Club
     private ?string $name;
     private ?string $type;
     private ?string $description;
+    private ?string $image;
     // private ?string $image;
 
 
-    public function __construct($name ,$type, $description)
+    public function __construct($name ,$type, $description,$image)
     {
+        $this->image = $image;
         $this->name = $name;
         $this->type = $type;
         $this->description = $description;
         // $this->image = $image;
     }
 
+    public function getImage()
+    {
+        return $this->image;
+    }
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 
     public function getIdClub()
     {

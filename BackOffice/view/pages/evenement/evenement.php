@@ -539,6 +539,7 @@ if(isset($_GET["idClub"])){
       <th>Nom</th>
       <th>Type</th>
       <th>Description</th>
+      <th>Image</th>
       <th>Action</th>
     </tr>
 
@@ -553,6 +554,8 @@ if(isset($_GET["idClub"])){
              <td><?= $Club['name']; ?></td>
             <td><?= $Club['type']; ?></td>
             <td><?= $Club['description']; ?></td>
+            <td><img  width="100" height="100" src="uploads/<?= $Club['image']; ?>" alt=""></td>
+            
     <td><a href="update.php?idClub=<?php echo $Club['idClub']; ?>"><i class="fa fa-edit" style="font-size:25px;"></i></a>&nbsp;&nbsp;<a href="evenement.php?idClub=<?php echo $Club['idClub']; ?>"><i class="fa fa-trash" style="font-size:25px;"></i></a></td>
   </tr>
 
