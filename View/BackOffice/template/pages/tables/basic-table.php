@@ -462,8 +462,11 @@ if (isset($_POST["search"])) {
                         <th>Username</th>
                         <th>Adress</th>
                         <th>University</th>
+                        <th>classe</th>
                         <th>Update</th>
                         <th>Delete</th>
+                        
+
                       </tr>
                     </thead>
                     <tbody>
@@ -478,6 +481,8 @@ if (isset($_POST["search"])) {
                           <td><?php echo $j['Username'] ?></td>
                           <td><?php echo $j['Adress'] ?></td>
                           <td><?php echo $j['University'] ?></td>
+                          <td><?php echo $j['classe'] ?></td>
+                          
 
                           <td>
                             <a href="/ss/View/updateUser.php?id=<?php echo $j['Id_User']; ?>">Update</a>

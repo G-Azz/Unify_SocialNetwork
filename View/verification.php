@@ -23,6 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verification_code']))
 
             // Check if user data is in the session
             if ($User) {
+                
+
+                
                 $userInstance = new User(
                     null, // You may set null for Id_User if it's auto-incremented in the database
                     $_SESSION['user_data']['Name'],
@@ -31,9 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['verification_code']))
                     $_SESSION['user_data']['Username'],
                     md5($_SESSION['user_data']['Password']),
                     $_SESSION['user_data']['Adress'],
-                    $_SESSION['user_data']['University']
+                    $_SESSION['user_data']['University'],
+                    $_SESSION['user_data']['classe'],
+                    $_SESSION['user_data']['media']
                 );
                 
+                print_r($userInstance);
 
                 $UserC->addUser($userInstance);
 

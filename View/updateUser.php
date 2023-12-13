@@ -16,7 +16,8 @@ if (
     isset($_POST["Username"]) &&
     isset($_POST["Password"]) &&
     isset($_POST["Adress"]) &&
-    isset($_POST["University"])
+    isset($_POST["University"]) &&
+    isset($_POST["classe"])
 
 ) {
     if (
@@ -26,10 +27,11 @@ if (
         !empty($_POST["Username"]) &&
         !empty($_POST["Password"]) &&
         !empty($_POST["Adress"]) &&
-        !empty($_POST["University"])
+        !empty($_POST["University"]) &&
+        !empty($_POST["classe"])
     ) {
 
-        $User = new User(NULL, $_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], md5($_POST['Password']), $_POST['Adress'], $_POST['University']);
+        $User = new User(NULL, $_POST['Name'], $_POST['Lname'], $_POST['Email'], $_POST['Username'], md5($_POST['Password']), $_POST['Adress'], $_POST['University'] ,$_POST['classe'], $_POST['image']);
         var_dump($User);
         $UserC->updateuser($User, $_GET['id']);
         header('Location:/ss/View/BackOffice/template/pages/tables/basic-table.php');
@@ -193,10 +195,15 @@ if (
                                             <label class="form-label">Email</label>
                                             <input type="text" placeholder="Email" id="Email" name="Email" value="<?php echo $User['Email'] ?>">
                                         </div>
+
+                                        
+
                                         <div class="form-group">
                                             <label class="form-label">Password</label>
                                             <input type="text" placeholder="Password" id="Password" name="Password" value="">
                                         </div>
+
+                                        
                                     </div>
                                 </div>
 
@@ -226,6 +233,15 @@ if (
                                                 <option>Kasserine</option>
                                                 <option>Kébili</option>
                                             </select>
+                                        </div>
+                                        <div class="input-field">
+                                            <i class="fa-solid fa-people-roof"></i>
+                                            <input type="text" placeholder="classe" id="classe" name="classe" value="<?php echo $User['classe'] ?>">
+                                            <?php
+                                            if (isset($_POST['Username']) && !preg_match("/^[a-zA-Z]*$/", $_POST['Username'])) {
+                                                echo ' Username can only contain letters';
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                     <hr class="border-light m-0" />

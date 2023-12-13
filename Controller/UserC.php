@@ -17,8 +17,8 @@ class UserC
 
     function addUser($User)
 {
-    $sql = "INSERT INTO user (Nme, Lname, Email, Username, Pwd, Adress, University) 
-            VALUES (:Nme, :Lname, :Email, :Username, :Pwd, :Adress, :University)";
+    $sql = "INSERT INTO user (Nme, Lname, Email, Username, Pwd, Adress, University,classe, media) 
+            VALUES (:Nme, :Lname, :Email, :Username, :Pwd, :Adress, :University ,:classe ,:media)";
     $db = config::getConnexion();
     
     try {
@@ -34,6 +34,10 @@ class UserC
                 'Pwd' => $User->getPassword(),
                 'Adress' => $User->getAdress(),
                 'University' => $User->getUniversity(),
+                'classe' => $User->getClasse(),
+                'media' => $User->getImage(),
+
+
             ]);
         } else {
             echo 'Error: User must be an instance of User class!';
@@ -62,7 +66,7 @@ class UserC
         try {
             $db = config::getConnexion();
             $query = $db->prepare(
-                'UPDATE user SET Nme = :Nme,Lname = :Lname,Email = :Email,Username = :Username,Pwd = :Pwd,Adress = :Adress,University = :University
+                'UPDATE user SET Nme = :Nme,Lname = :Lname,Email = :Email,Username = :Username,Pwd = :Pwd,Adress = :Adress,University = :University,classe = :classe, media = :media
         WHERE  Id_User = :id'
             );
             $query->execute([
@@ -74,6 +78,8 @@ class UserC
                 'Pwd' => $User->getPassword(),
                 'Adress' => $User->getAdress(),
                 'University' => $User->getUniversity(),
+                'classe' => $User->getClasse(),
+                'media' => $User->getImage(),
             ]);
 
             return $query->rowCount(); // Return the number of updated records
