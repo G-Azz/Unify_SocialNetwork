@@ -576,10 +576,10 @@ if (
               <input type="text" class="form-control" name="description" id="description" value="<?php echo $Club['description'] ?>">
               <span id="erreurdescriptions" style="color:red"></span>
               <label for="Img">Image</label>
-              <?php if(isset($typeclub['image'])) {?>
-                <img  width="100" height="100" src="uploads/<?php echo $typeclub['image']?>" alt="">
+              <?php if(isset($Club['image'])) {?>
+                <img  width="100" height="100" src="uploads/<?php echo $Club['image']?>" alt="">
                 <?php }?>  
-              <input type="file" class="form-control" name="image" id="image" value="<?php echo $typeclub['image'] ?>">
+              <input type="file" class="form-control" name="image" id="image" value="<?php echo $Club['image'] ?>">
               <br>
 
               <button type="submit">Modifier</button>
