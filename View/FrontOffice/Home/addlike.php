@@ -3,8 +3,8 @@ session_start(); // Start the session at the beginning of the script
 require_once '../../../Controller/likeED.php';
 
 // Check if the user is logged in and the request is POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id']; // Retrieve the logged-in user's ID from the session
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_data'] ['Id_User'])) {
+    $userId = $_SESSION['user_data'] ['Id_User']; // Retrieve the logged-in user's ID from the session
 
     // Assuming you're sending the liked ID and type via POST request
     if (isset($_POST['likedId']) && isset($_POST['likedType'])) {

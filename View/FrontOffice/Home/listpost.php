@@ -1,11 +1,40 @@
 <?php
-session_start();
-$_SESSION['user_id'] = 2;
+
+
 // Assuming you have a Controller class that can fetch posts
+include("../../../Controller/UserC.php");
+include("../../../Model/User.php");
 require_once '../../../Controller/postED.php';
 require_once '../../../Controller/functions.php';
 include "../../../Model/comment.php";
 include "../../../Controller/commentED.php";
+
+session_start();
+
+$error = '';
+$User = isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;
+$UserC = new UserC();
+
+// Uncomment the next line if you want to debug and see the current user data
+
+
+function validateInput($input)
+{
+    return filter_var($input, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1)));
+}
+echo ($_SESSION['id']);
+if (isset($_SESSION['id'])) {
+    $userID = validateInput($_SESSION['id']);
+
+    // Only create a new User object if the data is being updated
+    // You might need additional checks here to see if a POST request is being made
+    $User = $UserC->showuser($userID);
+
+
+} else {
+    echo "No user ID found in session.";
+}
+
 $postController = new PostED(); // Replace with your actual controller class
 $posts = $postController->listPosts(); // Replace with the actual method to fetch posts
 $commentController = new CommentED(); // Replace with your actual controller class
@@ -67,8 +96,16 @@ $commentController = new CommentED(); // Replace with your actual controller cla
                 <input type="hidden" name="postd" id="postId_edit">
                 <div class="post-box">
                     <div class="post-header">
-                        <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
-                            alt="Profile Icon" width="32" height="32">
+                        <?php
+                        // Split the path and the filename
+                        $path_parts = explode('/', $User['media']);
+                        $filename = array_pop($path_parts); // Get the filename
+                        $directory = implode('/', $path_parts); // Get the directory path
+                        
+                        // Combine them with rawurlencode applied only to the filename
+                        $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+                        ?>
+                        <img src="<?php echo $image_path; ?>" alt="Profile Icon" width="32" height="32">
                         <div class="dropdown-container">
                             <div>
                                 <p>Chat Channels :</p>
@@ -186,8 +223,16 @@ $commentController = new CommentED(); // Replace with your actual controller cla
                 <input type="hidden" name="commentid" id="commentId_edit">
                 <div class="post-box">
                     <div class="post-header">
-                        <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
-                            alt="Profile Icon" width="32" height="32">
+                        <?php
+                        // Split the path and the filename
+                        $path_parts = explode('/', $User['media']);
+                        $filename = array_pop($path_parts); // Get the filename
+                        $directory = implode('/', $path_parts); // Get the directory path
+                        
+                        // Combine them with rawurlencode applied only to the filename
+                        $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+                        ?>
+                        <img src="<?php echo $image_path; ?>" alt="Profile Icon" width="32" height="32">
                     </div>
 
                     <!-- Textarea for Post Content -->
@@ -220,12 +265,12 @@ $commentController = new CommentED(); // Replace with your actual controller cla
     </div>
     </div>
     <!-- sidebar starts -->
-    <div class="sidebar">
+    <a href="../Home/listposts.php"><div class="sidebar">
         <img src="./SVG/unifylogo.svg" class="logo" />
         <div class="sidebarOption active">
             <img class=" menu__items__icons " src="./SVG/home.svg" />
             <h2>Home</h2>
-        </div>
+        </div></a>
 
         <div class="sidebarOption">
             <img class="menu__items__icons  " src="./SVG/discussions.svg" />
@@ -242,10 +287,17 @@ $commentController = new CommentED(); // Replace with your actual controller cla
         <h2>Schedule</h2>
       </div> -->
 
-        <div class="sidebarOption">
-            <img class="menu__items__icons  " src="./SVG/profile.svg" />
+      <div class="sidebarOption" onclick="redirectToUpdatePage()">
+            <img class="menu__items__icons" src="./SVG/profile.svg" />
             <h2>Profile</h2>
         </div>
+
+        <script>
+            function redirectToUpdatePage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/profile.php';
+            }
+        </script>
         <div class="sidebarOption">
             <img class=" menu__items__icons " src="./SVG/clubs.svg" />
             <h2>Find clubs</h2>
@@ -291,10 +343,10 @@ $commentController = new CommentED(); // Replace with your actual controller cla
             <h2>Courses</h2>
         </div>
 
-        <div class="sidebarOption">
+        <a href="..\Tickets\index.php"><div class="sidebarOption">
             <img class="menu__items__icons  " src="./SVG/help.svg" />
             <h2>Help</h2>
-        </div>
+        </div><a>
 
         <button class="sidebar__tweet">Discuss</button>
     </div>
@@ -319,9 +371,16 @@ $commentController = new CommentED(); // Replace with your actual controller cla
             onsubmit="return validateForm();">
             <div class="post-box">
                 <div class="post-header">
-
-                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
-                        alt="Profile Icon" width="32" height="32">
+                    <?php
+                    // Split the path and the filename
+                    $path_parts = explode('/', $User['media']);
+                    $filename = array_pop($path_parts); // Get the filename
+                    $directory = implode('/', $path_parts); // Get the directory path
+                    
+                    // Combine them with rawurlencode applied only to the filename
+                    $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+                    ?>
+                    <img src="<?php echo $image_path; ?>" alt="Profile Icon" width="32" height="32">
                     <div class="dropdown-container">
                         <div>
                             <p>Chat Channels :</p>
@@ -421,18 +480,34 @@ $commentController = new CommentED(); // Replace with your actual controller cla
         <!-- tweetbox ends -->
         <!-- post starts -->
         <?php foreach ($posts as $post) { ?>
+            <?php
+            $userpost = $UserC->showuser($post['id_user']);
+            ?>
             <div class="post">
                 <div class="post__avatar">
-                    <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                    <?php
+                    // Split the path and the filename
+                    $path_parts = explode('/', $userpost['media']);
+                    $filename = array_pop($path_parts); // Get the filename
+                    $directory = implode('/', $path_parts); // Get the directory path
+                
+                    // Combine them with rawurlencode applied only to the filename
+                    $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+                    ?>
+                    <img src="<?php echo $image_path; ?>" alt="" />
+
+
                 </div>
 
                 <div class="post__body">
                     <div class="post__header">
                         <div class="post__headerText">
                             <h3>
-                                Somanath Goudar
+                                <?php echo $userpost['Nme'] ?>
+                                <?php echo $userpost['Lname'] ?>
                                 <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                    </span>@somanathg
+                                    </span>@
+                                    <?php echo $userpost['Username'] ?>
                                     <span class="post__date"
                                         data-creation-time="<?php echo (new DateTime($post['Created_DateTime']))->format('c'); ?>">
                                         <?php echo htmlspecialchars(timeElapsedString(new DateTime($post['Created_DateTime']))); ?>
@@ -446,7 +521,7 @@ $commentController = new CommentED(); // Replace with your actual controller cla
                                         <circle cx="20" cy="12" r="2" fill="currentColor" />
                                     </svg>
                                     <ul class="dropdown-menu-post__content">
-                            
+
                                         <li class="delete-option" onclick="confirmDelete(<?php echo $post['post_id']; ?>);">
 
                                             <svg class="icon delete-icon" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -571,20 +646,33 @@ $commentController = new CommentED(); // Replace with your actual controller cla
             <?php // Replace with your actual controller class
                 $comments = $commentController->listCommentsById($post['post_id']); ?>
             <?php foreach ($comments as $comment) { ?>
+                <?php $usercomment = $UserC->showuser($comment['created_by_user_id']); ?>
                 <div class="comment-container" style="background-color:#FFFBFB;">
                     <div class="vertical-line"></div>
                     <div class="post" style="padding-bottom: 3px;margin-left: 20px;">
                         <div class="post__avatar">
-                            <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="" />
+                            <?php
+                            // Split the path and the filename
+                            $path_parts = explode('/', $usercomment['media']);
+                            $filename = array_pop($path_parts); // Get the filename
+                            $directory = implode('/', $path_parts); // Get the directory path
+                    
+                            // Combine them with rawurlencode applied only to the filename
+                            $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+                            ?>
+                            <img src="<?php echo $image_path; ?>" alt="" />
                         </div>
 
                         <div class="post__body">
                             <div class="post__header">
                                 <div class="post__headerText">
                                     <h3 style="font-size: 15px;">
-                                        SAGAGA
+                                        <?php echo $usercomment['Nme'] ?>
+                                        <?php echo $usercomment['Lname'] ?>
                                         <span class="post__headerSpecial"><span class="material-icons post__badge"> verified
-                                            </span>@somanathg </span>
+                                            </span>@
+                                            <?php echo $usercomment['Username'] ?>
+                                        </span>
                                         <span class="post__date"
                                             data-creation-time="<?php echo (new DateTime($comment['datetime_creation']))->format('c'); ?>">
                                             <?php echo htmlspecialchars(timeElapsedString(new DateTime($comment['datetime_creation']))); ?>
@@ -668,11 +756,25 @@ $commentController = new CommentED(); // Replace with your actual controller cla
     </div>
     <div class="widgets">
         <div class="profile-container">
-            <img src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="User Avatar"
-                class="avatar">
+            <?php
+            // Split the path and the filename
+            $path_parts = explode('/', $User['media']);
+            $filename = array_pop($path_parts); // Get the filename
+            $directory = implode('/', $path_parts); // Get the directory path
+            
+            // Combine them with rawurlencode applied only to the filename
+            $image_path = "../Login/" . $directory . '/' . rawurlencode($filename);
+            ?>
+            <img src="<?php echo $image_path; ?>" alt="Profile Icon"
+                style=" border-radius: 50%;height: 40px;width: 40px;">
             <div class="user-info">
-                <span class="name">Gharbi Aziz</span>
-                <span class="username">@Sayonx1</span>
+                <span class="name" >
+                    <?php echo $User['Nme'] ?> <?php echo $User['Lname'] ?>
+
+                </span>
+                <span class="username">@
+                    <?php echo $User['Username'] ?>
+                </span>
             </div>
             <span class="dropdown-menu-post">
                 <svg class="dropdown-menu-post__icon" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -708,7 +810,7 @@ $commentController = new CommentED(); // Replace with your actual controller cla
                     </li>
 
 
-                    <li class="delete-option">
+                    <li class="delete-option" id="logoutOption">
 
 
                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -720,6 +822,7 @@ $commentController = new CommentED(); // Replace with your actual controller cla
                             </g>
                         </svg>
                         Logout
+
                     </li>
 
 

@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "../../../Model/comment.php"; include "../../../Controller/commentED.php"; 
     $postedit = new CommentED();
  

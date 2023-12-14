@@ -17,6 +17,19 @@ class PostED {
             die('Error: ' . $e->getMessage());
         }
     }
+    function showPostbyuser($postId)
+    {
+        $sql = "SELECT * from post where id_user = $postId";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->execute();
+            $rec = $query->fetch();
+            return $rec;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
     public function addPost($post) {
         $sql = $sql = "INSERT INTO post (id_user, created_datetime, channel_id, posttype_id, content, media) VALUES (:user, :created_datetime, :channel_id, :posttype, :content, :media)";
         ;

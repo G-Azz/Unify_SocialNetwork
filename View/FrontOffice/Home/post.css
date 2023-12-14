@@ -49,7 +49,8 @@
   margin-right: 10px; /* Adjust as needed */
   border-radius: 50%;
   width: auto;
-  height: 40px; /* Keep the height as is or adjust as needed */
+  height: 50px;
+  width: 50px; /* Keep the height as is or adjust as needed */
   /* Remove align-self to allow the flex container to align the image with the label */
   
 }
@@ -111,7 +112,7 @@
   transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 #dropbtn2,#dropbtn2-edit {
-  margin-left: 17px;
+  margin-left: 15px;
   width: 140px;
   height: 25px;
   padding: 6px 10px;

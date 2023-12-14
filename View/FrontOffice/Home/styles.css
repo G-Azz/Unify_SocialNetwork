@@ -108,7 +108,9 @@ body {
 /* tweet box */
 .tweetbox__input img {
   border-radius: 50%;
-  height: 40px;
+  height: 50px;
+  width: 50px;
+
 }
 
 .tweetBox {
@@ -157,8 +159,8 @@ body {
 .post__avatar img {
   margin-right: 10px; /* Adjust as needed */
   border-radius: 50%;
-  width: auto;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 
 .post {

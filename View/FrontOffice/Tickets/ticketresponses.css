@@ -1,0 +1,89 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    /* Animation styles for the ticket response box */
+    animation: colorChange 5s infinite alternate, titleAnimation 3s ease-in-out infinite alternate;
+}
+
+
+.back-to-help {
+   
+    color: #9b1c31;
+    margin-bottom: 30px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #9b1c31;
+    background-color: transparent;
+    
+    
+}
+
+.back-to-help:hover {
+    color: #fff;
+    background-color: #9b1c31;
+}
+
+.back-to-list {
+   
+    color: #9b1c31;
+    margin-bottom: 30px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid #9b1c31;
+    background-color: transparent;
+    
+    
+}
+
+.back-to-list:hover {
+    color: #fff;
+    background-color: #9b1c31;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #9b1c31;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border-left: 5px solid #9b1c31;
+    font-size: 16px;
+    line-height: 1.4;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+li:hover {
+    transform: scale(1.05);
+}
+
+li:last-child {
+    margin-bottom: 0;
+}
+
+strong {
+    color: #9b1c31;
+}

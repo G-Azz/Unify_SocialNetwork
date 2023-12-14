@@ -1,7 +1,13 @@
 <?php
+include("../../../Controller/UserC.php");
+include("../../../Model/User.php");
 include '../../../Controller/postED.php';
 include '../../../Model/post.php';
 include '../../../Controller/functions.php';
+session_start();
+
+
+
 $error = "";
 $media = ""; // Initialize $media variable
 
@@ -41,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Handle Post Creation
 $postedit = new PostED();
 if (isset($_POST["postContent"])) {
-    $user_id = 1; // Replace with actual user ID (e.g., from session)
+    $user_id =$_SESSION['user_data'] ['Id_User']; // Replace with actual user ID (e.g., from session)
     $createtime = date('Y-m-d H:i:s');
     $channel_id = $_POST['selectedChannel'] ?? 'default_channel'; // Provide a default value if not set
     $posttype = $_POST['selectedTopic'] ?? 'default_type'; // Provide a default value if not set
@@ -55,7 +61,7 @@ if (isset($_POST["postContent"])) {
         $error = $e->getMessage();
     }
 }
-header('Location: ./listpost.php');
+ header('Location: ./listpost.php');
     exit;
 // Additional logic or HTML here
 ?>

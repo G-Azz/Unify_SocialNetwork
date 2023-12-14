@@ -1,6 +1,7 @@
 <?php
 include '../../../Controller/commentED.php';
 include '../../../Model/post.php';
+session_start();
 var_dump($_POST);
 $error = "";
 $media = ""; // Initialize $media variable

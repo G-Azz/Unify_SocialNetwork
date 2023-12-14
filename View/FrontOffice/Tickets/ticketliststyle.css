@@ -1,0 +1,71 @@
+Z
+/* Center the content */
+body {
+    
+    
+    font-family: fArial, sans-seri;
+    
+}
+.solved {
+    color: green;
+}
+
+.not-solved {
+    color: red;
+}
+
+.ticket-description {
+    color: red;
+    
+}
+
+.title-style {
+
+    font-size: 24px; 
+    font-weight: bold;
+    
+}
+
+
+h1 {
+    margin-bottom: 10px;
+    color: #9b1c31;
+}
+
+/* Style the table */
+.ticket-table {
+    border-collapse: collapse;
+    width: 70%;
+    text-align: center;
+}
+
+.ticket-table th, .ticket-table td {
+    border: 1px solid #9b1c31;
+    padding: 8px;
+}
+
+/* Alternate row colors for better readability */
+.ticket-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style links within table cells */
+.ticket-table a {
+    text-decoration: none;
+    color: #9b1c31;
+}
+
+.ticket-table input[type="submit"] {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #1c9b4d;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ticket-table input[type="submit"]:hover {
+    background-color: #093109;
+}
+

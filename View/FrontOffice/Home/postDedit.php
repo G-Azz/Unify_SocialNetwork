@@ -1,6 +1,7 @@
 <?php
 include '../../../Controller/postED.php';
 include '../../../Model/post.php';
+session_start();
 $error = "";
 $media = ""; // Initialize $media variable
 

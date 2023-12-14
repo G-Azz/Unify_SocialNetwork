@@ -1,0 +1,443 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap");
+* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+section {
+    min-height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    
+
+}
+
+.menu_bouttons{
+    display: flex;
+    flex-direction: row;
+    
+}
+.menu_bouttons button {
+    gap: 5px;
+}
+.title {
+    font-size: 3rem;
+    margin-left: 20px;
+    margin-top: 10px;
+    color:#9b1c31 ;
+
+}
+.title p {
+  font-size: 1rem;
+  margin-left: 20px;
+  margin-top: 10px;
+  color:#9b1c31 ;
+
+}
+.aboutus p{
+    margin-left: 25px;
+    
+    font-size: 1.4rem;
+
+    
+}
+.faq{
+    max-width:700px;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    border-bottom:2px solid#fff;
+    cursor: pointer;
+    
+}
+
+.addticket {
+    width: 15%;
+    background-color: var(--twitter-color);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 30px;
+    height: 50px;
+    margin-top: 20px;
+  }
+.question{
+    display:flex;
+    
+    justify-content: space-between;
+    margin-left: 20px;
+    
+
+}
+.question h3 {
+    font-size: 1.8rem;
+}
+.answer {
+    max-height:0;
+    overflow:hidden;
+    transition: max-height 1.4s ease;
+    margin-left: 20px;
+}
+
+.answer p {
+    padding-top: 1rem;
+    line-height: 1.6;
+    font-size: 1.4rem;
+}
+
+.faq.active .answer{
+    max-height: 300px;
+    animation: fade 1s ease-in-out;
+    
+}
+
+.faq active svg{
+    transform: rotate(180deg);
+}
+ 
+svg {
+    transition: transform 0.5s ease-in
+
+
+}
+
+ @keyframes fade{
+    from{
+        opacity:0;
+        transform: translateY(-10px);
+    }
+ }
+
+ /* Basic styling for the form */
+.form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  
+  
+  .button-group {
+    margin-top: 20px;
+  }
+  
+  .submit-btn,
+  .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .submit-btn {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+
+  .label-reclamation {
+    font-weight: bold;
+    color: #9b1c31;
+    font-size: 1.5em; /* Adjust as needed */
+  }
+  .input-wrapper,
+.tickettype-wrapper,
+.buttons-wrapper {
+  margin-bottom: 15px;
+}
+form {
+  width: 60%; /* Adjust form width */
+  padding: 20px;
+
+  border-radius: 8px;
+
+}
+
+.form-wrapper{
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+
+}
+
+
+
+#ticketType {
+  font-size: 16px; /* Set the font size as needed */
+  padding: 10px; /* Increase padding for better visibility */
+  width: 200px; /* Adjust the width as needed */
+  /* Other styles */
+}
+
+/* Style for the input field */
+#descriptions {
+  border: 3px solid rgb(131, 118, 118);
+  outline: none;
+  font-size: 16px;
+  width: 80%;
+  height: 120px;
+  resize: none; /* Prevent resizing of textarea /
+  min-height: 50px; / Minimum height */
+  vertical-align: top;
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(99, 55, 55, 0.1);
+    /* You can add more styles as per your preference */
+}
+
+
+input[type="submit"],
+input[type="reset"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 7px;
+    background-color: #9b1c31;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    /* You can add more styles as per your preference */
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+    background-color: #697786;
+}
+.back-to-list {
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #9b1c31;
+  border-radius: 5px;
+  color: #9b1c31;
+  font-weight: none;
+  transition: background-color 0.3s, color 0.3s; /* Adds space below the link */
+}
+
+
+.back-to-list:hover {
+  background-color: #9b1c31;
+  color: white;
+}
+
+.back-to-help {
+  text-decoration: none;
+  margin-bottom: 10px;
+  display: inline-block;
+  padding: 10px 5px;
+  border: 1px solid #9b1c31;
+  border-radius: 5px;
+  color: #9b1c31;
+  font-weight: none;
+  transition: background-color 0.3s, color 0.3s; /* Adds space below the link */
+}
+
+.back-to-help:hover {
+  background-color: #9b1c31;
+  color: white;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 20px;
+  border: 1px solid #9b1c31;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #9b1c31;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.link-button:hover {
+  background-color: #9b1c31;
+  color: white;
+}
+
+.link-button2{
+  display: inline-block;
+  padding: 10px 50px;
+  border: 1px solid #9b1c31;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #9b1c31;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+
+}
+
+.link-button2:hover {
+  background-color: #9b1c31;
+  color: white;
+}
+
+.label-tickettype {
+  display: block;
+  margin-bottom: 1px;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #9b1c31;
+}
+
+.tickettype-wrapper select {
+  padding: 8px;
+  width: 8%;
+  font-size: 18px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+}
+
+.content-wrapper{
+  position: absolute;
+  top: 0px;
+}
+
+.chatbot {
+  position: fixed;
+  right: 40px;
+  bottom:100px;
+  width: 420px;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+              0 32px 64px -48px rgb(0, 0, 0, 0.5);
+}
+
+.chatbot header {
+  background: rgb(190, 190, 190);
+  padding:16px 0;
+  text-align: center;
+
+
+
+} 
+
+.chatbot header h2 {
+  color: #000000;
+  font-size: 1.4rem;
+}
+.chatbot .chatbox {
+  height:510px;
+  overflow-y :auto;
+  padding: 30px 20px 70px;
+}
+
+.chatbox .chat {
+  display:flex;
+}
+
+#send {
+  padding: 20px 15px;
+  background-color: rgb(146, 79, 94);
+  color: white;
+  width: 170px;
+  border-radius: 10px;
+  height: auto;
+  cursor: pointer;
+  position: fixed;
+  bottom: 0.5%;
+  left: 0.5%;
+  font-family: "Quicksand", sans-serif;
+
+  
+  
+}
+#send :hover{
+  background-color: rgb(58, 44, 44);
+  color: grey;
+}
+
+.chatbox .outgoing {
+  margin:20px 0;
+  justify-content: flex-end;
+  color: #1c1c1c;
+
+}
+
+
+
+.chatbox .chat p {
+  max-width: 75%;
+  color: rgb(0, 0, 0);
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 10px;
+  background: rgba(105, 59, 59, 0.247);
+}
+
+.chatbox .incoming p{
+  color: #000000;
+  background:#f2f2f2;
+  border-radius: 10px 10px 10px  0 ;    
+}
+
+
+.imagebot {
+  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(1deg) brightness(110%) contrast(101%);
+}
+
+.chatbot .chat-input{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  gap:5px;
+  background:#a76771; ;
+  padding:5px 20px;
+  border-top: 1px solid #cccccc;
+
+}
+
+.chat-input textarea {
+  height:50px;
+  width:100%;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  resize:none;
+  padding:16px 15px 16px 0;
+}
+.chat-input img{
+  color: rgb(128, 107, 190);
+  height: 30px;
+  line-height:30px;
+  font-size: 1.6rem;
+  margin-top: 10px;
+  margin-left: 5px;
+  cursor: pointer;
+
+}
+
+.chat-input textarea:valid ~ span {
+  visibility: visible;
+}
+
+
+
+

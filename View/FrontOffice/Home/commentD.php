@@ -4,7 +4,7 @@ include '../../../Model/comment.php';
 include '../../../Model/post.php';
 include '../../../Controller/functions.php';
 include '../../../Controller/postED.php';
-
+session_start();
 $error = "";
 $media = ""; // Initialize $media variable
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $commentedit = new CommentED();
 $postedit = new PostED();
 if (isset($_POST["commentContent"])) {
-    $user_id = 1; // Replace with actual user ID (e.g., from session)
+    $user_id = $_SESSION['user_data'] ['Id_User']; // Replace with actual user ID (e.g., from session)
     $post_id = $_POST['postId'];
     $createtime = date('Y-m-d H:i:s');
     $content = $_POST['commentContent'];

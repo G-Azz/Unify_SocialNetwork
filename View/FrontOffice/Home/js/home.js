@@ -375,6 +375,13 @@ document.addEventListener('click', function() {
     });
 })
 
+var logoutOption = document.getElementById('logoutOption');
+
+    // Add a click event listener to the logout element
+    logoutOption.addEventListener('click', function() {
+        // Redirect to index.php when the logout element is clicked
+        window.location.href = '../Login/index.php';
+    });
 
  
  

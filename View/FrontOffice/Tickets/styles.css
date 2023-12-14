@@ -1,0 +1,665 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  --twitter-color: #9b1c31;
+  --twitter-background: #e6ecf0;
+   
+    
+}* 
+
+
+
+.sidebarOption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sidebarOption  {
+  padding: 0px;
+}
+
+.sidebarOption h2 {
+  font-weight: 600;
+  font-size: 15px;
+  color-scheme: light;
+  margin-right: 20px;
+}
+
+.sidebarOption:hover {
+  border-radius: 20px;
+  transition: color 100ms ease-out;
+  background: rgba(155, 28, 49,0.1);
+  color: #9b1c31;
+ 
+  
+}
+
+.sidebarOption.active {
+  color: var(--twitter-color);
+  
+}
+
+.sidebar__tweet {
+  width: 100%;
+  background-color: var(--twitter-color);
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 30px;
+  height: 50px;
+  margin-top: 20px;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+
+.sidebar {
+  border-right: 1px solid var(--twitter-background);
+  flex: 0.2;
+
+  min-width: 250px;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.logo{
+  color: var(--twitter-color);
+  font-size: 30px;
+}
+
+/* feed */
+.feed {
+  flex: 0.5;
+  border-right: 1px solid var(--twitter-background);
+  min-width: fit-content;
+  overflow-y: scroll;
+}
+
+.feed__header {
+  position: sticky;
+  display: flex;
+  top: 0;
+  z-index: 100;
+  border: 1px solid var(--twitter-background);
+  padding: 15px 20px;
+  background-color: white;
+  color: #9b1c31;
+}
+.feed__header h1 {
+  display: inline;
+  margin: 0; /* Reset any default margin */
+  /* Any other necessary styling */
+}
+
+
+.feed__header h2 {
+  font-size: 20px;
+  font-weight: 600;
+ }
+
+.feed::-webkit-scrollbar {
+  display: none;
+}
+
+.feed {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* tweet box */
+.tweetbox__input img {
+  border-radius: 50%;
+  height: 40px;
+}
+
+.tweetBox {
+  padding-bottom: 10px;
+  border-bottom: 8px solid var(--twitter-background);
+  padding-right: 10px;;
+    display: flex;
+    align-items: center;
+}
+
+.tweetBox form {
+  display: flex;
+  flex-direction: column;
+}
+
+.tweetbox__input {
+  padding: 20px;
+}
+.tweetbox__input_header{
+  flex-direction: column;
+  display:flex;
+}
+
+.tweetbox__input input {
+  flex: 1;
+  margin-left: 30px;
+  font-size: 20px;
+  border: none;
+  outline: none;
+}
+
+.tweetBox__tweetButton {
+  background-color: var(--twitter-color);
+  border: none;
+  color: white;
+  font-weight: 900;
+
+  border-radius: 30px;
+  width: 80px;
+  height: 40px;
+  margin-top: 20px;
+  margin-left: auto;
+}
+
+/* post */
+.post__avatar img {
+  margin-right: 10px; /* Adjust as needed */
+  border-radius: 50%;
+  width: auto;
+  height: 40px; 
+  
+}
+
+.post {
+  display: flex;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--twitter-background);
+  padding-bottom: 10px;
+}
+
+
+.post__body img {
+  width: 450px;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.post__footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.post__badge {
+  font-size: 14px !important;
+  color: var(--twitter-color);
+  margin-right: 5px;
+}
+
+.post__headerSpecial {
+  font-weight: 600;
+  font-size: 12px;
+  color: gray;
+}
+
+.post__headerText h3 {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.post__headerchannels
+{
+  font-size: 13px;
+  color: #7f5159;
+  margin-bottom: 5px;
+}
+.post__headertopic
+{
+  width: 140px;
+  height: 25px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center; /* Vertically center the contents */
+  justify-content: center; 
+  border-radius: 16px; /* Fully rounded edges for a pill shape */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  cursor: pointer;
+  font-size: 14px; /* Adjusted font size */
+  color: #9b1c31; /* White text for contrast */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  border: 1px solid #9b1c31; /* Set the border width and style along with the color */
+}
+
+.post__headerDescription {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.post__body {
+  flex: 1;
+  padding: 10px;
+}
+
+.post__avatar {
+  padding: 20px;
+}
+.post__date {
+  color: #866565; /* Twitter-like grey color */
+  font-size: 12px; /* Small, subtle font size */
+  margin-left: 5px; /* Space between username and date */
+}
+
+/* Style for the horizontal menu */
+.post__menu {
+  display: flex; /* Aligns items in a row */
+  justify-content: space-around; /* Even spacing between items */
+  padding: 10px 0; /* Padding at the top and bottom */
+  border-top: 1px solid #e1e8ed; /* Light border on top, similar to Twitter */
+}
+
+
+/* Dropdown button */
+.dropdown-menu-post {
+  position: relative;
+  float: right;
+}
+
+.dropdown-menu-post__icon {
+  cursor: pointer;
+}
+.dropdown-menu-post__icon:hover {
+  background: rgba(155, 28, 49,0.1);
+  color: #9b1c31;
+  border-radius : 10px; 
+}
+.dropdown-menu-post__icon.active {
+  transition: color 100ms ease-out;
+  color: #9b1c31;
+  cursor: pointer;
+}
+
+/* Dropdown content */
+.dropdown-menu-post__content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9; /* Light background color */
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.dropdown-menu-post__content li,.dropdown-menu-post__content>form>li {
+  padding: 12px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px; /* Adjust the gap between icon and text as needed */
+  
+}
+.icon {
+  /* Style for your icons */
+  width: 24px; /* Adjust size as needed */
+  height: 24px; /* Adjust size as needed */
+}
+.delete-option ,.delete-option>form>button{
+  color: rgba(244, 33, 46, 1); /* Corrected RGBA color */
+  display: flex;
+  align-items: center; /* Ensure vertical alignment to center */
+  justify-content: start; /* Align content to the start of the li */
+  gap: 8px; /* Space between the icon and text */
+}
+.delete-option button {
+  background: none;
+  border: none;
+  padding: 0; /* Remove padding to prevent misalignment */
+  display: flex;
+  align-items: center; /* Align the button's children */
+  gap: 8px; /* Space between the icon and text */
+  object-fit: cover;
+  color: inherit; /* The button text inherits the color from .delete-option */
+}
+/* Style the list items */
+.dropdown-menu-post__content li:hover {
+  background-color: #f1f1f1; /* Light grey background on hover */
+}
+
+
+/* widgets */
+.widgets {
+
+  display: flex;
+  align-items: center;
+  background-color: var(--twitter-background);
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+.widgets__input input {
+  border: none;
+  background-color: var(--twitter-background);
+}
+
+.widgets__searchIcon {
+  color: gray;
+}
+
+.widgets__widgetContainer {
+  margin-top: 15px;
+  margin-left: 20px;
+  padding: 20px;
+  background-color: #f5f8fa;
+  border-radius: 20px;
+}
+
+.widgets__widgetContainer h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+/*mine*/
+
+.menu__items:hover {
+  background: rgba(155, 28, 49,0.1);
+  color: #9b1c31;
+  border-radius : 20px; 
+  cursor: pointer;
+}
+.menu__items--active{
+ color: #9b1c31;
+}
+.sidebarOption.active .menu__items__icons{
+  filter: invert(16%) sepia(84%) saturate(2103%) hue-rotate(330deg) brightness(93%) contrast(99%);
+}
+
+.menu__items__icons{
+  height: 26px;
+  width: auto;
+  margin: 20px;
+  
+}
+/*7rf*/
+.tree ul{
+  list-style: none;
+  line-height:2em;
+}
+
+.tree ul summary{
+  cursor: pointer;
+}
+.tree ul summary::marker{
+  display:none;
+}
+.tree ul summary::-webkit-details-marker{
+  display:none;
+}
+
+.tree ul li{
+  position:relative;
+
+}
+.tree ul li::before{
+  position:absolute;
+  left:-10px;
+  top:0px;
+  border-bottom:2px solid rgba(155, 28, 49,1);
+  border-left:2px solid rgba(155, 28, 49,1);;
+  content:"";
+  width:8px;
+  height:3em;
+}
+
+.tree ul li::after{
+  position:absolute;
+  left:-10px;
+  bottom:0px;
+  border-left: 2px solid rgba(155, 28, 49,1);
+  content:"";
+  width:8px;
+  height: 100%;
+
+}
+
+.tree ul li:last-child::after{
+  display:none;
+}
+
+.tree ul.tree > li:after,ul.tree> li:before{
+  display:none;
+}
+
+
+.tree details > summary {
+  list-style: none;
+}
+.tree details > summary::-webkit-details-marker {
+  display: none;
+}
+.lefty{
+  margin-left:86px;
+}
+.search_bar{
+  text-align: left;
+  margin-left: 30vw;
+  background-color: rgba(155, 28, 49,0.1);
+  align-items: center ;
+  display:flex;
+  border-radius: 200px;
+  
+
+}
+.search_bar input{
+  background:transparent;
+  width: 200px;
+  height: 10px;
+  flex:0;
+  border: 0;
+  outline: 0px;
+  padding: 15px 10px;
+  font-size: 15px;
+  color:black ;
+}
+.search_bar input::placeholder{
+  color: rgba(155, 28, 49,0.4);
+  font-size: 15px;
+}
+.search_bar button img{
+  width: 25px;
+  filter: invert(16%) sepia(84%) saturate(2103%) hue-rotate(330deg) brightness(93%) contrast(99%);
+  height: auto;
+}
+.search_bar button {
+  border:none;
+  border-radius: 100%;
+  width: 60px;
+  height: 30px;
+  background-color: transparent;
+  cursor: pointer;
+
+}
+#study:active{
+  border-radius: 30px;
+  transition: color 100ms ease-out;
+  background: rgba(155, 28, 49,0.1);
+  color: #9b1c31;
+  border-radius : 20px; 
+  cursor: pointer;
+}
+.channel-tag {
+  display: inline-block;
+  margin: 3px;
+  background-color: transparent;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+  border: 1px solid transparent;
+  font-size: 12px; /* Smaller font size */
+  border-radius: 25%;
+}
+
+.channel-tag .flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.channel-tag i {
+  cursor: pointer;
+}
+
+.all-channels {
+  background-color: #ff0fdf; /* Background color for "All Channels" */
+}
+.tweetbox_input_header{
+  -webkit-box-direction: normal;
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+.all-channels #selected-channels {
+  display: flex;
+}
+/*Modal*/
+/* Modal Styles */
+
+
+/* Modal Content */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+ 
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+  display:flex;
+  background-color: #fefefe;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
+  gap:10px;
+}
+.modal-content-edit {
+  display:flex;
+ 
+  background-color: #fefefe;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
+  gap:10px;
+}
+.modal-content-edit > form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.modal-content > form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.delete-btn {
+  background-color: rgba(244, 33, 46, 1);; /* Red */
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-right: 10px;
+  cursor:pointer;
+}
+
+.cancel-btn {
+  background-color: #f9f9f9; /* Light grey */
+  border: 1px solid #ccc;
+  width:100%;
+  cursor:pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+.page-overlay {
+  display: none; /* Hidden by default */
+  position: fixed; /* Cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 10; /* Ensure it's below the modal but above other content */
+}
+/* When the modal is active, add this class to main content via JavaScript */
+.blur-content {
+  filter: blur(8px);
+}
+.giphy-menu {
+  position: absolute; /* Position relative to the parent element */
+  background-color: #f9f9f9;
+  max-width: 600px;
+  max-height: 400px; /* Set a max height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: unset;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 5000; /* High z-index to overlay above everything */
+  border-radius: 5px;
+  padding: 10px;
+  display: none; /* Initially hide the menu */
+}
+.giphy-search {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.emote-container {
+  position: absolute; /* Position relative to the parent element */
+  background-color: #f9f9f9;
+  max-width: 400px;
+  max-height: 200px; /* Set a max height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: unset;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 5000; /* High z-index to overlay above everything */
+  border-radius: 5px;
+  padding: 10px;
+  display: none; /* Initially hide the menu */
+}
+
+
+
+.emote {
+  cursor: pointer;
+  margin: 5px;
+  width: 50px; /* Example size, adjust as needed */
+  height: 50px;
+}
