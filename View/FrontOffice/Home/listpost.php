@@ -22,7 +22,7 @@ function validateInput($input)
 {
     return filter_var($input, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1)));
 }
-echo ($_SESSION['id']);
+
 if (isset($_SESSION['id'])) {
     $userID = validateInput($_SESSION['id']);
 
@@ -265,12 +265,12 @@ $commentController = new CommentED(); // Replace with your actual controller cla
     </div>
     </div>
     <!-- sidebar starts -->
-    <a href="../Home/listposts.php"><div class="sidebar">
+    <div class="sidebar">
         <img src="./SVG/unifylogo.svg" class="logo" />
-        <div class="sidebarOption active">
+        <div class="sidebarOption active"onclick="redirectToHomePage()" >
             <img class=" menu__items__icons " src="./SVG/home.svg" />
             <h2>Home</h2>
-        </div></a>
+        </div>
 
         <div class="sidebarOption">
             <img class="menu__items__icons  " src="./SVG/discussions.svg" />
@@ -296,6 +296,14 @@ $commentController = new CommentED(); // Replace with your actual controller cla
             function redirectToUpdatePage() {
                 // Use the local server URL
                 window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/profile.php';
+            }
+            function redirectToHelpPage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Tickets/index.php';
+            }
+            function redirectToHomePage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/listpost.php';
             }
         </script>
         <div class="sidebarOption">
@@ -343,10 +351,10 @@ $commentController = new CommentED(); // Replace with your actual controller cla
             <h2>Courses</h2>
         </div>
 
-        <a href="..\Tickets\index.php"><div class="sidebarOption">
-            <img class="menu__items__icons  " src="./SVG/help.svg" />
+       <div class="sidebarOption" onclick="redirectToHelpPage()">
+            <img class="menu__items__icons  "  src="./SVG/help.svg" />
             <h2>Help</h2>
-        </div><a>
+        </div>
 
         <button class="sidebar__tweet">Discuss</button>
     </div>

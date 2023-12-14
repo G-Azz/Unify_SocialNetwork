@@ -51,8 +51,8 @@ if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
     <!-- sidebar starts -->
     <div class="sidebar">
         <img src="./SVG/unifylogo.svg" class="logo" />
-        <div class="sidebarOption">
-            <img class=" menu__items__icons " src="./SVG/home.svg" onclick="redirectTohomeePage()"/>
+        <div class="sidebarOption active"onclick="redirectToHomePage()" >
+            <img class=" menu__items__icons " src="./SVG/home.svg" />
             <h2>Home</h2>
         </div>
 
@@ -71,7 +71,7 @@ if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
         <h2>Schedule</h2>
       </div> -->
 
-        <div class="sidebarOption active" onclick="redirectToUpdatePage()">
+      <div class="sidebarOption" onclick="redirectToUpdatePage()">
             <img class="menu__items__icons" src="./SVG/profile.svg" />
             <h2>Profile</h2>
         </div>
@@ -79,16 +79,17 @@ if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
         <script>
             function redirectToUpdatePage() {
                 // Use the local server URL
-                window.location.href = 'http://localhost/ss/View/FrontOfiice/View/Home/profile.php';
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/profile.php';
             }
-            function redirectTohomePage() {
+            function redirectToHelpPage() {
                 // Use the local server URL
-                window.location.href = 'http://localhost/ss/View/FrontOfiice/View/Home/listpost.php';
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Tickets/index.php';
+            }
+            function redirectToHomePage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/listpost.php';
             }
         </script>
-
-
-
         <div class="sidebarOption">
             <img class=" menu__items__icons " src="./SVG/clubs.svg" />
             <h2>Find clubs</h2>
@@ -134,26 +135,10 @@ if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
             <h2>Courses</h2>
         </div>
 
-        <div class="sidebarOption">
-            <img class="menu__items__icons  " src="./SVG/help.svg" />
+       <div class="sidebarOption" onclick="redirectToHelpPage()">
+            <img class="menu__items__icons  "  src="./SVG/help.svg" />
             <h2>Help</h2>
         </div>
-
-        <div class="sidebarOption" id="logoutOption">
-            <img class="menu__items__icons  " src="./SVG/help.svg" />
-            <h2>Logout</h2>
-        </div>
-
-        <script>
-            // Get the logout element by its ID
-            var logoutOption = document.getElementById('logoutOption');
-
-            // Add a click event listener to the logout element
-            logoutOption.addEventListener('click', function () {
-                // Redirect to index.php when the logout element is clicked
-                window.location.href = '../../../../View/index.php';
-            });
-        </script>
 
         <button class="sidebar__tweet">Discuss</button>
     </div>
@@ -291,6 +276,13 @@ if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
             </h3>
 
         </div>
+
+
+
+
+
+
+        <!-- widgets ends -->
         <script src="./js/home.js"></script>
         <script src="./js/postedit.js"></script>
         <style>

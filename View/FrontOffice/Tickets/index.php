@@ -1,7 +1,28 @@
 <?php
+include("../../../Controller/UserC.php");
+include("../../../Model/User.php");
 session_start();
+$error = '';
+$User = isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;
+$UserC = new UserC();
 
-$User = isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;?>
+
+function validateInput($input)
+{
+    return filter_var($input, FILTER_VALIDATE_INT, array("options" => array("min_range" => 1)));
+}
+
+
+$User = $UserC->showuser($_SESSION['user_data']['Id_User']);
+
+
+if (isset($_POST['submit']) && isset($_SESSION['id']) && $User) {
+    // Form is submitted, update the user
+    $UserC->updateuser($User, $_SESSION['id']);
+    // Redirect or perform any other actions after updating the user
+    header("Location: updateUser.php");
+    exit();
+}?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,83 +48,98 @@ $User = isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;?>
 
   <!-- sidebar starts -->
   <div class="sidebar">
-    <img src="./SVG/unifylogo.svg" class="logo" />
-    <div class="sidebarOption ">
-      <img class=" menu__items__icons " src="./SVG/home.svg" />
-      <h2>Home</h2>
-    </div>
+        <img src="./SVG/unifylogo.svg" class="logo" />
+        <div class="sidebarOption active"onclick="redirectToHomePage()" >
+            <img class=" menu__items__icons " src="./SVG/home.svg" />
+            <h2>Home</h2>
+        </div>
 
-    <div class="sidebarOption">
-      <img class="menu__items__icons  " src="./SVG/discussions.svg" />
-      <h2>Discussions</h2>
-    </div>
+        <div class="sidebarOption">
+            <img class="menu__items__icons  " src="./SVG/discussions.svg" />
+            <h2>Discussions</h2>
+        </div>
 
-    <!-- <div class="sidebarOption">
+        <!-- <div class="sidebarOption">
         <img class="menu__items__icons  " src="./SVG/notification.svg" />
         <h2>Notifications</h2>
       </div> -->
 
-    <!-- <div class="sidebarOption">
+        <!-- <div class="sidebarOption">
         <img class="menu__items__icons  " src="./SVG/schedule.svg" />
         <h2>Schedule</h2>
       </div> -->
 
-    <div class="sidebarOption">
-      <img class="menu__items__icons  " src="./SVG/profile.svg" />
-      <h2>Profile</h2>
+      <div class="sidebarOption" onclick="redirectToUpdatePage()">
+            <img class="menu__items__icons" src="./SVG/profile.svg" />
+            <h2>Profile</h2>
+        </div>
+
+        <script>
+            function redirectToUpdatePage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/profile.php';
+            }
+            function redirectToHelpPage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Tickets/index.php';
+            }
+            function redirectToHomePage() {
+                // Use the local server URL
+                window.location.href = 'http://localhost/Unify_SocialNetwork/View/FrontOffice/Home/listpost.php';
+            }
+        </script>
+        <div class="sidebarOption">
+            <img class=" menu__items__icons " src="./SVG/clubs.svg" />
+            <h2>Find clubs</h2>
+        </div>
+
+        <div class="sidebarOption">
+            <img class="menu__items__icons  " src="./SVG/carpooling.svg" />
+            <h2>Carpooling</h2>
+        </div>
+        <ul class="tree">
+            <li>
+                <details>
+                    <summary>
+                        <div class="sidebarOption" id="study" tabindex="0" name="study">
+                            <img class="menu__items__icons  " src="./SVG/study.svg" />
+                            <h2>Study with</h2>
+                        </div>
+                    </summary>
+                    <ul>
+                        <div class="lefty">
+                            <li>
+                                <div class="sidebarOption">
+                                    <img class="menu__items__icons  " src="./SVG/tutor.svg" />
+                                    <h4>Tutor</h4>
+                                </div>
+                            </li>
+                            <li>
+
+                                <div class="sidebarOption">
+                                    <img class="menu__items__icons  " src="./SVG/group.svg" />
+                                    <h4>Group</h4>
+                                </div>
+                            </li>
+                        </div>
+
+
+                </details>
+            </li>
+        </ul>
+
+        <div class="sidebarOption">
+            <img class="menu__items__icons  " src="./SVG/courses.svg" />
+            <h2>Courses</h2>
+        </div>
+
+       <div class="sidebarOption" onclick="redirectToHelpPage()">
+            <img class="menu__items__icons  "  src="./SVG/help.svg" />
+            <h2>Help</h2>
+        </div>
+
+        <button class="sidebar__tweet">Discuss</button>
     </div>
-    <div class="sidebarOption">
-      <img class=" menu__items__icons " src="./SVG/clubs.svg" />
-      <h2>Find clubs</h2>
-    </div>
-
-    <div class="sidebarOption">
-      <img class="menu__items__icons  " src="./SVG/carpooling.svg" />
-      <h2>Carpooling</h2>
-    </div>
-    <ul class="tree">
-      <li>
-        <details>
-          <summary>
-            <div class="sidebarOption" id="study" tabindex="0" name="study">
-              <img class="menu__items__icons  " src="./SVG/study.svg" />
-              <h2>Study with</h2>
-            </div>
-          </summary>
-          <ul>
-            <div class="lefty">
-              <li>
-                <div class="sidebarOption">
-                  <img class="menu__items__icons  " src="./SVG/tutor.svg" />
-                  <h4>Tutor</h4>
-                </div>
-              </li>
-              <li>
-
-                <div class="sidebarOption">
-                  <img class="menu__items__icons  " src="./SVG/group.svg" />
-                  <h4>Group</h4>
-                </div>
-              </li>
-            </div>
-
-
-        </details>
-      </li>
-    </ul>
-
-    <div class="sidebarOption" style="top: 0; left: 0;">
-      <img class="menu__items__icons  " src="./SVG/courses.svg" />
-      <h2>Courses</h2>
-    </div>
-
-    <div class="sidebarOption active">
-      <img class="menu__items__icons  " src="./SVG/help.svg" />
-      <h2>Help Center</h2>
-    </div>
-
-    <button class="sidebar__tweet">Discuss</button>
-  </div>
   <!-- sidebar ends -->
 
   <!-- feed starts -->
@@ -203,6 +239,7 @@ $User = isset($_SESSION['user_data']) ? $_SESSION['user_data'] : null;?>
   From A Bot
 </a>
 </div>
+
 
 
 
