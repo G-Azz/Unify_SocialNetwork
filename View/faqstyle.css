@@ -28,12 +28,21 @@ section {
     margin-left: 20px;
     margin-top: 10px;
     color:#9b1c31 ;
-    
 
+}
+.title p {
+  font-size: 1rem;
+  margin-left: 20px;
+  margin-top: 10px;
+  color:#9b1c31 ;
 
 }
 .aboutus p{
     margin-left: 25px;
+    
+    font-size: 1.4rem;
+
+    
 }
 .faq{
     max-width:700px;
@@ -43,6 +52,7 @@ section {
     cursor: pointer;
     
 }
+
 .addticket {
     width: 15%;
     background-color: var(--twitter-color);
@@ -427,5 +437,7 @@ input[type="reset"]:hover {
 .chat-input textarea:valid ~ span {
   visibility: visible;
 }
+
+
 
 

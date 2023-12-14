@@ -9,9 +9,11 @@ class Ticket
     private DateTime $created_datetime;
     private int $ticket_typeid;
     private string $opened;
+    private string $email;
+
     
     public function __construct( int $user_sender_id,
-     int $admin_id, string $descriptions, string $media, string $created_datetime, int $ticket_typeid,string $opened)
+     int $admin_id, string $descriptions, string $media, string $created_datetime, int $ticket_typeid,string $opened,string $email)
         {   
             $this->user_sender_id = $user_sender_id;
             $this->admin_id = $admin_id;
@@ -20,6 +22,9 @@ class Ticket
             $this->created_datetime = new DateTime($created_datetime);
             $this->ticket_typeid = $ticket_typeid;
             $this->opened = $opened;
+            $this->email = $email;
+            
+
         }
 public function setTicketId(int $ticket_id)
 {
@@ -87,6 +92,16 @@ public function getopened()
 {
     return $this->opened;
 }
+public function setemail(string $email)
+{
+    $this->email = $email;
+}
+public function getemail()
+{
+    return $this->email;
+}
+
+
 }
 
 ?>

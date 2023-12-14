@@ -13,6 +13,7 @@ body {
 }* 
 
 
+
 .sidebarOption {
   display: flex;
   align-items: center;
@@ -57,7 +58,7 @@ body {
 
 body {
   display: flex;
-  height: 100vh;
+  flex-direction: row;
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
@@ -91,11 +92,16 @@ body {
   position: sticky;
   display: flex;
   top: 0;
-  background-color: white;
   z-index: 100;
   border: 1px solid var(--twitter-background);
   padding: 15px 20px;
+  background-color: white;
   color: #9b1c31;
+}
+.feed__header h1 {
+  display: inline;
+  margin: 0; /* Reset any default margin */
+  /* Any other necessary styling */
 }
 
 
@@ -163,8 +169,11 @@ body {
 
 /* post */
 .post__avatar img {
+  margin-right: 10px; /* Adjust as needed */
   border-radius: 50%;
-  height: 40px;
+  width: auto;
+  height: 40px; 
+  
 }
 
 .post {
@@ -173,6 +182,7 @@ body {
   border-bottom: 1px solid var(--twitter-background);
   padding-bottom: 10px;
 }
+
 
 .post__body img {
   width: 450px;
@@ -202,9 +212,32 @@ body {
   font-size: 15px;
   margin-bottom: 5px;
 }
+.post__headerchannels
+{
+  font-size: 13px;
+  color: #7f5159;
+  margin-bottom: 5px;
+}
+.post__headertopic
+{
+  width: 140px;
+  height: 25px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center; /* Vertically center the contents */
+  justify-content: center; 
+  border-radius: 16px; /* Fully rounded edges for a pill shape */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  cursor: pointer;
+  font-size: 14px; /* Adjusted font size */
+  color: #9b1c31; /* White text for contrast */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  border: 1px solid #9b1c31; /* Set the border width and style along with the color */
+}
 
 .post__headerDescription {
   margin-bottom: 10px;
+  margin-top: 10px;
   font-size: 15px;
 }
 
@@ -216,6 +249,90 @@ body {
 .post__avatar {
   padding: 20px;
 }
+.post__date {
+  color: #866565; /* Twitter-like grey color */
+  font-size: 12px; /* Small, subtle font size */
+  margin-left: 5px; /* Space between username and date */
+}
+
+/* Style for the horizontal menu */
+.post__menu {
+  display: flex; /* Aligns items in a row */
+  justify-content: space-around; /* Even spacing between items */
+  padding: 10px 0; /* Padding at the top and bottom */
+  border-top: 1px solid #e1e8ed; /* Light border on top, similar to Twitter */
+}
+
+
+/* Dropdown button */
+.dropdown-menu-post {
+  position: relative;
+  float: right;
+}
+
+.dropdown-menu-post__icon {
+  cursor: pointer;
+}
+.dropdown-menu-post__icon:hover {
+  background: rgba(155, 28, 49,0.1);
+  color: #9b1c31;
+  border-radius : 10px; 
+}
+.dropdown-menu-post__icon.active {
+  transition: color 100ms ease-out;
+  color: #9b1c31;
+  cursor: pointer;
+}
+
+/* Dropdown content */
+.dropdown-menu-post__content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9; /* Light background color */
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.dropdown-menu-post__content li,.dropdown-menu-post__content>form>li {
+  padding: 12px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px; /* Adjust the gap between icon and text as needed */
+  
+}
+.icon {
+  /* Style for your icons */
+  width: 24px; /* Adjust size as needed */
+  height: 24px; /* Adjust size as needed */
+}
+.delete-option ,.delete-option>form>button{
+  color: rgba(244, 33, 46, 1); /* Corrected RGBA color */
+  display: flex;
+  align-items: center; /* Ensure vertical alignment to center */
+  justify-content: start; /* Align content to the start of the li */
+  gap: 8px; /* Space between the icon and text */
+}
+.delete-option button {
+  background: none;
+  border: none;
+  padding: 0; /* Remove padding to prevent misalignment */
+  display: flex;
+  align-items: center; /* Align the button's children */
+  gap: 8px; /* Space between the icon and text */
+  object-fit: cover;
+  color: inherit; /* The button text inherits the color from .delete-option */
+}
+/* Style the list items */
+.dropdown-menu-post__content li:hover {
+  background-color: #f1f1f1; /* Light grey background on hover */
+}
+
 
 /* widgets */
 .widgets {
@@ -381,14 +498,14 @@ body {
 }
 .channel-tag {
   display: inline-block;
-  margin: 5px;
-  padding: 2px 6px; /* Smaller padding */
+  margin: 3px;
   background-color: transparent;
   text-align: center;
   white-space: nowrap;
   position: relative;
-  border: 2px solid transparent;
-  font-size: 14px; /* Smaller font size */
+  border: 1px solid transparent;
+  font-size: 12px; /* Smaller font size */
+  border-radius: 25%;
 }
 
 .channel-tag .flex-container {
@@ -412,9 +529,137 @@ body {
 }
 .all-channels #selected-channels {
   display: flex;
+}
+/*Modal*/
+/* Modal Styles */
 
+
+/* Modal Content */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+ 
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+  display:flex;
+  background-color: #fefefe;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
+  gap:10px;
+}
+.modal-content-edit {
+  display:flex;
+ 
+  background-color: #fefefe;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  border-radius: 15px;
+  gap:10px;
+}
+.modal-content-edit > form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.modal-content > form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.delete-btn {
+  background-color: rgba(244, 33, 46, 1);; /* Red */
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-right: 10px;
+  cursor:pointer;
+}
+
+.cancel-btn {
+  background-color: #f9f9f9; /* Light grey */
+  border: 1px solid #ccc;
+  width:100%;
+  cursor:pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+.page-overlay {
+  display: none; /* Hidden by default */
+  position: fixed; /* Cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  z-index: 10; /* Ensure it's below the modal but above other content */
+}
+/* When the modal is active, add this class to main content via JavaScript */
+.blur-content {
+  filter: blur(8px);
+}
+.giphy-menu {
+  position: absolute; /* Position relative to the parent element */
+  background-color: #f9f9f9;
+  max-width: 600px;
+  max-height: 400px; /* Set a max height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: unset;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 5000; /* High z-index to overlay above everything */
+  border-radius: 5px;
+  padding: 10px;
+  display: none; /* Initially hide the menu */
+}
+.giphy-search {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.emote-container {
+  position: absolute; /* Position relative to the parent element */
+  background-color: #f9f9f9;
+  max-width: 400px;
+  max-height: 200px; /* Set a max height for scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: unset;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 5000; /* High z-index to overlay above everything */
+  border-radius: 5px;
+  padding: 10px;
+  display: none; /* Initially hide the menu */
 }
 
 
 
-
+.emote {
+  cursor: pointer;
+  margin: 5px;
+  width: 50px; /* Example size, adjust as needed */
+  height: 50px;
+}

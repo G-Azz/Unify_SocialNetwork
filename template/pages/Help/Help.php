@@ -45,7 +45,7 @@
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h1 class="welcome-text">  <span class="text-black fw-bold">Unify</span></h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -376,31 +376,7 @@
       <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="../../index.php">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
-          </li>
           
-
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a></li>
-              </ul>
-            </div>
-          </li>
 
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
@@ -408,12 +384,15 @@
               <span class="menu-title">Users</span>
               <i class="menu-arrow"></i>
             </a>
+           
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/ss/View/BackOffice/template/pages/tables/basic-table.php">Users Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../tables/basic-table.php">Users Management</a></li>
               </ul>
             </div>
           </li>
+
+         
 
           <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
@@ -427,6 +406,26 @@
 
               </ul>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="postt.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Posts</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="clubs.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Clubs</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="typeclub.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Club Types</span>
+            </a>
           </li>
 
 
@@ -489,29 +488,39 @@ $totalPages = ceil($totalTickets / $perPage);
         <th>Description</th>
         <th>Date</th>
         <th>Type</th>
+        <th>Email</th>
         <th>Delete</th>
         <th>Reply</th>
     </tr>
 
     <?php foreach ($tab as $ticket) { ?>
-        <tr>
-            <td><?= $ticket['ticket_id']; ?></td>
-            <td><?= $ticket['user_sender_id']; ?></td>
-            <td><?= $ticket['descriptions']; ?></td>
-            <td><?= $ticket['created_datetime']; ?></td>
-            <td><?= $ticket['ticket_typeid']; ?></td>
-            <td>
-                <a href="../../../View/deleteticket.php?id=<?= $ticket['ticket_id']; ?>">Delete</a> 
-            </td>
-            <td>
-                <form method="POST" action="reply.php">
-                    <a href="../../../View/reply.php?id=<?= $ticket['ticket_id']; ?>">Reply </a>
-                </form>
-            </td>
+    <tr>
+        <td><?= $ticket['ticket_id']; ?></td>
+        <td><?= $ticket['user_sender_id']; ?></td>
+        <td><?= $ticket['descriptions']; ?></td>
+        <td><?= $ticket['created_datetime']; ?></td>
 
-        </tr>
+        <td>
+            <?php if ($ticket['ticket_typeid'] == 1): ?>
+                Feedback
+            <?php elseif ($ticket['ticket_typeid'] == 2): ?>
+                Report
+            <?php else: ?>
+                Other Type
+            <?php endif; ?>
+        </td>
+        <td><?= $ticket['email']; ?></td>
 
-    <?php } ?>
+        <td>
+            <a href="../../../View/deleteticket.php?id=<?= $ticket['ticket_id']; ?>">Delete</a>
+        </td>
+        <td>
+            <form method="POST" action="reply.php">
+                <a href="../../../View/reply.php?id=<?= $ticket['ticket_id']; ?>">Reply </a>
+            </form>
+        </td>
+    </tr>
+<?php } ?>
 </table>
 
 <div class="pagination">

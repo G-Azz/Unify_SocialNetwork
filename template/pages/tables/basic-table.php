@@ -1,10 +1,4 @@
-<?php
-include('D:/Esprit 2eme/progs/xampp/htdocs/ss/Controller/UserC.php');
-$UserC = new UserC();
-$UserC->listUser();
-$list = $UserC->listUser();
 
-?>
 
 
 <!DOCTYPE html>
@@ -22,6 +16,9 @@ $list = $UserC->listUser();
   <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
   <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="listoftickets.css">
+
+
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -53,7 +50,7 @@ $list = $UserC->listUser();
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h1 class="welcome-text">  <span class="text-black fw-bold">Unify</span></h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -384,12 +381,7 @@ $list = $UserC->listUser();
       <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="../../index.php">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
+         
 
           <li class="nav-item">
 
@@ -418,10 +410,12 @@ $list = $UserC->listUser();
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/ss/View/BackOffice/template/pages/tables/basic-table.php">Users Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="basic-table.php">Users Management</a></li>
               </ul>
             </div>
           </li>
+
+
 
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
@@ -431,9 +425,29 @@ $list = $UserC->listUser();
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/ss/View/BackOffice/template/pages/Help/Help.php">Tickets Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../Help/Help.php">Tickets Management</a></li>
               </ul>
             </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="../Help/postt.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Posts</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../Help/clubs.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Clubs</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="../Help/typeclub.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Club Types</span>
+            </a>
           </li>
 
 
@@ -536,3 +550,10 @@ $list = $UserC->listUser();
 </body>
 
 </html>
+<?php
+include('D:/Esprit 2eme/progs/xampp/htdocs/ss/Controller/UserC.php');
+$UserC = new UserC();
+$UserC->listUser();
+$list = $UserC->listUser();
+
+?>

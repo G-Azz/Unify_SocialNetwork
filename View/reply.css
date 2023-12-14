@@ -1,86 +1,90 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 0;
+    background-image: linear-gradient(to bottom right, #fca9a9, #ffcccb); /* Gradient background */
 }
 
-/* Styling for the ticket details section */
+/* Container styling */
+.khalil {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Ticket details styling */
 .ticket-details {
-    background-color: #f9f9f9;
-    padding: 20px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ccc; /* Adjust border size here */
 }
 
-.ticket-details h2 {
-    color: #a03737;
+.ticketd {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* Reply box styling */
+.reply-box {
+    padding: 20px;
+    background-color: rgba(255, 235, 238, 0.8); /* Light red semi-transparent background */
+    border-radius: 12px;
+    border: 2px solid #9b1c31; /* Red border */
+    animation: fadeIn 1s ease-in-out; /* Example animation */
+}
+
+.reply-box h2 {
+    color: #9b1c31; /* Red color */
     margin-bottom: 15px;
 }
 
-.ticket-details p {
-    margin: 5px 0;
-}
-
-.ticket-details strong {
-    font-weight: bold;
-}
-.ticketd{
+/* Form styling */
+form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    
-}
-.sghar{
-    display:flex;
-    flex-direction: column;
 }
 
-/* Styling for the reply box section */
-.reply-box {
-    background-color: #fff;
-    padding: 20px;
+textarea {
+    width: calc(100% - 20px);
+    height: 100px;
+    margin-bottom: 20px;
+    border: 1px solid #9b1c31; /* Red border */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ccc;
-    width: 700px;
-    align-items:center /* Adjust border size here */
-}
-.khalil{
-    display:flex;
-    flex-direction: column;
-    
-
-}
-.reply-box h2 {
-    color:#a03737;
-    margin-bottom: 15px;
-    
-}
-
-.reply-box textarea {
-    width: 100%;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    resize: vertical;
+    resize: none;
 }
 
-.reply-box input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #2cad7c;
-    color: #fff;
+input[type="submit"] {
+    width: 150px;
+    padding: 12px;
+    background-color: #9b1c31; /* Red background */
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.reply-box input[type="submit"]:hover {
-    background-color: #0056b3;
+input[type="submit"]:hover {
+    background-color: #9b1c31; /* Darker red on hover */
+}
+
+/* Error styling */
+.errors {
+    color: #9b1c31; /* Bright red for errors */
+    margin-bottom: 20px;
+}
+
+/* Example animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

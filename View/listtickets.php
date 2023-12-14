@@ -3,26 +3,41 @@ include "../Controller/ticketreplyC.php";
 include "../controller/ticketC.php"; 
 $user_sender_id = 3;
 $ticketedit = new TicketED();
-$tab = $ticketedit->listTicketsByUser($user_sender_id); 
+$perPage = 10; // Number of tickets per page
+
+// Get the current page or set a default
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Get total number of tickets
+$total_tickets = $ticketedit->countTicketsByUser($user_sender_id);
+$total_pages = ceil($total_tickets / $perPage);
+
+// Calculate the starting ticket for the current page
+$start = ($current_page - 1) * $perPage;
+
+// Fetch tickets for the current page
+$tab = $ticketedit->listTicketsByUserWithPagination($user_sender_id, $start, $perPage); 
 $ticketreplyedit = new TicketReplyED();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="ticketliststyle.css">
-    <link rel="stylesheet" href="faqstyle.css">
+    <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="brand.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List of Tickets</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: auto;
-            position: relative;
-            background-color: #f8f8f8;
-        }
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  flex-direction: row;
+  font-family: Arial, Helvetica, sans-serif;
+}
+    
         canvas {
             position: fixed;
             top: 0;
@@ -69,10 +84,10 @@ $ticketreplyedit = new TicketReplyED();
         .status {
             font-weight: bold;
         }
-        .solved {
+        .replied {
             color: #27ae60;
         }
-        .not-solved {
+        .not-replied{
             color: #c0392b;
         }
         .update {
@@ -102,16 +117,110 @@ $ticketreplyedit = new TicketReplyED();
     </style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
+<div class="sidebar">
+    <img src="./SVG/unifylogo.svg" class="logo" />
+    <div class="sidebarOption ">
+      <img class=" menu__items__icons " src="./SVG/home.svg" />
+      <h2>Home</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/discussions.svg" />
+      <h2>Discussions</h2>
+    </div>
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/notification.svg" />
+        <h2>Notifications</h2>
+      </div> -->
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/schedule.svg" />
+        <h2>Schedule</h2>
+      </div> -->
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/profile.svg" />
+      <h2>Profile</h2>
+    </div>
+    <div class="sidebarOption">
+      <img class=" menu__items__icons " src="./SVG/clubs.svg" />
+      <h2>Find clubs</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/carpooling.svg" />
+      <h2>Carpooling</h2>
+    </div>
+    <ul class="tree">
+      <li>
+        <details>
+          <summary>
+            <div class="sidebarOption" id="study" tabindex="0" name="study">
+              <img class="menu__items__icons  " src="./SVG/study.svg" />
+              <h2>Study with</h2>
+            </div>
+          </summary>
+          <ul>
+            <div class="lefty">
+              <li>
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/tutor.svg" />
+                  <h4>Tutor</h4>
+                </div>
+              </li>
+              <li>
+
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/group.svg" />
+                  <h4>Group</h4>
+                </div>
+              </li>
+            </div>
+
+
+        </details>
+      </li>
+    </ul>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/courses.svg" />
+      <h2>Courses</h2>
+    </div>
+
+    <div class="sidebarOption active">
+      <img class="menu__items__icons  " src="./SVG/help.svg" />
+      <h2>Help Center</h2>
+    </div>
+
+    <button class="sidebar__tweet">Discuss</button>
+  </div>
+  <!-- sidebar ends -->
+    
+    <div class="feed">
+    
+    <div class="feed__header">
+      <h1>List of tickets</h1>
+      <form action="post" class="search_bar">
+
+        <input type="text" placeholder="Search In Unify " name="q">
+        <button type="submit" class="search_btn">
+          <img src="./SVG/search.svg" alt="Search">
+        </button>
+
+      </form>
+      
+    </div>
     <a class="back-to-help" href="index.html">Back To Help Center</a>
-    <h1>List of tickets</h1>
+    
+    
     <table class="ticket-table" border="1" align="center">
         <tr>
             <th>Ticket ID</th>
             <th>User ID</th>
             <th>Description</th>
             <th>Date</th>
-            <th>Type</th>
+            
             <th>Delete</th>
             <th>Update</th>
             <th>Response</th>
@@ -119,14 +228,14 @@ $ticketreplyedit = new TicketReplyED();
         </tr>
         <?php foreach ($tab as $tickets) { 
             $responses = $ticketreplyedit->getRepliesForTicket($tickets['ticket_id']);
-            $statusClass = (!empty($responses)) ? 'solved' : 'not-solved';
+            $statusClass = (!empty($responses)) ? 'replied' : 'not-replied';
         ?>
         <tr>
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $tickets['ticket_id']; ?></td>
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $tickets['user_sender_id']; ?></td>
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $tickets['descriptions']; ?></td>
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $tickets['created_datetime']; ?></td>
-            <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;"><?= $tickets['ticket_typeid']; ?></td>
+            
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
                 <a style="text-decoration: none; color: #9b1c31; transition: color 0.3s ease;" href="deleteticket.php?id=<?= $tickets['ticket_id']; ?>">Delete</a> 
             </td>
@@ -140,11 +249,29 @@ $ticketreplyedit = new TicketReplyED();
                 <a style="text-decoration: none; color: #9b1c31; transition: color 0.3s ease;" href="ticketresponses.php?id=<?= $tickets['ticket_id']; ?>">See response</a>
             </td>
             <td style="border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
-                <span style="font-weight: bold; color: <?= (!empty($responses)) ? '#27ae60' : '#c0392b'; ?>;"><?= (!empty($responses)) ? 'Solved' : 'Not Solved'; ?></span>
+                <span style="font-weight: bold; color: <?= (!empty($responses)) ? '#27ae60' : '#c0392b'; ?>;"><?= (!empty($responses)) ? 'Replied' : 'Not Replied'; ?></span>
             </td>
         </tr>
         <?php } ?>
     </table>
+    <!-- Pagination controls -->
+<div class="pagination">
+    <?php if ($current_page > 1) { ?>
+        <a href="?page=<?= $current_page - 1; ?>">Previous</a>
+    <?php } ?>
+
+    <?php for ($i = 1; $i <= $total_pages; $i++) { ?>
+        <a href="?page=<?= $i; ?>" <?= ($i === $current_page) ? 'class="active"' : ''; ?>>
+            <?= $i; ?>
+        </a>
+    <?php } ?>
+
+    <?php if ($current_page < $total_pages) { ?>
+        <a href="?page=<?= $current_page + 1; ?>">Next</a>
+    <?php } ?>
+</div>
+        </div>
+    <!-- <canvas id="particles"></canvas> -->
     <script>
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');

@@ -1,10 +1,5 @@
-<?php
-include "../controller/ticketC.php"; 
-$user_sender_id=1;
-$ticketedit = new TicketED();
-$tab = $ticketedit->listTicketsByUser($user_sender_id); 
 
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,27 +7,66 @@ $tab = $ticketedit->listTicketsByUser($user_sender_id);
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Star Admin2 </title>
+  <title>Unify </title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="../template/vendors/feather/feather.css">
-  <link rel="stylesheet" href="../template/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../template/vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../template/vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="../template/vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="../template/vendors/css/vendor.bundle.base.css">
-  <link rel="stylesheet" href="faqstyle.css">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="ticketliststyle.css">
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="listoftickets.css">
 
-  
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="../template/css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="../template/images/favicon.png" />
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css"
+  rel="stylesheet"/>
 </head>
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"
+></script>
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #9b1c31;
+  color: white;
+}
+</style>
 
 <body>
   <div class="container-scroller">
@@ -46,7 +80,7 @@ $tab = $ticketedit->listTicketsByUser($user_sender_id);
         </div>
         <div>
           <a class="navbar-brand brand-logo" href="../../index.php">
-            <img src="../template/logoo.png" alt="logo" />
+            <img src="../../images/loogo.png" alt="logo" />
           </a>
           <a class="navbar-brand brand-logo-mini" href="../../index.php">
             <img src="../../images/logo-mini.svg" alt="logo" />
@@ -56,7 +90,7 @@ $tab = $ticketedit->listTicketsByUser($user_sender_id);
       <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
+            <h1 class="welcome-text">  <span class="text-black fw-bold">Unify</span></h1>
             <h3 class="welcome-sub-text">Your performance summary this week </h3>
           </li>
         </ul>
@@ -387,31 +421,7 @@ $tab = $ticketedit->listTicketsByUser($user_sender_id);
       <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="../../index.php">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-
-          <li class="nav-item">
-
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/ui-features/typography.html">Typography</a></li>
-              </ul>
-            </div>
-          </li>
-          
-
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="../../pages/forms/basic_elements.html">Basic Elements</a></li>
-              </ul>
-            </div>
-          </li>
+         
 
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
@@ -419,91 +429,160 @@ $tab = $ticketedit->listTicketsByUser($user_sender_id);
               <span class="menu-title">Users</span>
               <i class="menu-arrow"></i>
             </a>
+           
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/ss/View/BackOffice/template/pages/tables/basic-table.php">Users Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../tables/basic-table.php">Users Management</a></li>
               </ul>
             </div>
           </li>
 
+         
+
           <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
               <i class="menu-icon mdi mdi-table"></i>
-              <a href="listtickets.php">  <span class="menu-title">Help</span> </a>
+              <span class="menu-title">Help</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/Help/Help.php">Tickets Management</a></li>
+              <li class="nav-item"> <a class="nav-link" href="Help.php">Tickets Management</a></li>
+
               </ul>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="postt.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Posts</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="clubs.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Clubs</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="typeclub.php">
+              <i class="menu-icon mdi mdi-table"></i>
+              <span class="menu-title">Club Types</span>
+            </a>
           </li>
 
 
         </ul>
       </nav>
       <!-- partial -->
-      
-      <!-- main-panel ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
 
-  <a class="back-to-help" href="index.html">Back To Help Center </a>
+              <div class="card-body">
+                
+ 
 
-<h1>List of tickets</h1>   
+
+<a class="back-to-help" href="index.html">Back To Help Center </a>
+
+<h1 class="title-list-tickets" > Club Types </h1>   
 
 <table class="ticket-table" border="1" align="center" width="70%">
-    <tr>
-        <th>Ticket ID</th>
-        <th>User ID</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Delete</th>
-        <th>Update</th>
-    </tr>
+<tr>
+    <th>idTypeClub</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
 
-    <?php foreach ($tab as $tickets) { ?>
-        <tr>
-            <td><? $tickets['ticket_id']; ?></td>
-            <td><?= $tickets['user_sender_id']; ?></td>
-            <td><?= $tickets['descriptions']; ?></td>
-            <td><?= $tickets['created_datetime']; ?></td>
-            <td><?= $tickets['ticket_typeid']; ?></td>
-            <td>
-            <a href="deleteticket.php?id=<?= $tickets['ticket_id']; ?>">Delete</a> 
-            </td>
-            <td>
-            <form method="POST" action="updateticket.php">
-                    <input type="submit" name="update" value="Update">
-                    <input type="hidden" value=<?PHP echo $tickets['ticket_id']; ?> name="ticket_id">
-                </form>
-            
-            </td>
-        </tr>
-    <?php } ?>
+  <?php
+    foreach ($tab as $typeclub) {
+    ?>
+  <tr>
+  <td><?= $typeclub['idType']; ?></td>
+            <td><?= $typeclub['type']; ?></td>
+            <td><?= $typeclub['description']; ?></td>
+            <td><img  width="100" height="100" src="uploads/<?= $typeclub['image']; ?>" alt=""></td>
+    <td><a href="updateTypeClub.php?idType=<?php echo $typeclub['idType']; ?>"><i class="fa fa-edit" style="font-size:25px;"></i></a>&nbsp;&nbsp;<a href="ListType.php?idType=<?php echo $typeclub['idType']; ?>"><i class="fa fa-trash" style="font-size:25px;"></i></a></td>
+  </tr>
+<?php } ?>
 </table>
 
 
-  <!-- container-scroller -->
-  <!-- plugins:js -->
-  <script src="../../vendors/js/vendor.bundle.base.js"></script>
-  <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <!-- endinject -->
-  <!-- Plugin js for this page -->
-  <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <!-- End plugin js for this page -->
-  <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
-  <!-- Custom js for this page-->
-  <!-- End custom js for this page-->
-  
+
+                  
+
+                
+</div>
+
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+
+</div>
+</div>
+</div>  
+  </div>
+
+</div>
+
+<div class="col-lg-12 grid-margin stretch-card">
+
+</div>
+</div>
+</div>
+<!-- content-wrapper ends -->
+<!-- partial:../../partials/_footer.html -->
+<footer class="footer">
+<div class="d-sm-flex justify-content-center justify-content-sm-between">
+<span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+</div>
+</footer>
+<!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
 </body>
 
 </html>
+
+
+<?php
+include "../../../Back/Controller/typeclubC.php";
+
+$c = new typeclubC();
+$tab = $c->listtypeclub();
+
+  $clientC = new typeclubC();
+  if(isset($_GET["idType"])) {
+  $clientC->deletetypeclub($_GET["idType"]);
+  }
+
+
+?>
+

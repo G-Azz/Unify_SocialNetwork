@@ -1,14 +1,9 @@
-body, h1, table {
-    margin: 0;
-    padding: 0;
-}
+Z
 /* Center the content */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: Arial, sans-serif;
+    
+    
+    font-family: fArial, sans-seri;
     
 }
 .solved {

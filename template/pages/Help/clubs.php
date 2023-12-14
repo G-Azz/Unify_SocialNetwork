@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,26 +8,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Star Admin2 </title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="vendors/feather/feather.css">
-  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="vendors/typicons/typicons.css">
-  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
-  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <link rel="stylesheet" type="text/css" href="js/select.dataTables.min.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
-<body class="with-welcome-text">
+
+<body>
   <div class="container-scroller">
-    
-    <!-- partial:partials/_navbar.html -->
+    <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
         <div class="me-3">
@@ -35,15 +34,15 @@
           </button>
         </div>
         <div>
-          <a class="navbar-brand brand-logo" href="index.php">
-            <img src="images/loogo.png" alt="logo" />
+          <a class="navbar-brand brand-logo" href="../../index.php">
+            <img src="../../images/loogo.png" alt="logo" />
           </a>
-          <a class="navbar-brand brand-logo-mini" href="index.php">
-            <img src="images/logo-mini.svg" alt="logo" />
+          <a class="navbar-brand brand-logo-mini" href="../../index.php">
+            <img src="../../images/logo-mini.svg" alt="logo" />
           </a>
         </div>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-top"> 
+      <div class="navbar-menu-wrapper d-flex align-items-top">
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
             <h1 class="welcome-text">  <span class="text-black fw-bold">Unify</span></h1>
@@ -54,7 +53,7 @@
           <li class="nav-item dropdown d-none d-lg-block">
             <a class="nav-link dropdown-bordered dropdown-toggle dropdown-toggle-split" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false"> Select Category </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-              <a class="dropdown-item py-3" >
+              <a class="dropdown-item py-3">
                 <p class="mb-0 font-weight-medium float-left">Select category</p>
               </a>
               <div class="dropdown-divider"></div>
@@ -136,7 +135,7 @@
               </a>
             </div>
           </li>
-          <li class="nav-item dropdown"> 
+          <li class="nav-item dropdown">
             <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="icon-bell"></i>
               <span class="count"></span>
@@ -149,7 +148,7 @@
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../../images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
@@ -158,7 +157,7 @@
               </a>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../../images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
@@ -167,7 +166,7 @@
               </a>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                  <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                  <img src="../../images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow py-2">
                   <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
@@ -178,10 +177,10 @@
           </li>
           <li class="nav-item dropdown d-none d-lg-block user-dropdown">
             <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-              <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image"> </a>
+              <img class="img-xs rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image"> </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <div class="dropdown-header text-center">
-                <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                <img class="img-md rounded-circle" src="../../images/faces/face8.jpg" alt="Profile image">
                 <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
                 <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
               </div>
@@ -200,14 +199,18 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_settings-panel.html -->
+      <!-- partial:../../partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-settings"></i></div>
         <div id="theme-settings" class="settings-panel">
           <i class="settings-close ti-close"></i>
           <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+            <div class="img-ss rounded-circle bg-light border me-3"></div>Light
+          </div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border me-3"></div>Dark
+          </div>
           <p class="settings-heading mt-2">HEADER SKINS</p>
           <div class="color-tiles mx-0 px-4">
             <div class="tiles success"></div>
@@ -314,7 +317,7 @@
             </div>
             <ul class="chat-list">
               <li class="list active">
-                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="../../images/faces/face1.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Thomas Douglas</p>
                   <p>Available</p>
@@ -322,7 +325,7 @@
                 <small class="text-muted my-auto">19 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="profile"><img src="../../images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
                 <div class="info">
                   <div class="wrapper d-flex">
                     <p>Catherine</p>
@@ -333,7 +336,7 @@
                 <small class="text-muted my-auto">23 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="../../images/faces/face3.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Daniel Russell</p>
                   <p>Available</p>
@@ -341,7 +344,7 @@
                 <small class="text-muted my-auto">14 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="profile"><img src="../../images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
                 <div class="info">
                   <p>James Richardson</p>
                   <p>Away</p>
@@ -349,7 +352,7 @@
                 <small class="text-muted my-auto">2 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="../../images/faces/face5.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Madeline Kennedy</p>
                   <p>Available</p>
@@ -357,7 +360,7 @@
                 <small class="text-muted my-auto">5 min</small>
               </li>
               <li class="list">
-                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="profile"><img src="../../images/faces/face6.jpg" alt="image"><span class="online"></span></div>
                 <div class="info">
                   <p>Sarah Graves</p>
                   <p>Available</p>
@@ -370,26 +373,26 @@
         </div>
       </div>
       <!-- partial -->
-      <!-- partial:partials/_sidebar.html -->
+      <!-- partial:../../partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-         
+          
+
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Users</span>
               <i class="menu-arrow"></i>
             </a>
-
-            
-            
+           
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.php">Users Management</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../tables/basic-table.php">Users Management</a></li>
               </ul>
             </div>
           </li>
 
+         
 
           <li class="nav-item">
           <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
@@ -399,55 +402,150 @@
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/Help/Help.php">Tickets Management</a></li>
+              <li class="nav-item"> <a class="nav-link" href="Help.php">Tickets Management</a></li>
+
               </ul>
             </div>
           </li>
-
           <li class="nav-item">
-            <a class="nav-link" href="pages/Help/postt.php">
+            <a class="nav-link" href="postt.php">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Posts</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="pages/Help/clubs.php">
+            <a class="nav-link" href="clubs.php">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Clubs</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="pages/Help/typeclub.php">
+            <a class="nav-link" href="typeclub.php">
               <i class="menu-icon mdi mdi-table"></i>
               <span class="menu-title">Club Types</span>
             </a>
           </li>
-          
-          
-          
-          
+
+
+        </ul>
       </nav>
       <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-6 grid-margin stretch-card">
+
+              <div class="card-body">
+                
+<head>
+    <link rel="stylesheet" href="listoftickets.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>List of Clubs</title>
+    
+</head>
+
+<a class="back-to-help" href="index.html">Back To Help Center </a>
+
+<h1 class="title-list-tickets" > List of clubs</h1>   
+
+<table class="ticket-table" border="1" align="center" width="70%">
+<tr>
+    <th>idTypeClub</th>
+    <th>idClub</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
+
+  <?php
+    foreach ($tab as $Club) {
+    ?>
+  <tr>
+  <td><?= $Club['idType']; ?></td>
+  <td><?= $Club['idClub']; ?></td>
+            <td><?= $Club['type']; ?></td>
+            <td><?= $Club['description']; ?></td>
+            <td><img  width="100" height="100" src="uploads/<?= $Club['image']; ?>" alt=""></td>
+    <td><a href="update.php?idClub=<?php echo $Club['idClub']; ?>"><i class="fa fa-edit" style="font-size:25px;"></i></a>&nbsp;&nbsp;<a href="evenement.php?idClub=<?php echo $Club['idClub']; ?>"><i class="fa fa-trash" style="font-size:25px;"></i></a></td>
+  </tr>
+<?php } ?>
+</table>
+
+<div class="pagination">
+    <?php if ($current > 1) { ?>
+        <a href="?page=<?= $current - 1; ?>">Previous </a>
+    <?php } ?>
+
+    <?php if ($totalPages > 0) { ?>
+        <a href="?page=1" <?= $current === 1 ? 'class="active"' : ''; ?>>1</a>
+    <?php } ?>
+
+    &nbsp; <!-- Add a space or use any other separator -->
+
+    <?php if ($totalPages > 1) { ?>
+        <a href="?page=2" <?= $current === 2 ? 'class="active"' : ''; ?>>2</a>
+    <?php } ?>
+
+    &nbsp; <!-- Add a space or use any other separator -->
+
+    <?php for ($i = 3; $i <= $totalPages; $i++) { ?>
+        <a href="?page=<?= $i; ?>" <?= $i === $current ? 'class="active"' : ''; ?>>
+            <?= $i; ?>
+        </a>
+        
+        &nbsp; <!-- Add a space or use any other separator -->
+    <?php } ?>
+
+    <?php if ($current < $totalPages) { ?>
+        <a href="?page=<?= $current + 1; ?>">Next</a>
+    <?php } ?>
+</div>
       
+              </div>
 
+            </div>
+
+            <div class="col-lg-12 grid-margin stretch-card">
+
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
     </div>
-
+    <!-- page-body-wrapper ends -->
   </div>
-  <script src="vendors/js/vendor.bundle.base.js"></script>
-  <script src="vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <script src="vendors/chart.js/chart.min.js"></script>
-  <script src="vendors/progressbar.js/progressbar.min.js"></script>
-  <script src="js/off-canvas.js"></script>
-  <script src="js/hoverable-collapse.js"></script>
-  <script src="js/template.js"></script>
-  <script src="js/settings.js"></script>
-  <script src="js/todolist.js"></script>
-  <script src="js/jquery.cookie.js" type="text/javascript"></script>
-  <script src="js/dashboard.js"></script>
-
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
 </body>
 
 </html>
-

@@ -19,73 +19,116 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <title>Ticket Responses</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f6e0d5; /* Lighter shade of red */
-            color: #333; /* Darker text color for better readability */
-            animation: colorChange 5s infinite alternate; /* Animation for color change */
-        }
-        @keyframes colorChange {
-            from { background-color: #f6e0d5; } /* Initial background color */
-            to { background-color: #f9c7bb; } /* Another shade of red for animation */
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for container */
-            backdrop-filter: blur(10px);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 36px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            color: #e74c3c; /* Red color for title */
-            animation: titleAnimation 3s ease-in-out infinite alternate; /* Animation for title */
-        }
-        @keyframes titleAnimation {
-            from { transform: scale(1); } /* Initial scale */
-            to { transform: scale(1.05); } /* Slight scale up for animation */
-        }
-        p {
-            margin-bottom: 20px;
-            font-size: 18px;
-            line-height: 1.6;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            padding: 15px;
-            margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white background for list items */
-            border-radius: 8px;
-            border-left: 5px solid #e74c3c; /* Red border for contrast */
-            font-size: 16px;
-            line-height: 1.4;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out; /* Transition effect */
-        }
-        li:hover {
-            transform: scale(1.05); /* Scale up on hover */
-        }
-        li:last-child {
-            margin-bottom: 0;
-        }
-        strong {
-            color: #e74c3c; /* Red color for strong text */
-        }
-    </style>
+    <link href="brand.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link href="ticketresponses.css" rel="stylesheet">
+  
 </head>
 <body>
+<div class="sidebar">
+    <img src="./SVG/unifylogo.svg" class="logo" />
+    <div class="sidebarOption ">
+      <img class=" menu__items__icons " src="./SVG/home.svg" />
+      <h2>Home</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/discussions.svg" />
+      <h2>Discussions</h2>
+    </div>
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/notification.svg" />
+        <h2>Notifications</h2>
+      </div> -->
+
+    <!-- <div class="sidebarOption">
+        <img class="menu__items__icons  " src="./SVG/schedule.svg" />
+        <h2>Schedule</h2>
+      </div> -->
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/profile.svg" />
+      <h2>Profile</h2>
+    </div>
+    <div class="sidebarOption">
+      <img class=" menu__items__icons " src="./SVG/clubs.svg" />
+      <h2>Find clubs</h2>
+    </div>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/carpooling.svg" />
+      <h2>Carpooling</h2>
+    </div>
+    <ul class="tree">
+      <li>
+        <details>
+          <summary>
+            <div class="sidebarOption" id="study" tabindex="0" name="study">
+              <img class="menu__items__icons  " src="./SVG/study.svg" />
+              <h2>Study with</h2>
+            </div>
+          </summary>
+          <ul>
+            <div class="lefty">
+              <li>
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/tutor.svg" />
+                  <h4>Tutor</h4>
+                </div>
+              </li>
+              <li>
+
+                <div class="sidebarOption">
+                  <img class="menu__items__icons  " src="./SVG/group.svg" />
+                  <h4>Group</h4>
+                </div>
+              </li>
+            </div>
+
+
+        </details>
+      </li>
+    </ul>
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons  " src="./SVG/courses.svg" />
+      <h2>Courses</h2>
+    </div>
+
+    <div class="sidebarOption active">
+      <img class="menu__items__icons  " src="./SVG/help.svg" />
+      <h2>Help Center</h2>
+    </div>
+
+    <button class="sidebar__tweet">Discuss</button>
+    
+  </div>
+  <!-- sidebar ends -->
+    
+    <div class="feed">
+    <a class="back-to-help" href="index.html">Back To Help Center</a>
+    <a class="back-to-list" href="listtickets.php">View your tickets</a>
+
+
+      
+    
+    <div class="feed__header">
+      
+      <h1>Answers</h1>
+      <form action="post" class="search_bar">
+
+        <input type="text" placeholder="Search In Unify " name="q">
+        <button type="submit" class="search_btn">
+          <img src="./SVG/search.svg" alt="Search">
+        </button>
+
+      </form>
+      
+    </div>
+    
     <div class="container">
+    
         <h1>Ticket Responses for ID: <?php echo $ticket_id; ?></h1>
         <?php if (!empty($ticket)) { ?>
             <p><strong>Ticket Description:</strong> <?php echo $ticket['descriptions']; ?></p>
@@ -101,6 +144,7 @@ if (isset($_GET['id'])) {
         <?php } else { ?>
             <p>No responses found for this ticket.</p>
         <?php } ?>
+        
     </div>
 </body>
 </html>
