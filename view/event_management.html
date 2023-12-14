@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twitter Clone - Final</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="brand.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous" />
+
+</head>
+
+<body>
+
+  <!-- sidebar starts -->
+  <div class="sidebar">
+    <img src="/event_/view/SVG/unifylogo.svg" class="logo" />
+
+    <div class="sidebarOption active">
+      <img class="menu__items__icons" src="/event_/view/SVG/home.svg" />
+      <h2>Home</h2>
+    </div>
+
+
+    <div class="sidebarOption">
+      <img class="menu__items__icons" src="/event_/view/SVG/profile.svg" />
+      <h2>Profile</h2>
+    </div>
+
+
+    <div class="sidebarOption">
+          <img class="menu__items__icons" src="/event_/view/SVG/event.svg" />
+          <h2>Event</h2>
+        </div>
+
+
+
+    <!-- Remaining Sidebar Options -->
+
+
+
+
+
+  
+  </div>
+  <!-- sidebar ends -->
+  <!-- ... (Your existing sidebar options) ... -->
+
+  <!-- New Admin Buttons -->
+  <div class="admin-buttons">
+    <!-- Add Event Button -->
+    <div class="sidebarOption admin-button">
+      <i class="fas fa-plus-circle menu__items__icons"></i>
+      <h2>Add Event</h2>
+    </div>
+
+    <!-- Manage Events Button -->
+    <div class="sidebarOption admin-button">
+      <i class="fas fa-cogs menu__items__icons"></i>
+      <h2>Manage Events</h2>
+    </div>
+
+    <!-- Log Out Button (You can customize the icon) -->
+    <div class="sidebarOption admin-button">
+      <i class="fas fa-sign-out-alt menu__items__icons"></i>
+      <h2>Log Out</h2>
+    </div>
+  </div>
+
+  <!-- feed starts -->
+
+  <div class="feed">
+    <!-- ... (Your existing feed content) ... -->
+  </div>
+  <!-- feed ends -->
+
+  <!-- widgets starts -->
+  <!-- ... (Your existing widgets content) ... -->
+  <!-- widgets ends -->
+
+<!-- ... Your existing HTML code ... -->
+
+<!-- Add the JavaScript script just before the closing </body> tag -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get all admin buttons
+    const adminButtons = document.querySelectorAll('.admin-button');
+
+    // Add click event listeners to each admin button
+    adminButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        // Get the text content of the clicked button
+        const buttonText = button.querySelector('h2').textContent;
+
+        // Perform action based on the button text
+        switch (buttonText) {
+          case 'Add Event':
+            // Redirect to 'addevent.php'
+            window.location.href = '/event_/controller/addevent.php';
+            break;
+          case 'Manage Events':
+            // Redirect to 'manageevents.php'
+            window.location.href = '/event_/controller/manageevents.php';
+            break;
+          case 'Log Out':
+            // Redirect to 'logout.php'
+            window.location.href = 'index.html';
+            break;
+          default:
+            // Handle other buttons if needed
+            break;
+        }
+      });
+    });
+  });
+</script>
+
+
+
+</body>
+
+</html>

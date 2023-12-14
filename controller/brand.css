@@ -1,0 +1,14 @@
+.logo{
+    height: 100px;
+    margin-left: 40px;
+    width: auto;
+    filter: invert(16%) sepia(84%) saturate(2103%) hue-rotate(330deg) brightness(93%) contrast(99%);
+}
+.settings
+{   
+    margin-left: 200px;
+    margin-top: 30px;
+    margin-bottom: 45px;
+    height: 40px;
+    width: auto;
+}
