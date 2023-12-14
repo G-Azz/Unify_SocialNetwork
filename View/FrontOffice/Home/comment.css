@@ -1,0 +1,134 @@
+.comment-wrapper {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: #f0f2f5;
+    object-fit: fill;
+    border-radius: 18px;
+    padding: 3px;
+    width: 100%; /* Adjust as per your layout */
+    margin: auto;
+}
+
+.comment-box {
+    display: flex;
+    align-items: center;
+    
+    background-color: white;
+    border-radius: 18px;
+    padding: 6px 10px;
+}
+
+.input-comment {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    border-radius: 18px;
+    padding: 6px 10px;
+    font-size: 16px; /* Adjust the size as needed */
+}
+
+.icons-comment {
+    display: flex;
+    align-items: center;
+}
+
+.icon-comment {
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 8px;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    color: #806f6f;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.action-button:hover {
+    text-decoration: underline;
+}
+
+.social-media-comment {
+  background-color:white;
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 10px auto;
+  max-width: 100%; /* Adjust based on your preference */
+ 
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  flex-direction: row  ;
+  margin-bottom: 10px;
+}  
+  .comment_body img {
+    width: 450px;
+    object-fit: contain;
+    border-radius: 20px;
+  }
+  .comment_body {
+    flex: 1;
+    padding: 10px;
+  }
+  
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.username {
+  font-weight: bold;
+  color: #333;
+}
+
+.handle {
+  color: #555;
+}
+
+.time-posted {
+  color: #555;
+}
+
+.comment-content p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.comment-footer {
+  font-size: 14px;
+  color: #555;
+}
+
+.comment-likes, .comment-replies {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.comment-likes:hover, .comment-replies:hover {
+  text-decoration: underline;
+}
+
